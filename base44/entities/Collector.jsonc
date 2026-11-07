@@ -1,0 +1,90 @@
+{
+  "name": "Collector",
+  "properties": {
+    "approved": {
+      "default": false,
+      "description": "Shown in the public directory once an admin approves",
+      "rls": {
+        "create": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "boolean"
+    },
+    "collection_type": {
+      "enum": [
+        "Straight Razors",
+        "Safety Razors",
+        "Sharpeners-Stroppers",
+        "Hones",
+        "Strops",
+        "Barbershop Collectibles"
+      ],
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "email": {
+      "description": "Private: only admins can read it",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "string"
+    },
+    "from_legacy_site": {
+      "default": false,
+      "rls": {
+        "create": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "boolean"
+    },
+    "main_collection_size": {
+      "description": "As entered by the collector, e.g. 500+",
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sharpener_collection_size": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {},
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
