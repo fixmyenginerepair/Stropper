@@ -144,13 +144,8 @@
   "required": [
     "name"
   ],
-  "type": "object",
   "rls": {
-    "create": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
+    "create": {},
     "delete": {
       "user_condition": {
         "role": "admin"
@@ -161,5 +156,6 @@
         "role": "admin"
       }
     }
-  }
+  },
+  "type": "object"
 }
