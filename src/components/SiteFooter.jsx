@@ -21,6 +21,9 @@ export default function SiteFooter() {
             <a href="/about" className="text-white/75 transition-colors hover:text-white">
               Help
             </a>
+            <a href="/classic" className="text-white/75 transition-colors hover:text-white">
+              Classic Stropper
+            </a>
             <a
               href={SITE.sister}
               target="_blank"

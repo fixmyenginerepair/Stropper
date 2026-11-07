@@ -1,0 +1,96 @@
+{
+  "name": "ArchiveItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "What the artefact is, e.g. 'MySQL database dump'"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "page",
+        "php",
+        "html",
+        "css",
+        "javascript",
+        "java",
+        "sql",
+        "image",
+        "document",
+        "capture"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray",
+        "blue",
+        "yellow",
+        "purple",
+        "red",
+        "gray",
+        "pink",
+        "blue"
+      ],
+      "description": "What sort of thing it is"
+    },
+    "path": {
+      "type": "string",
+      "description": "Original location on the old server, e.g. /home/stropper_index_mobile.php"
+    },
+    "description": {
+      "type": "string"
+    },
+    "external_url": {
+      "type": "string",
+      "description": "Live address on the classic site"
+    },
+    "capture_url": {
+      "type": "string",
+      "description": "Internet Archive capture of the page"
+    },
+    "file_uri": {
+      "type": "string",
+      "description": "Private storage location of the archived master copy"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "bytes": {
+      "type": "number"
+    },
+    "checksum": {
+      "type": "string",
+      "description": "SHA-256 of the archived copy"
+    },
+    "captured_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "position": {
+      "type": "number",
+      "description": "Order within its group"
+    }
+  },
+  "required": [
+    "title",
+    "kind"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

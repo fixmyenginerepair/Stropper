@@ -12,4 +12,5 @@ export const NAV_LINKS = [
   { label: 'Swap List', to: '/swap-list' },
   { label: 'The Book', to: '/book' },
   { label: 'About', to: '/about' },
+  { label: 'Classic', to: '/classic' },
 ];
