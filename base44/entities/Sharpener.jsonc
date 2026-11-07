@@ -150,7 +150,11 @@
         "role": "admin"
       }
     },
-    "delete": {},
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "update": {
       "user_condition": {
         "role": "admin"
