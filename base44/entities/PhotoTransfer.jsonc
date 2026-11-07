@@ -1,5 +1,4 @@
 {
-  "description": "Temporary: photo bytes in transit from old stropper.com. Delete after migration.",
   "name": "PhotoTransfer",
   "properties": {
     "data": {
@@ -24,11 +23,7 @@
         "role": "admin"
       }
     },
-    "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
+    "delete": {},
     "read": {},
     "update": {
       "user_condition": {
