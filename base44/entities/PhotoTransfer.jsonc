@@ -1,0 +1,40 @@
+{
+  "description": "Temporary: photo bytes in transit from old stropper.com. Delete after migration.",
+  "name": "PhotoTransfer",
+  "properties": {
+    "data": {
+      "type": "string"
+    },
+    "mime": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "size": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "path"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
