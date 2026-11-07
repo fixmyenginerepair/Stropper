@@ -155,11 +155,7 @@
         "role": "admin"
       }
     },
-    "update": {
-      "user_condition": {
-        "role": "admin"
-      }
-    }
+    "update": {}
   },
   "type": "object"
 }
