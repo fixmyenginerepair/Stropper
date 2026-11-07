@@ -109,9 +109,8 @@ export default function SharpenerDetail() {
   };
 
   const addToMyBook = () => {
-    const ids = addToBook(sharpener.id);
+    addToBook(sharpener.id);
     setInBook(true);
-    navigate(bookHref(ids));
   };
 
   const mailto = `mailto:${SITE.webmaster}?subject=${encodeURIComponent(
@@ -175,7 +174,7 @@ export default function SharpenerDetail() {
               value={sharpener.collection}
               to={
                 sharpener.collection
-                  ? `/browse?q=${encodeURIComponent(sharpener.collection)}`
+                  ? `/browse?collector=${encodeURIComponent(sharpener.collection)}`
                   : null
               }
             />
@@ -189,12 +188,21 @@ export default function SharpenerDetail() {
             >
               Contact the collector
             </a>
-            <button
-              onClick={addToMyBook}
-              className="rounded-lg border border-ink/20 bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-oxblood hover:text-oxblood"
-            >
-              {inBook ? 'In my book — open it' : 'Add to my book'}
-            </button>
+            {inBook ? (
+              <Link
+                to={bookHref(readBook())}
+                className="rounded-lg border border-ink/20 bg-white px-6 py-3 text-sm font-semibold text-oxblood transition-colors hover:border-oxblood"
+              >
+                In my book — open it
+              </Link>
+            ) : (
+              <button
+                onClick={addToMyBook}
+                className="rounded-lg border border-ink/20 bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-oxblood hover:text-oxblood"
+              >
+                Add to my book
+              </button>
+            )}
             {isAdmin && <AdminSharpenerEditor sharpener={sharpener} onSaved={save} />}
           </div>
         </div>

@@ -1,24 +1,109 @@
 export const SHARPENER_TYPES = [
-  'Strops',
-  'Rollers',
+  'Allegro Type',
   'Auto Strop',
-  'Pull String',
-  'Hones',
+  'Barber',
   'Rotary Belt',
-  'Magnetic',
+  'Accessories',
+  'Blade Holder & Hone',
+  'Blade Holder',
+  'Blades',
+  'Circular',
+  'Edge-Bak',
   'Electric',
+  'Handle-like Ingersoll',
+  'Handle-like Valet',
+  'Hone-Carborundum',
+  'Hone-Glass/Other',
+  'Machine-Pull Handles',
+  'Magnetic',
+  'Marbles-Bearings',
+  'Marvel',
+  'Other',
+  'Pull String',
+  'Rollers-1',
+  'Rollers-2',
+  'Rollers-3',
+  'Rollers-4',
+  'Safety Razor',
+  'Set',
+  'Shake Sharp',
+  'Shaving Stand',
+  'Straight Razor',
+  'Strop',
+  'Unknown',
 ];
 
-export const TYPE_BLURBS = {
-  Strops: 'Leather, canvas and linen strops that realign a blade’s edge.',
-  Rollers: 'Clamp-and-roll devices that brought the edge back to life.',
-  'Auto Strop': 'Self-stropping razor frames from the safety-razor era.',
-  'Pull String': 'Cord-driven mechanisms sold as pocket sharpeners.',
-  Hones: 'Natural and synthetic stones that cut a fresh bevel.',
-  'Rotary Belt': 'Belt-driven wheels turned against the blade.',
-  Magnetic: 'Magnetised guides that hold the blade at a fixed angle.',
-  Electric: 'Mains-powered sharpeners of the post-war decades.',
-};
+export const COUNTRY_VALUES = [
+  'Argentina',
+  'Australia',
+  'Austria',
+  'Brazil',
+  'Canada',
+  'Czechoslovakia',
+  'Denmark',
+  'England',
+  'France',
+  'Germany',
+  'Holland',
+  'Hungary',
+  'Italy',
+  'Japan',
+  'Netherland',
+  'Norway',
+  'Other',
+  'Poland',
+  'Russia',
+  'Spain',
+  'Sweden',
+  'Switzerland',
+  'Unknown',
+  'USA',
+];
+
+// The eight headline families on the home page. `match` is the prefix used
+// against the archive's type field, so "Rollers" finds Rollers-1 … Rollers-4.
+export const TYPE_GROUPS = [
+  {
+    label: 'Strops',
+    match: 'Strop',
+    blurb: 'Leather, canvas and linen strops that realign a blade’s edge.',
+  },
+  {
+    label: 'Rollers',
+    match: 'Rollers',
+    blurb: 'Clamp-and-roll devices that brought the edge back to life.',
+  },
+  {
+    label: 'Auto Strop',
+    match: 'Auto Strop',
+    blurb: 'Self-stropping razor frames from the safety-razor era.',
+  },
+  {
+    label: 'Pull String',
+    match: 'Pull String',
+    blurb: 'Cord-driven mechanisms sold as pocket sharpeners.',
+  },
+  {
+    label: 'Hones',
+    match: 'Hone',
+    blurb: 'Natural and synthetic stones that cut a fresh bevel.',
+  },
+  {
+    label: 'Rotary Belt',
+    match: 'Rotary Belt',
+    blurb: 'Belt-driven wheels turned against the blade.',
+  },
+  {
+    label: 'Magnetic',
+    match: 'Magnetic',
+    blurb: 'Magnetised guides that hold the blade at a fixed angle.',
+  },
+  {
+    label: 'Electric',
+    match: 'Electric',
+    blurb: 'Mains-powered sharpeners of the post-war decades.',
+  },
+];
 
 export const TYPE_IMAGES = {
   Strops:
@@ -28,13 +113,13 @@ export const TYPE_IMAGES = {
   'Auto Strop':
     'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/aef486215_generated_4bd56326.png',
   'Pull String':
-    'https://static.wixstatic.com/media/12d367_4f26ccd17f8f4e3a8958306ea08c2332~mv2.png',
+    'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/45a4b80ad_generated_image.png',
   Hones:
     'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/acfc3aece_generated_e669e569.png',
   'Rotary Belt':
     'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/e02808993_generated_a0ec6800.png',
   Magnetic:
-    'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/825bff5f2_generated_5555ab38.png',
+    'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/aef486215_generated_4bd56326.png',
   Electric:
     'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/e02808993_generated_a0ec6800.png',
 };
@@ -67,8 +152,14 @@ export const SORT_OPTIONS = [
 
 export const PAGE_SIZE = 48;
 
+export function typeImage(type) {
+  if (!type) return PLACEHOLDER_IMAGE;
+  const group = TYPE_GROUPS.find((item) => String(type).startsWith(item.match));
+  return group ? TYPE_IMAGES[group.label] : PLACEHOLDER_IMAGE;
+}
+
 export function sharpenerImage(sharpener) {
-  return sharpener?.images?.[0] || TYPE_IMAGES[sharpener?.type] || PLACEHOLDER_IMAGE;
+  return sharpener?.images?.[0] || typeImage(sharpener?.type);
 }
 
 export function rarityLabel(rarity) {
@@ -82,11 +173,9 @@ export function raritySegments(rarity) {
 }
 
 export function formatValue(value) {
-  if (value === 0 || value) {
-    const n = Number(value);
-    if (Number.isFinite(n)) {
-      return `$${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
-    }
+  const n = Number(value);
+  if (value !== null && value !== '' && Number.isFinite(n)) {
+    return `$${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
   }
   return 'Not recorded';
 }

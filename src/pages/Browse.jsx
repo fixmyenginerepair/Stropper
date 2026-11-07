@@ -15,14 +15,7 @@ export default function Browse() {
 
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
-  const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    base44.entities.Sharpener.list({ distinct: 'country' }).then((result) =>
-      setCountries((result.items || []).filter(Boolean).sort())
-    );
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -82,7 +75,7 @@ export default function Browse() {
 
       <div className="mt-9 grid gap-8 lg:grid-cols-[280px_1fr]">
         <aside className="lg:sticky lg:top-[104px] lg:self-start">
-          <FilterPanel values={filters} countries={countries} onApply={apply} onClear={clear} />
+          <FilterPanel values={filters} onApply={apply} onClear={clear} />
         </aside>
 
         <div>

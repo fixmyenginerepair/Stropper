@@ -1,8 +1,17 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
 import SharpenerCard from '@/components/SharpenerCard';
-import { SAMPLE_SHARPENERS } from '@/lib/sampleSharpeners';
 
 export default function RecentSharpeners() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Sharpener.list({ sort: '-created_date', limit: 4 }).then((page) =>
+      setItems(page.items || [])
+    );
+  }, []);
+
   return (
     <section className="bg-white py-16 lg:py-20">
       <div className="archive-container">
@@ -22,7 +31,7 @@ export default function RecentSharpeners() {
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
-          {SAMPLE_SHARPENERS.slice(0, 4).map((sharpener) => (
+          {items.map((sharpener) => (
             <SharpenerCard key={sharpener.id} sharpener={sharpener} />
           ))}
         </div>

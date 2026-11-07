@@ -18,7 +18,7 @@ const initialForm = (sharpener) => ({
   blade: sharpener.blade || '',
   comment: sharpener.comment || '',
   collection: sharpener.collection || '',
-  collector_id: sharpener.collector_id || '',
+  legacy_id: sharpener.legacy_id ?? '',
   rarity: sharpener.rarity || '',
   value: sharpener.value ?? '',
   description: sharpener.description || '',
@@ -42,6 +42,7 @@ export default function AdminSharpenerEditor({ sharpener, onSaved }) {
     const saved = await onSaved({
       ...form,
       value: form.value === '' ? null : Number(form.value),
+      legacy_id: form.legacy_id === '' ? null : Number(form.legacy_id),
       images: form.images
         .split('\n')
         .map((line) => line.trim())
@@ -97,8 +98,8 @@ export default function AdminSharpenerEditor({ sharpener, onSaved }) {
           {field('Manufacturer', 'manufacturer')}
           {field('Patent', 'patent')}
           {field('Blade', 'blade')}
-          {field('Collection', 'collection')}
-          {field('Collector ID', 'collector_id')}
+          {field('Collection (collector ID)', 'collection')}
+          {field('Legacy ID (old site)', 'legacy_id')}
 
           <label className="block text-[12px] font-medium text-steel">
             Rarity

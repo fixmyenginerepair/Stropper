@@ -49,10 +49,12 @@ export function buildQuery(filters) {
     query.name = { $regex: `^${filters.letter}`, $options: 'i' };
   }
   if (filters.country) query.country = filters.country;
-  if (filters.type) query.type = filters.type;
+  // Prefix match so the home page families (Rollers, Hone …) find
+  // Rollers-1 … Rollers-4 and Hone-Carborundum.
+  if (filters.type) query.type = { $regex: `^${filters.type}`, $options: 'i' };
   if (filters.rarity) query.rarity = filters.rarity;
   if (filters.collector) {
-    query.collector_id = { $regex: `^${filters.collector}`, $options: 'i' };
+    query.collection = { $regex: `^${filters.collector}`, $options: 'i' };
   }
   if (filters.updated) {
     const since = new Date();

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { SHARPENER_TYPES, TYPE_BLURBS } from '@/lib/archive';
+import { TYPE_GROUPS } from '@/lib/archive';
 
 export default function TypeGrid() {
   return (
@@ -21,15 +21,15 @@ export default function TypeGrid() {
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {SHARPENER_TYPES.map((type) => (
+        {TYPE_GROUPS.map((group) => (
           <Link
-            key={type}
-            to={`/browse?type=${encodeURIComponent(type)}`}
+            key={group.label}
+            to={`/browse?type=${encodeURIComponent(group.match)}`}
             className="group flex items-start justify-between gap-4 rounded-[10px] border border-hair bg-white p-5 transition-colors hover:border-oxblood"
           >
             <div>
-              <h3 className="font-heading text-[17px] font-bold text-ink">{type}</h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-steel">{TYPE_BLURBS[type]}</p>
+              <h3 className="font-heading text-[17px] font-bold text-ink">{group.label}</h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-steel">{group.blurb}</p>
             </div>
             <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-steel transition-colors group-hover:text-oxblood" />
           </Link>

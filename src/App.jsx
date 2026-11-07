@@ -9,6 +9,12 @@ import ScrollToTop from './components/ScrollToTop';
 import SiteLayout from '@/components/SiteLayout';
 // Add page imports here
 import Home from '@/pages/Home';
+import Browse from '@/pages/Browse';
+import SharpenerDetail from '@/pages/SharpenerDetail';
+import Book from '@/pages/Book';
+import Collectors from '@/pages/Collectors';
+import SwapList from '@/pages/SwapList';
+import About from '@/pages/About';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -38,6 +44,12 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/browse" element={<Browse />} />
+        <Route path="/sharpener/:id" element={<SharpenerDetail />} />
+        <Route path="/book" element={<Book />} />
+        <Route path="/collectors" element={<Collectors />} />
+        <Route path="/swap-list" element={<SwapList />} />
+        <Route path="/about" element={<About />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

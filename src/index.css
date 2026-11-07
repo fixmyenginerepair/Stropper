@@ -78,4 +78,31 @@
   .no-print {
     display: none !important;
   }
+
+  header,
+  footer {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .book-cover {
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .book-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .book-entry:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
 }

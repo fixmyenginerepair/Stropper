@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
-import { ALPHABET, RARITY_LABELS, RARITY_VALUES, SHARPENER_TYPES } from '@/lib/archive';
+import {
+  ALPHABET,
+  COUNTRY_VALUES,
+  RARITY_LABELS,
+  RARITY_VALUES,
+  SHARPENER_TYPES,
+} from '@/lib/archive';
 
 const fieldClass =
   'h-11 w-full rounded-lg border border-hair bg-white px-3 text-sm text-ink focus:border-oxblood focus:outline-none focus:ring-1 focus:ring-oxblood';
 
 const labelClass = 'mt-5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-steel';
 
-export default function FilterPanel({ values, countries, onApply, onClear }) {
+export default function FilterPanel({ values, onApply, onClear }) {
   const [word, setWord] = useState(values.q);
   const [collector, setCollector] = useState(values.collector);
 
@@ -64,7 +70,7 @@ export default function FilterPanel({ values, countries, onApply, onClear }) {
         className={`mt-2 ${fieldClass}`}
       >
         <option value="">All countries</option>
-        {countries.map((country) => (
+        {COUNTRY_VALUES.map((country) => (
           <option key={country} value={country}>
             {country}
           </option>
@@ -81,6 +87,9 @@ export default function FilterPanel({ values, countries, onApply, onClear }) {
         className={`mt-2 ${fieldClass}`}
       >
         <option value="">All types</option>
+        {values.type && !SHARPENER_TYPES.includes(values.type) && (
+          <option value={values.type}>{values.type}</option>
+        )}
         {SHARPENER_TYPES.map((type) => (
           <option key={type} value={type}>
             {type}

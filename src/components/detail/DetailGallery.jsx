@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Image } from '@/components/ui/image';
-import { sharpenerImage, TYPE_IMAGES } from '@/lib/archive';
+import { sharpenerImage } from '@/lib/archive';
 
 export default function DetailGallery({ sharpener }) {
   const images = sharpener.images?.length
     ? sharpener.images.slice(0, 4)
-    : [TYPE_IMAGES[sharpener.type] || sharpenerImage(sharpener)];
+    : [sharpenerImage(sharpener)];
 
   const [active, setActive] = useState(0);
   const main = images[active] || images[0];

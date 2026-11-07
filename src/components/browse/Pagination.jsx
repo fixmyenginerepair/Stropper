@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Pagination({ page, totalPages, onChange }) {
@@ -43,10 +42,6 @@ export default function Pagination({ page, totalPages, onChange }) {
       >
         Next <ChevronRight className="h-4 w-4" />
       </button>
-
-      <Link to="/browse" className="sr-only">
-        Browse the archive
-      </Link>
     </nav>
   );
 }
