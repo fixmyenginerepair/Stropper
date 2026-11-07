@@ -1,0 +1,151 @@
+{
+  "name": "Sharpener",
+  "properties": {
+    "blade": {
+      "type": "string"
+    },
+    "collection": {
+      "description": "Collector/member ID who owns it",
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "country": {
+      "enum": [
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Brazil",
+        "Canada",
+        "Czechoslovakia",
+        "Denmark",
+        "England",
+        "France",
+        "Germany",
+        "Holland",
+        "Hungary",
+        "Italy",
+        "Japan",
+        "Netherland",
+        "Norway",
+        "Other",
+        "Poland",
+        "Russia",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Unknown",
+        "USA"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "images": {
+      "description": "Photo URLs, first is main",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "is_double": {
+      "default": false,
+      "description": "Available on the swap list",
+      "type": "boolean"
+    },
+    "legacy_id": {
+      "description": "ID on the old stropper.com",
+      "type": "number"
+    },
+    "manufacturer": {
+      "description": "Maker and address",
+      "type": "string"
+    },
+    "name": {
+      "description": "Short name, e.g. 1-2-3 Lightning",
+      "type": "string"
+    },
+    "patent": {
+      "type": "string"
+    },
+    "rarity": {
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "T"
+      ],
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "Allegro Type",
+        "Auto Strop",
+        "Barber",
+        "Rotary Belt",
+        "Accessories",
+        "Blade Holder & Hone",
+        "Blade Holder",
+        "Blades",
+        "Circular",
+        "Edge-Bak",
+        "Electric",
+        "Handle-like Ingersoll",
+        "Handle-like Valet",
+        "Hone-Carborundum",
+        "Hone-Glass/Other",
+        "Machine-Pull Handles",
+        "Magnetic",
+        "Marbles-Bearings",
+        "Marvel",
+        "Other",
+        "Pull String",
+        "Rollers-1",
+        "Rollers-2",
+        "Rollers-3",
+        "Rollers-4",
+        "Safety Razor",
+        "Set",
+        "Shake Sharp",
+        "Shaving Stand",
+        "Straight Razor",
+        "Strop",
+        "Unknown"
+      ],
+      "type": "string"
+    },
+    "value": {
+      "description": "Estimated value in USD",
+      "type": "number"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
