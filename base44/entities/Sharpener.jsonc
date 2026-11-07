@@ -15,14 +15,20 @@
       "enum": [
         "Argentina",
         "Australia",
+        "Australia?",
         "Austria",
+        "Austria-Hungary",
         "Brazil",
+        "Britian",
         "Canada",
         "Czechoslovakia",
         "Denmark",
         "England",
         "France",
+        "French",
+        "French?",
         "Germany",
+        "Greece",
         "Holland",
         "Hungary",
         "Italy",
@@ -32,9 +38,12 @@
         "Other",
         "Poland",
         "Russia",
+        "Russian",
+        "South Africa",
         "Spain",
         "Sweden",
         "Switzerland",
+        "Ukraine",
         "Unknown",
         "USA"
       ],
@@ -90,10 +99,10 @@
         "Allegro Type",
         "Auto Strop",
         "Barber",
-        "Rotary Belt",
+        "Barber Accessories",
         "Accessories",
-        "Blade Holder & Hone",
         "Blade Holder",
+        "Blade Holder & Hone",
         "Blades",
         "Circular",
         "Edge-Bak",
@@ -102,20 +111,25 @@
         "Handle-like Valet",
         "Hone-Carborundum",
         "Hone-Glass/Other",
+        "Knife",
         "Machine-Pull Handles",
         "Magnetic",
         "Marbles-Bearings",
         "Marvel",
         "Other",
         "Pull String",
+        "Razor Other",
         "Rollers-1",
         "Rollers-2",
         "Rollers-3",
         "Rollers-4",
+        "Rotary Belt",
         "Safety Razor",
         "Set",
+        "Sets",
         "Shake Sharp",
         "Shaving Stand",
+        "Shear",
         "Straight Razor",
         "Strop",
         "Unknown"
@@ -130,6 +144,7 @@
   "required": [
     "name"
   ],
+  "type": "object",
   "rls": {
     "create": {
       "user_condition": {
@@ -146,6 +161,5 @@
         "role": "admin"
       }
     }
-  },
-  "type": "object"
+  }
 }
