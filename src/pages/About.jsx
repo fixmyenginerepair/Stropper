@@ -3,8 +3,10 @@ import { SITE } from '@/lib/site';
 
 // --- About the Founder -------------------------------------------------------
 // Paste asset URLs here after uploading in Base44 > Assets (leave '' to hide).
-const FOUNDER_PHOTO = '';
-const PRESENTATION_PDF = '';
+const FOUNDER_PHOTO =
+  'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/f6b313c24_tom-willard-cincinnati-full.jpg';
+const PRESENTATION_PDF =
+  'https://media.base44.com/files/public/6aef7ea3490a3928d32a4982/ed40313be_1216275358.pdf';
 
 const PRESENTATION = {
   title: 'The World of Razor Sharpeners',
