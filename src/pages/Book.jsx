@@ -4,8 +4,8 @@ import { Printer } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import FilterPanel from '@/components/browse/FilterPanel';
 import BookEntry from '@/components/book/BookEntry';
+import BookCover from '@/components/book/BookCover';
 import { buildQuery, readFilters } from '@/lib/filters';
-import { SITE } from '@/lib/site';
 
 export default function Book() {
   const [searchParams] = useSearchParams();
@@ -175,18 +175,7 @@ export default function Book() {
           </div>
 
           <div className="mt-6 space-y-5">
-            <section className="book-cover overflow-hidden rounded-[10px] border border-hair bg-white print:rounded-none print:border-0">
-              <div className="bg-navy px-8 py-12 text-center">
-                <img src={SITE.logo} alt="Stropper.com" className="mx-auto h-12 w-auto" />
-                <h2 className="mt-8 font-heading text-3xl font-bold text-white">
-                  The World of Razor Sharpeners
-                </h2>
-                <div className="mx-auto mt-4 h-[3px] w-16 bg-oxblood" />
-                <p className="mt-4 text-[13px] text-white/65">
-                  Stropper.com · {items.length} catalogued sharpeners
-                </p>
-              </div>
-            </section>
+            <BookCover count={items.length} />
 
             {loading ? (
               <p className="rounded-[10px] border border-hair bg-white p-10 text-center text-sm text-steel">
