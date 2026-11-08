@@ -94,15 +94,43 @@
     page-break-after: always;
   }
 
+  @page {
+    size: letter;
+    margin: 0.45in;
+  }
+
   .book-entry {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  /* Full layout: one sharpener per page. */
+  .book-entry--full {
     break-after: page;
     page-break-after: always;
   }
 
-  .book-entry:last-child {
+  .book-entry--full:last-child {
     break-after: auto;
     page-break-after: auto;
+  }
+
+  /* Compact layout: a two-column grid, several sharpeners per page. */
+  .book-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.12in !important;
+  }
+
+  .book-entry--compact {
+    border: 1px solid #d9d9e6 !important;
+    border-radius: 6px !important;
+    padding: 0.08in !important;
+    box-shadow: none !important;
+  }
+
+  img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

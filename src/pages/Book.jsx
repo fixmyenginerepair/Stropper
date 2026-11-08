@@ -17,6 +17,9 @@ export default function Book() {
     if (ids.length) return 'selection';
     return searchParams.get('scope') === 'all' ? 'all' : 'filters';
   });
+  const [layout, setLayout] = useState(() =>
+    searchParams.get('layout') === 'full' ? 'full' : 'compact'
+  );
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,9 +34,25 @@ export default function Book() {
           ? {}
           : buildQuery(filters);
 
-    base44.entities.Sharpener.filter(query, { sort: 'name', limit: 200 }).then((page) => {
+    // Page through every match so "The entire archive" includes all of it.
+    const fetchAll = async () => {
+      let all = [];
+      let cursor;
+      do {
+        const page = await base44.entities.Sharpener.filter(query, {
+          sort: 'name',
+          limit: 200,
+          ...(cursor ? { cursor } : {}),
+        });
+        all = all.concat(page.items || []);
+        cursor = page.has_more ? page.next_cursor : null;
+      } while (cursor && !cancelled);
+      return all;
+    };
+
+    fetchAll().then((all) => {
       if (cancelled) return;
-      setItems(page.items || []);
+      setItems(all);
       setLoading(false);
     });
 
@@ -92,6 +111,30 @@ export default function Book() {
                 className="h-4 w-4 accent-[#680000]"
               />
               Only the filters below
+            </label>
+          </div>
+
+          <div className="rounded-[10px] border border-hair bg-white p-5">
+            <h2 className="font-heading text-lg font-bold text-ink">Page layout</h2>
+            <label className="mt-3 flex items-center gap-2 text-[13px] text-ink">
+              <input
+                type="radio"
+                name="layout"
+                checked={layout === 'compact'}
+                onChange={() => setLayout('compact')}
+                className="h-4 w-4 accent-[#680000]"
+              />
+              Compact — several sharpeners per page
+            </label>
+            <label className="mt-3 flex items-center gap-2 text-[13px] text-ink">
+              <input
+                type="radio"
+                name="layout"
+                checked={layout === 'full'}
+                onChange={() => setLayout('full')}
+                className="h-4 w-4 accent-[#680000]"
+              />
+              Full — one sharpener per page
             </label>
           </div>
 
@@ -154,9 +197,20 @@ export default function Book() {
                 No sharpeners match these filters.
               </p>
             ) : (
-              items.map((sharpener, index) => (
-                <BookEntry key={sharpener.id} sharpener={sharpener} index={index + 1} />
-              ))
+              <div
+                className={
+                  layout === 'compact' ? 'book-grid grid gap-3 sm:grid-cols-2' : 'book-list space-y-5'
+                }
+              >
+                {items.map((sharpener, index) => (
+                  <BookEntry
+                    key={sharpener.id}
+                    sharpener={sharpener}
+                    index={index + 1}
+                    compact={layout === 'compact'}
+                  />
+                ))}
+              </div>
             )}
           </div>
         </div>
