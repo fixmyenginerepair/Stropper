@@ -8,6 +8,7 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { label: 'Browse', to: '/browse' },
+  { label: 'List', to: '/list' },
   { label: 'Collectors', to: '/collectors' },
   { label: 'Swap List', to: '/swap-list' },
   { label: 'The Book', to: '/book' },

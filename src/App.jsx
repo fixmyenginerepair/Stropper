@@ -10,6 +10,7 @@ import SiteLayout from '@/components/SiteLayout';
 // Add page imports here
 import Home from '@/pages/Home';
 import Browse from '@/pages/Browse';
+import FullList from '@/pages/FullList';
 import SharpenerDetail from '@/pages/SharpenerDetail';
 import Book from '@/pages/Book';
 import Collectors from '@/pages/Collectors';
@@ -46,6 +47,7 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/browse" element={<Browse />} />
+        <Route path="/list" element={<FullList />} />
         <Route path="/sharpener/:id" element={<SharpenerDetail />} />
         <Route path="/book" element={<Book />} />
         <Route path="/collectors" element={<Collectors />} />
