@@ -1,8 +1,12 @@
 import StropAnimation from '@/components/book/StropAnimation';
 
-export default function BookCover({ count }) {
+const FRAMED =
+  'book-cover overflow-hidden rounded-[10px] border border-hair bg-navy px-4 py-6 sm:px-8 sm:py-10 print:rounded-none print:border-0 print:bg-white print:p-0';
+const BARE = 'book-cover mx-auto w-full max-w-[320px] print:max-w-none';
+
+export default function BookCover({ count, variant = 'framed' }) {
   return (
-    <section className="book-cover overflow-hidden rounded-[10px] border border-hair bg-navy px-4 py-6 sm:px-8 sm:py-10 print:rounded-none print:border-0 print:bg-white print:p-0">
+    <section className={variant === 'bare' ? BARE : FRAMED}>
       <div className="mx-auto flex max-w-[420px] overflow-hidden rounded-l-[4px] rounded-r-[8px] bg-[#1016a3] shadow-[0_24px_50px_-18px_rgba(0,0,0,0.75)] print:shadow-none">
         <div className="w-3.5 shrink-0 bg-gradient-to-b from-oxblood-dark via-oxblood to-oxblood-dark sm:w-4" />
 
@@ -34,7 +38,7 @@ export default function BookCover({ count }) {
             </div>
 
             <p className="mt-4 text-[11px] text-white/55">
-              {count} catalogued sharpeners
+              {count ? `${count} catalogued sharpeners` : 'The complete catalogue'}
             </p>
           </div>
         </div>
