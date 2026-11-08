@@ -1,0 +1,82 @@
+{
+  "name": "Maker",
+  "properties": {
+    "aliases": {
+      "description": "Other spellings or names used on items",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "city": {
+      "type": "string"
+    },
+    "closed_year": {
+      "type": "number"
+    },
+    "country": {
+      "type": "string"
+    },
+    "founded_year": {
+      "type": "number"
+    },
+    "history": {
+      "description": "Long-form history of the maker (markdown)",
+      "type": "string"
+    },
+    "images": {
+      "description": "Logos, ads, factory photos; first is main",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "key_people": {
+      "description": "Founders, inventors, notable figures",
+      "type": "string"
+    },
+    "name": {
+      "description": "Company or inventor name, e.g. AutoStrop Safety Razor Co.",
+      "type": "string"
+    },
+    "open_questions": {
+      "description": "What is still unknown about this maker",
+      "type": "string"
+    },
+    "patents": {
+      "description": "Patent numbers linked to this maker",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "sources": {
+      "description": "Links or citations used for the history",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

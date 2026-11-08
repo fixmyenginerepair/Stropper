@@ -1,6 +1,9 @@
 {
   "name": "Sharpener",
   "properties": {
+    "acquired_year": {
+      "type": "number"
+    },
     "blade": {
       "type": "string"
     },
@@ -59,6 +62,10 @@
       },
       "type": "array"
     },
+    "interview_audio_url": {
+      "description": "Recording of the collector talking about this piece",
+      "type": "string"
+    },
     "is_double": {
       "default": false,
       "description": "Available on the swap list",
@@ -67,6 +74,10 @@
     "legacy_id": {
       "description": "ID on the old stropper.com",
       "type": "number"
+    },
+    "maker_id": {
+      "description": "Linked Maker record",
+      "type": "string"
     },
     "manufacturer": {
       "description": "Maker and address",
@@ -77,6 +88,10 @@
       "type": "string"
     },
     "patent": {
+      "type": "string"
+    },
+    "provenance": {
+      "description": "Where, when and how it was acquired; prior owners",
       "type": "string"
     },
     "rarity": {
@@ -92,6 +107,10 @@
         "9",
         "T"
       ],
+      "type": "string"
+    },
+    "story": {
+      "description": "The story behind this piece, in the collector's words (markdown)",
       "type": "string"
     },
     "type": {
@@ -139,11 +158,16 @@
     "value": {
       "description": "Estimated value in USD",
       "type": "number"
+    },
+    "year_made": {
+      "description": "Approximate year of manufacture, used for the timeline",
+      "type": "number"
     }
   },
   "required": [
     "name"
   ],
+  "type": "object",
   "rls": {
     "create": {
       "user_condition": {
@@ -160,6 +184,5 @@
         "role": "admin"
       }
     }
-  },
-  "type": "object"
+  }
 }

@@ -1,0 +1,112 @@
+{
+  "name": "Article",
+  "properties": {
+    "audio_url": {
+      "description": "Interview recording, if any",
+      "type": "string"
+    },
+    "author": {
+      "default": "Thomas V. Willard",
+      "type": "string"
+    },
+    "body": {
+      "description": "Full article text (markdown)",
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "The Collector",
+        "Maker History",
+        "Patent Spotlight",
+        "Themed Collection",
+        "Era",
+        "Interview",
+        "Collecting Tips"
+      ],
+      "type": "string"
+    },
+    "cover_image": {
+      "type": "string"
+    },
+    "era_end_year": {
+      "type": "number"
+    },
+    "era_start_year": {
+      "type": "number"
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "images": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "maker_ids": {
+      "description": "Maker records discussed in this article",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "published_date": {
+      "format": "date",
+      "type": "string"
+    },
+    "sharpener_ids": {
+      "description": "Sharpener records featured in this article",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "slug": {
+      "description": "URL-friendly name, e.g. why-blade-sharpeners-existed",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "default": "Draft",
+      "enum": [
+        "Draft",
+        "Published"
+      ],
+      "type": "string"
+    },
+    "summary": {
+      "description": "One or two sentences for cards and previews",
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
