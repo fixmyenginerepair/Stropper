@@ -1,6 +1,142 @@
 import { Link } from 'react-router-dom';
 import { SITE } from '@/lib/site';
 
+// --- About the Founder -------------------------------------------------------
+// Paste asset URLs here after uploading in Base44 > Assets (leave '' to hide).
+const FOUNDER_PHOTO = '';
+const PRESENTATION_PDF = '';
+
+const PRESENTATION = {
+  title: 'The World of Razor Sharpeners',
+  page: 'https://www.slideserve.com/judson/the-world-of-razor-sharpeners-by-tom-willard',
+  embed: 'https://www.slideserve.com/embed/282385',
+};
+
+const FOUNDER_FACTS = [
+  ['Name', 'Thomas V. “Tom” Willard'],
+  ['Service', 'Colonel, U.S. Air Force (Ret.)'],
+  ['Collection', '1,500+ razor sharpeners & stroppers'],
+  ['Founded', 'Stropper.com & ShaveWorld.org'],
+];
+
+const FOUNDER_LINKS = [
+  { label: 'The World of Razor Sharpeners — presentation (SlideServe)', href: PRESENTATION.page },
+  { label: 'Presentation embed (SlideServe)', href: PRESENTATION.embed },
+  { label: 'Original Stropper.com', href: 'http://www.stropper.com/' },
+  { label: 'ShaveWorld.org — International Organization for Shaving Memorabilia', href: 'http://www.shaveworld.org/' },
+];
+
+const linkCls =
+  'font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood';
+
+function AboutFounder() {
+  return (
+    <section id="founder" className="border-b border-hair bg-white">
+      <div className="archive-container py-12 sm:py-16">
+        <p className="eyebrow text-steel">About the founder</p>
+        <h2 className="mt-3 font-heading text-[1.8rem] font-bold leading-tight text-ink sm:text-4xl">
+          Col. Thomas V. “Tom” Willard, USAF (Ret.)
+        </h2>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+          <div className="space-y-5 text-[16px] leading-relaxed text-ink/85">
+            <p>
+              Tom Willard, a retired Colonel of the United States Air Force, has assembled one of the
+              largest collections of razor strops and sharpeners in the world. In his own survey of
+              the field’s leading stropper collections, his collection of more than 1,500 pieces
+              heads the list — ahead of collectors in Germany, France, the Netherlands and Scandinavia.
+            </p>
+            <p>
+              About thirty years ago he built Stropper.com to catalogue every sharpener he could
+              find, and went on to develop its sister site, ShaveWorld.org — The International
+              Organization for Shaving Memorabilia. He wrote every line of both sites himself — the
+              PHP, HTML, CSS, Java and SQL — over several years, creating what became the most
+              comprehensive listing of razor sharpeners on the web.
+            </p>
+            <p>
+              His presentation, <em>The World of Razor Sharpeners</em>, maps the whole subject:
+              roughly 2,000 known sharpeners and stroppers (not counting leather strops and
+              straight-razor hones), built from leather, glass, steel and bakelite to magnetic
+              fields, with the earliest patents he found dating to 1839 (a strop with a handle),
+              1877 (cylindrical rollers) and 1902 (magnetism).
+            </p>
+            <p>
+              Tom is now passing the torch to his son, John W. Willard, who is rebuilding the
+              archive to protect the collection, carry it forward, and honor the passion behind it.
+            </p>
+
+            <dl className="grid gap-px overflow-hidden rounded-[10px] border border-hair bg-hair sm:grid-cols-2">
+              {FOUNDER_FACTS.map(([k, v]) => (
+                <div key={k} className="bg-white px-4 py-3">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-steel">{k}</dt>
+                  <dd className="mt-1 text-[15px] font-semibold text-ink">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <figure className="self-start">
+            {FOUNDER_PHOTO ? (
+              <img
+                src={FOUNDER_PHOTO}
+                alt="Tom Willard beside his table of antique razor sharpeners at a shaving collectibles meeting"
+                className="w-full rounded-[10px] border border-hair object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div className="flex aspect-[4/3] w-full items-center justify-center rounded-[10px] border border-dashed border-hair bg-navy/5 text-sm text-steel">
+                Founder photo coming soon
+              </div>
+            )}
+            <figcaption className="mt-3 text-[13px] leading-relaxed text-steel">
+              Tom Willard with his display of sharpeners and stroppers at a shaving collectibles meeting.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="mt-12">
+          <h3 className="font-heading text-2xl font-bold text-ink">{PRESENTATION.title}</h3>
+          <p className="mt-2 text-[15px] text-steel">A presentation by Tom Willard — 33 slides.</p>
+          <div className="mt-5 w-full max-w-3xl overflow-hidden rounded-[10px] border border-hair bg-white">
+            <div className="relative w-full" style={{ paddingBottom: '82.8%' }}>
+              <iframe
+                src={PRESENTATION.embed}
+                title={`${PRESENTATION.title} by Tom Willard`}
+                className="absolute inset-0 h-full w-full"
+                frameBorder="0"
+                scrolling="no"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-[10px] border border-hair bg-white p-5 sm:p-6">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-steel">Direct links</h4>
+            <ul className="mt-3 space-y-2.5 text-[15px]">
+              {PRESENTATION_PDF && (
+                <li>
+                  <a href={PRESENTATION_PDF} target="_blank" rel="noreferrer" className={linkCls}>
+                    Download the presentation (PDF)
+                  </a>
+                </li>
+              )}
+              {FOUNDER_LINKS.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} target="_blank" rel="noreferrer" className={linkCls}>
+                    {l.label}
+                  </a>
+                  <span className="mt-0.5 block break-all text-[12px] text-steel">{l.href}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function About() {
   return (
     <div>
@@ -17,6 +153,8 @@ export default function About() {
           </p>
         </div>
       </section>
+
+      <AboutFounder />
 
       <section className="archive-container grid gap-8 py-12 sm:gap-10 sm:py-16 lg:grid-cols-[1.3fr_0.7fr]">
         <div className="space-y-6 text-[16px] leading-relaxed text-ink/85">
