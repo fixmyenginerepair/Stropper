@@ -32,15 +32,15 @@ function SteelGradient({ id }) {
 
 function RazorBlade() {
   return (
-    <div aria-hidden="true" className="razor-blade pointer-events-none flex h-[14px] w-full">
+    <div aria-hidden="true" className="razor-blade pointer-events-none flex h-[18px] w-full bg-navy">
       <style>{`
-        .razor-blade{filter:drop-shadow(0 3px 3px rgba(0,0,30,.45))}
+        .razor-blade{box-shadow:0 4px 6px -2px rgba(0,0,30,.5)}
         .razor-glint{animation:razor-glint 7s ease-in-out infinite}
         @keyframes razor-glint{0%,55%{transform:translateX(-30vw) skewX(-25deg)}100%{transform:translateX(130vw) skewX(-25deg)}}
         @media (prefers-reduced-motion: reduce){.razor-glint{animation:none;display:none}}
       `}</style>
       {/* Shoulder / tang */}
-      <svg width="46" height="14" viewBox="0 0 46 14" className="shrink-0">
+      <svg width="59" height="18" viewBox="0 0 46 14" className="shrink-0">
         <defs><SteelGradient id="razor-steel-l" /></defs>
         <path d="M0 0 H46 V14 H20 Q12 14 9 9 Q7 6 0 6 Z" fill="url(#razor-steel-l)" />
         <path d="M0 0 H18 V6 H0 Z" fill="#4a5466" />
@@ -54,7 +54,7 @@ function RazorBlade() {
         />
       </div>
       {/* Round toe */}
-      <svg width="26" height="14" viewBox="0 0 26 14" className="shrink-0">
+      <svg width="33" height="18" viewBox="0 0 26 14" className="shrink-0">
         <defs><SteelGradient id="razor-steel-r" /></defs>
         <path d="M0 0 H12 Q25 1 25 7 Q24 12 16 14 H0 Z" fill="url(#razor-steel-r)" />
       </svg>
