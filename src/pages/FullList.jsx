@@ -1,21 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Image } from '@/components/ui/image';
+import SharpenerTable from '@/components/list/SharpenerTable';
+import SharpenerCards from '@/components/list/SharpenerCards';
 import Pagination from '@/components/browse/Pagination';
-import { sharpenerImage } from '@/lib/archive';
 
 const ROWS_PER_PAGE = 40;
-
-const th =
-  'whitespace-nowrap border-b border-hair px-3 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.14em] text-steel';
-const td = 'px-3 py-2 align-middle';
-
-function money(value) {
-  const n = Number(value);
-  if (value === null || value === undefined || value === '' || !Number.isFinite(n)) return '';
-  return `$${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
-}
 
 export default function FullList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,6 +35,7 @@ export default function FullList() {
   }, [page]);
 
   const totalPages = Math.max(1, Math.ceil(total / ROWS_PER_PAGE));
+  const startIndex = (page - 1) * ROWS_PER_PAGE;
 
   const goToPage = (next) => {
     const params = new URLSearchParams(searchParams);
@@ -55,83 +46,25 @@ export default function FullList() {
   };
 
   return (
-    <div className="archive-container py-12 lg:py-16">
+    <div className="archive-container py-10 sm:py-12 lg:py-16">
       <header className="max-w-2xl">
         <p className="eyebrow text-oxblood">The archive</p>
-        <h1 className="mt-3 font-heading text-3xl font-bold text-ink sm:text-[2.6rem]">
+        <h1 className="mt-3 font-heading text-[1.9rem] font-bold leading-tight text-ink sm:text-[2.6rem]">
           The full list
         </h1>
-        <p className="mt-3 text-[16px] leading-relaxed text-steel">
-          Every sharpener in the archive. Click a description to view its picture and details.
+        <p className="mt-3 text-[15.5px] leading-relaxed text-steel sm:text-[16px]">
+          Every sharpener in the archive. Tap any entry to view its picture and details.
         </p>
       </header>
 
-      <div className="mt-9 overflow-hidden rounded-[10px] border border-hair bg-white">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[760px] border-collapse text-[14px]">
-            <thead>
-              <tr className="bg-frost/70">
-                <th className={`${th} w-14 text-right`}>#</th>
-                <th className={th}>Description</th>
-                <th className={th}>Country</th>
-                <th className={th}>Type</th>
-                <th className={th}>Rarity</th>
-                <th className={`${th} text-right`}>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-10 text-center text-sm text-steel">
-                    Loading the list…
-                  </td>
-                </tr>
-              )}
-
-              {!loading && items.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-10 text-center text-sm text-steel">
-                    No sharpeners have been recorded yet.
-                  </td>
-                </tr>
-              )}
-
-              {!loading &&
-                items.map((item, index) => (
-                  <tr key={item.id} className="border-t border-hair/70 hover:bg-frost/50">
-                    <td className={`${td} text-right font-mono text-[12px] text-steel`}>
-                      {(page - 1) * ROWS_PER_PAGE + index + 1}
-                    </td>
-                    <td className={td}>
-                      <Link
-                        to={`/sharpener/${item.id}`}
-                        className="flex items-center gap-3 text-ink transition-colors hover:text-oxblood"
-                      >
-                        <span className="h-10 w-10 shrink-0 overflow-hidden rounded border border-hair bg-frost">
-                          <Image
-                            src={sharpenerImage(item)}
-                            alt={item.name || 'Sharpener'}
-                            loading="lazy"
-                            className="h-10 w-10 object-cover"
-                          />
-                        </span>
-                        <span className="leading-snug">{item.description || item.name}</span>
-                      </Link>
-                    </td>
-                    <td className={`${td} text-steel`}>{item.country || ''}</td>
-                    <td className={`${td} text-steel`}>{item.type || ''}</td>
-                    <td className={`${td} text-steel`}>{item.rarity || ''}</td>
-                    <td className={`${td} text-right text-ink`}>{money(item.value)}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="mt-8 overflow-hidden rounded-[10px] border border-hair bg-white">
+        <SharpenerTable items={items} loading={loading} startIndex={startIndex} />
+        <SharpenerCards items={items} loading={loading} startIndex={startIndex} />
       </div>
 
       <Pagination page={page} totalPages={totalPages} onChange={goToPage} />
 
-      {total > 0 && (
+      {!loading && total > 0 && (
         <p className="mt-4 text-center text-[13px] text-steel">
           Showing {items.length} of {total} sharpeners
         </p>

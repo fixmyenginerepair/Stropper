@@ -4,10 +4,10 @@ import { SITE } from '@/lib/site';
 export default function About() {
   return (
     <div>
-      <section className="bg-navy py-16 text-white">
+      <section className="bg-navy py-12 text-white sm:py-16">
         <div className="archive-container max-w-3xl">
           <p className="eyebrow text-white/55">About the archive</p>
-          <h1 className="mt-4 font-heading text-4xl font-bold leading-tight">
+          <h1 className="mt-3 font-heading text-[1.9rem] font-bold leading-tight sm:mt-4 sm:text-4xl">
             Archiving razor sharpeners for over 30 years
           </h1>
           <p className="mt-5 text-[17px] leading-relaxed text-white/70">
@@ -18,7 +18,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="archive-container grid gap-10 py-16 lg:grid-cols-[1.3fr_0.7fr]">
+      <section className="archive-container grid gap-8 py-12 sm:gap-10 sm:py-16 lg:grid-cols-[1.3fr_0.7fr]">
         <div className="space-y-6 text-[16px] leading-relaxed text-ink/85">
           <h2 className="font-heading text-2xl font-bold text-ink">What is catalogued</h2>
           <p>

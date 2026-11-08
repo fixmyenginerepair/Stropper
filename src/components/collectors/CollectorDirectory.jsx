@@ -72,7 +72,7 @@ export default function CollectorDirectory({ collectors, loading }) {
       </div>
 
       <div className="mt-5 overflow-hidden rounded-[10px] border border-hair bg-white">
-        <div className="overflow-x-auto">
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[860px] border-collapse text-[14px]">
             <thead>
               <tr className="bg-frost/70">
@@ -124,6 +124,41 @@ export default function CollectorDirectory({ collectors, loading }) {
             </tbody>
           </table>
         </div>
+
+        <ul className="divide-y divide-hair/70 md:hidden">
+          {loading && (
+            <li className="px-4 py-8 text-center text-sm text-steel">Gathering collectors…</li>
+          )}
+
+          {!loading && rows.length === 0 && (
+            <li className="px-4 py-8 text-center text-sm text-steel">
+              No collectors match that search.
+            </li>
+          )}
+
+          {!loading &&
+            rows.map((row) => (
+              <li key={row.id} className="px-4 py-4">
+                <p className="font-heading text-[15px] font-bold leading-snug text-ink">{row.name}</p>
+                <p className="mt-0.5 text-[13px] text-steel">
+                  {[row.country, row.collection_type].filter(Boolean).join(' · ') || '—'}
+                </p>
+                {(row.main_collection_size || row.sharpener_collection_size) && (
+                  <p className="mt-1 text-[12px] text-steel">
+                    {row.main_collection_size && `Main ${row.main_collection_size}`}
+                    {row.main_collection_size && row.sharpener_collection_size && ' · '}
+                    {row.sharpener_collection_size && `Sharpeners ${row.sharpener_collection_size}`}
+                  </p>
+                )}
+                <a
+                  href={contactHref(row.name)}
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-hair px-3 py-1.5 text-[13px] text-ink transition-colors hover:border-oxblood hover:text-oxblood"
+                >
+                  <Mail className="h-3.5 w-3.5" /> Contact
+                </a>
+              </li>
+            ))}
+        </ul>
       </div>
 
       {!loading && (

@@ -4,7 +4,7 @@ import { TYPE_GROUPS } from '@/lib/archive';
 
 export default function TypeGrid() {
   return (
-    <section className="archive-container py-16 lg:py-20">
+    <section className="archive-container py-12 sm:py-16 lg:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-oxblood">The categories</p>

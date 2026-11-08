@@ -124,7 +124,7 @@ export default function SharpenerDetail() {
         <span>/</span>
         <Link to="/browse" className="hover:text-oxblood">Browse</Link>
         <span>/</span>
-        <span className="text-ink">{sharpener.name}</span>
+        <span className="min-w-0 break-words text-ink">{sharpener.name}</span>
       </nav>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
@@ -134,7 +134,7 @@ export default function SharpenerDetail() {
           <p className="eyebrow text-oxblood">
             {[sharpener.type, sharpener.country].filter(Boolean).join(' · ') || 'Sharpener'}
           </p>
-          <h1 className="mt-3 font-heading text-3xl font-bold leading-tight text-ink sm:text-[2.4rem]">
+          <h1 className="mt-3 break-words font-heading text-[1.8rem] font-bold leading-tight text-ink sm:text-3xl lg:text-[2.4rem]">
             {sharpener.name}
           </h1>
           {sharpener.description && (

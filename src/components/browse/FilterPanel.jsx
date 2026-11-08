@@ -15,6 +15,7 @@ const labelClass = 'mt-5 block text-[11px] font-semibold uppercase tracking-[0.1
 export default function FilterPanel({ values, onApply, onClear }) {
   const [word, setWord] = useState(values.q);
   const [collector, setCollector] = useState(values.collector);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => setWord(values.q), [values.q]);
   useEffect(() => setCollector(values.collector), [values.collector]);
@@ -25,8 +26,21 @@ export default function FilterPanel({ values, onApply, onClear }) {
   };
 
   return (
-    <form onSubmit={submit} className="rounded-[10px] border border-hair bg-white p-5">
-      <h2 className="font-heading text-lg font-bold text-ink">Filters</h2>
+    <form onSubmit={submit} className="rounded-[10px] border border-hair bg-white p-4 sm:p-5">
+      <div className="flex items-center justify-between gap-3 lg:hidden">
+        <h2 className="font-heading text-lg font-bold text-ink">Filters</h2>
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          className="h-9 rounded-lg border border-hair px-3 text-[13px] font-semibold text-ink transition-colors hover:border-oxblood hover:text-oxblood"
+          aria-expanded={open}
+        >
+          {open ? 'Hide' : 'Show'}
+        </button>
+      </div>
+
+      <div className={open ? 'block' : 'hidden lg:block'}>
+      <h2 className="hidden font-heading text-lg font-bold text-ink lg:block">Filters</h2>
 
       <label htmlFor="filter-word" className={labelClass}>
         Search word
@@ -153,6 +167,7 @@ export default function FilterPanel({ values, onApply, onClear }) {
       >
         Clear filters
       </button>
+      </div>
     </form>
   );
 }

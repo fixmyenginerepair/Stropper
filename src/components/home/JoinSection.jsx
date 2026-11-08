@@ -6,7 +6,7 @@ const signIn = () => base44.auth.redirectToLogin(window.location.href);
 
 export default function JoinSection() {
   return (
-    <section className="archive-container py-16 lg:py-20">
+    <section className="archive-container py-12 sm:py-16 lg:py-20">
       <div className="grid gap-5 md:grid-cols-3">
         <div className="rounded-[10px] border border-hair bg-white p-7">
           <p className="eyebrow text-oxblood">Collectors</p>

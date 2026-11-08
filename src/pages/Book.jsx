@@ -168,7 +168,7 @@ export default function Book() {
             <button
               onClick={print}
               disabled={loading || items.length === 0}
-              className="flex h-11 items-center gap-2 rounded-lg bg-oxblood px-5 text-sm font-semibold text-white transition-colors hover:bg-oxblood-dark disabled:opacity-50"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-oxblood px-5 text-sm font-semibold text-white transition-colors hover:bg-oxblood-dark disabled:opacity-50 sm:w-auto"
             >
               <Printer className="h-4 w-4" /> Build the PDF
             </button>

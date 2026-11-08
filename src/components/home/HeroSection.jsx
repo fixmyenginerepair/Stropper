@@ -22,10 +22,10 @@ export default function HeroSection() {
 
   return (
     <section className="bg-navy text-white">
-      <div className="archive-container grid items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+      <div className="archive-container grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-24">
         <div>
           <p className="eyebrow text-white/55">The world of razor sharpeners</p>
-          <h1 className="mt-5 max-w-2xl font-heading text-[2.35rem] font-bold leading-[1.08] sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="mt-4 max-w-2xl break-words font-heading text-[1.95rem] font-bold leading-[1.1] sm:mt-5 sm:text-5xl lg:text-[3.4rem]">
             The most complete archive of razor sharpeners on the web.
           </h1>
           <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/70">
@@ -66,8 +66,8 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[330px] sm:h-[420px] lg:h-[480px]">
-          <div className="absolute right-2 top-6 h-[300px] w-[300px] rounded-full bg-oxblood/25 blur-[90px] sm:h-[380px] sm:w-[380px]" />
+        <div className="relative h-[250px] sm:h-[420px] lg:h-[480px]">
+          <div className="absolute right-2 top-6 h-[220px] w-[220px] rounded-full bg-oxblood/25 blur-[90px] sm:h-[380px] sm:w-[380px]" />
           <Image
             src={TYPE_IMAGES.Rollers}
             alt="Roller razor sharpener"

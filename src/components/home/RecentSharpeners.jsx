@@ -13,7 +13,7 @@ export default function RecentSharpeners() {
   }, []);
 
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="archive-container">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

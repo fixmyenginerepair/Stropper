@@ -3,7 +3,7 @@ import { SITE } from '@/lib/site';
 
 export default function BookSection() {
   return (
-    <section className="bg-navy py-16 text-white lg:py-24">
+    <section className="bg-navy py-12 text-white sm:py-16 lg:py-24">
       <div className="archive-container grid items-center gap-14 lg:grid-cols-2">
         <div className="flex justify-center">
           <div className="relative w-[230px] rounded-l-[3px] rounded-r-[8px] border-l-[14px] border-oxblood bg-[#0b0b7d] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] sm:w-[260px]">

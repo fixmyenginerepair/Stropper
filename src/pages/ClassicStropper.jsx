@@ -41,9 +41,9 @@ export default function ClassicStropper() {
   return (
     <div>
       <section className="bg-navy text-white">
-        <div className="archive-container max-w-4xl py-16">
+        <div className="archive-container max-w-4xl py-12 sm:py-16">
           <p className="eyebrow text-white/55">Part of the record</p>
-          <h1 className="mt-4 font-heading text-4xl font-bold leading-tight sm:text-[3rem]">
+          <h1 className="mt-3 font-heading text-[1.9rem] font-bold leading-tight sm:mt-4 sm:text-[3rem]">
             Classic Stropper
           </h1>
           <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/70">
@@ -68,7 +68,7 @@ export default function ClassicStropper() {
         </div>
       </section>
 
-      <section className="archive-container py-14">
+      <section className="archive-container py-10 sm:py-14">
         <div className="max-w-2xl">
           <p className="eyebrow text-oxblood">The classic pages</p>
           <h2 className="mt-3 font-heading text-2xl font-bold text-ink">
@@ -91,7 +91,7 @@ export default function ClassicStropper() {
       </section>
 
       <section className="border-y border-hair bg-white/60">
-        <div className="archive-container py-14">
+        <div className="archive-container py-10 sm:py-14">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <p className="eyebrow text-oxblood">The master copies</p>
@@ -135,7 +135,7 @@ export default function ClassicStropper() {
         </div>
       </section>
 
-      <section className="archive-container py-14">
+      <section className="archive-container py-10 sm:py-14">
         <div className="rounded-[10px] border border-hair bg-white p-7">
           <h2 className="font-heading text-xl font-bold text-ink">When the domain moves</h2>
           <ul className="mt-4 space-y-3 text-[14.5px] leading-relaxed text-steel">
