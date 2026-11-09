@@ -72,7 +72,6 @@ export default function HeroSection() {
             src={HERO_IMAGE}
             alt="A straight razor resting on an oxblood leather strop"
             className="absolute inset-0 h-full w-full object-cover object-right"
-            fetchpriority="high"
           />
         </div>
       </div>
