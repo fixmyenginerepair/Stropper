@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import { Image } from '@/components/ui/image';
-import { TYPE_IMAGES } from '@/lib/archive';
+
+const HERO_IMAGE =
+  'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/405754d86_stropper-hero.jpg';
 
 const CHIPS = [
   { label: 'Rollers', to: '/browse?type=Rollers' },
@@ -66,22 +67,12 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[250px] sm:h-[420px] lg:h-[480px]">
-          <div className="absolute right-2 top-6 h-[220px] w-[220px] rounded-full bg-oxblood/25 blur-[90px] sm:h-[380px] sm:w-[380px]" />
-          <Image
-            src={TYPE_IMAGES.Rollers}
-            alt="Roller razor sharpener"
-            className="absolute right-0 top-0 h-[58%] w-[72%] rounded-[10px] object-cover ring-1 ring-white/15"
-          />
-          <Image
-            src={TYPE_IMAGES.Strops}
-            alt="Leather razor strop"
-            className="absolute bottom-[10%] left-0 h-[46%] w-[54%] rounded-[10px] object-cover ring-1 ring-white/15"
-          />
-          <Image
-            src={TYPE_IMAGES['Auto Strop']}
-            alt="Auto Strop sharpener"
-            className="absolute bottom-0 right-[4%] h-[36%] w-[40%] rounded-[10px] object-cover ring-1 ring-white/15"
+        <div className="relative h-[260px] sm:h-[420px] lg:h-[480px]">
+          <img
+            src={HERO_IMAGE}
+            alt="A straight razor resting on an oxblood leather strop"
+            className="absolute inset-0 h-full w-full object-cover object-right"
+            fetchpriority="high"
           />
         </div>
       </div>
