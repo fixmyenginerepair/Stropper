@@ -24,6 +24,7 @@ export default function Patents() {
   const [rows, setRows] = useState(null);
   const [total, setTotal] = useState(0);
   const [counts, setCounts] = useState({});
+  const [photos, setPhotos] = useState({}); // patent id -> photo of a piece carrying it (when no drawing)
 
   const set = (patch) => {
     const next = new URLSearchParams(params);
@@ -66,6 +67,28 @@ export default function Patents() {
     }).catch(() => !cancelled && setRows([]));
     return () => { cancelled = true; };
   }, [query, sort, page]);
+
+  // For patents with no drawing, borrow the photo of a piece in the collection that carries the patent.
+  useEffect(() => {
+    if (!rows?.length) return undefined;
+    let cancelled = false;
+    const need = rows.filter((p) => !p.drawing_urls?.length && p.sharpener_ids?.length);
+    const ids = [...new Set(need.flatMap((p) => p.sharpener_ids.slice(0, 6)))];
+    if (!ids.length) return undefined;
+    base44.entities.Sharpener.filter({ id: { $in: ids } }, 'name', ids.length, 0, ['id', 'images'])
+      .then((list) => {
+        if (cancelled) return;
+        const img = Object.fromEntries((list || []).filter((s) => s.images?.[0]).map((s) => [s.id, s.images[0]]));
+        const out = {};
+        need.forEach((p) => {
+          const hit = p.sharpener_ids.find((id) => img[id]);
+          if (hit) out[p.id] = img[hit];
+        });
+        setPhotos(out);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [rows]);
 
   useEffect(() => {
     Promise.all(Object.keys(COUNTRY_NAMES).filter((c) => c !== 'Other').map((c) =>
@@ -133,6 +156,11 @@ export default function Patents() {
             <div className="flex aspect-[3/4] items-center justify-center overflow-hidden bg-[#fbf9f4]">
               {p.drawing_urls?.[0] ? (
                 <img src={p.drawing_urls[0]} alt="" loading="lazy" className="h-full w-full object-contain p-2 mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.03]" />
+              ) : photos[p.id] ? (
+                <span className="relative block h-full w-full bg-white">
+                  <img src={photos[p.id]} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <span className="absolute bottom-2 left-2 rounded bg-white/90 px-1.5 py-0.5 text-[10.5px] font-medium text-steel">From the collection</span>
+                </span>
               ) : (
                 <span className="px-4 text-center font-heading text-lg font-bold text-hair">{patentLabel(p)}</span>
               )}
