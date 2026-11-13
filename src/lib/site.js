@@ -13,6 +13,7 @@ export const NAV_LINKS = [
   { label: 'Swap List', to: '/swap-list' },
   { label: 'The Book', to: '/book' },
   { label: 'History', to: '/history' },
+  { label: 'Patents', to: '/patents' },
   { label: 'Ads', to: '/advertising' },
   { label: 'About', to: '/about' },
   { label: 'Classic', to: '/classic' },
