@@ -55,6 +55,9 @@ export default function PatentDetail() {
   if (!patent) return <div className="archive-container py-24"><div className="h-6 w-64 animate-pulse rounded bg-white" /></div>;
 
   const sheets = patent.drawing_urls || [];
+  // No drawing online: show photos of the pieces in the collection that carry this patent.
+  const photos = sheets.length ? [] : pieces.filter((s) => s.images?.[0]).map((s) => ({ src: s.images[0], piece: s }));
+  const photo = photos[sheet] || photos[0];
 
   return (
     <div className="archive-container py-8 lg:py-12">
@@ -80,9 +83,27 @@ export default function PatentDetail() {
               )}
               <p className="mt-2 text-[12.5px] text-steel">Patent drawings are in the public domain. Images via Google Patents.</p>
             </>
+          ) : photo ? (
+            <>
+              <Link to={`/sharpener/${photo.piece.id}`} className="block overflow-hidden rounded-[10px] border border-hair bg-white">
+                <img src={photo.src} alt={photo.piece.name} className="mx-auto max-h-[760px] w-full object-contain" />
+              </Link>
+              {photos.length > 1 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {photos.slice(0, 8).map((p, i) => (
+                    <button key={p.piece.id} onClick={() => setSheet(i)} className={`h-20 w-20 overflow-hidden rounded border bg-white ${p === photo ? 'border-oxblood ring-1 ring-oxblood' : 'border-hair'}`} aria-label={p.piece.name}>
+                      <img src={p.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+              <p className="mt-2 text-[12.5px] text-steel">
+                No patent drawing found online yet. Shown instead: <Link to={`/sharpener/${photo.piece.id}`} className="text-oxblood hover:underline">{photo.piece.name}</Link> from the collection, which is marked with this patent.
+              </p>
+            </>
           ) : (
             <div className="flex aspect-[3/4] items-center justify-center rounded-[10px] border border-dashed border-hair bg-white px-8 text-center text-steel">
-              No drawing found online for this patent yet.
+              {pieces.length ? 'No drawing found online for this patent yet, and the pieces that carry it have no photos.' : 'No drawing found online for this patent yet.'}
             </div>
           )}
         </div>
