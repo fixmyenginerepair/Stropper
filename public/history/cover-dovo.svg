@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><pattern id="h" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#fff" opacity=".035"/></pattern></defs>
+<rect width="1600" height="900" fill="#010068"/><rect width="1600" height="900" fill="url(#h)"/>
+<rect x="44" y="44" width="1512" height="812" fill="none" stroke="#f7f3ea" stroke-opacity=".55" stroke-width="2"/>
+<rect x="56" y="56" width="1488" height="788" fill="none" stroke="#f7f3ea" stroke-opacity=".25"/>
+<text x="130" y="254" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="7" fill="#e9b9b9">MAKER HISTORY</text>
+<text x="130" y="360" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="96" fill="#f7f3ea">DOVO</text>
+<rect x="130" y="400" width="170" height="6" fill="#680000" stroke="#f7f3ea" stroke-opacity=".35"/>
+<text x="130" y="464" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" fill="#f7f3ea" fill-opacity=".85">Wald · Solingen, Germany</text>
+<text x="130" y="506" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f7f3ea" fill-opacity=".6">Dorp &amp; Voos · founded 1906</text>
+<text x="130" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" letter-spacing="4" fill="#f7f3ea" fill-opacity=".45">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+<svg x="960" y="200" width="520" height="460" viewBox="0 0 420 360">
+<g fill="none" stroke="#f7f3ea" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M70 250 H 330 L 300 290 H 100 Z"/><path d="M130 290 V 330 H 270 V 290"/>
+  <path d="M70 250 C 50 250 30 236 26 220 H 90"/>
+  <path d="M120 140 C 180 110 290 110 360 122 L 362 160 C 290 166 200 172 120 178 Z"/>
+  <path d="M120 178 L 100 196 C 140 214 210 222 280 222" />
+  <g transform="rotate(-35 300 70)"><rect x="262" y="40" width="76" height="34" rx="5"/><path d="M300 74 V 150" stroke-width="7"/></g>
+  <path d="M190 210 l -8 -18 M210 206 l 0 -20 M228 210 l 8 -18" stroke-width="3" opacity=".7"/>
+</g></svg>
+</svg>
