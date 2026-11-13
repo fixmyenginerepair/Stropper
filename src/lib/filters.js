@@ -1,4 +1,24 @@
+import { base44 } from '@/api/base44Client';
 import { PAGE_SIZE, rarityBandValues } from '@/lib/archive';
+
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Makers whose own name or any of their aliases matches the search word, so a
+// piece filed under "AutoStrop" is also found by "Valet Auto Strop".
+export async function makerIdsFor(term) {
+  if (!term) return [];
+  const match = { $regex: escapeRegex(term), $options: 'i' };
+  const rows = await base44.entities.Maker
+    .filter({ $or: [{ name: match }, { aliases: match }] }, 'name', 200, 0)
+    .catch(() => []);
+  return (rows || []).map((row) => row.id);
+}
+
+// Browse and The Book both search with this, so alias matching is identical in each.
+export async function buildSearchQuery(filters) {
+  const makerIds = await makerIdsFor(filters.q);
+  return buildQuery(filters, makerIds);
+}
 
 export const SORT_PARAMS = {
   name: 'name',
@@ -33,7 +53,7 @@ export function filtersToParams(filters) {
   return params;
 }
 
-export function buildQuery(filters) {
+export function buildQuery(filters, makerIds = []) {
   const query = {};
 
   if (filters.q) {
@@ -44,6 +64,10 @@ export function buildQuery(filters) {
       { comment: { $regex: filters.q, $options: 'i' } },
       { collection: { $regex: filters.q, $options: 'i' } },
     ];
+  }
+  if (makerIds.length) {
+    // Pieces made by a maker whose alias matched the search word.
+    query.$or = [...(query.$or || []), { maker_id: { $in: makerIds } }];
   }
   if (filters.letter) {
     query.name = { $regex: `^${filters.letter}`, $options: 'i' };

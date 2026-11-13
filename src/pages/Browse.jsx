@@ -6,7 +6,7 @@ import FilterPanel from '@/components/browse/FilterPanel';
 import Pagination from '@/components/browse/Pagination';
 import SharpenerCard from '@/components/SharpenerCard';
 import { PAGE_SIZE, SORT_OPTIONS } from '@/lib/archive';
-import { buildQuery, fetchResultPage, filtersToParams, readFilters } from '@/lib/filters';
+import { buildSearchQuery, fetchResultPage, filtersToParams, readFilters } from '@/lib/filters';
 
 export default function Browse() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,12 +20,13 @@ export default function Browse() {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    const query = buildQuery(filters);
 
-    Promise.all([
-      base44.entities.Sharpener.count(query),
-      fetchResultPage(base44.entities.Sharpener, query, filters.sort, filters.page),
-    ]).then(([count, pageItems]) => {
+    buildSearchQuery(filters).then((query) =>
+      Promise.all([
+        base44.entities.Sharpener.count(query),
+        fetchResultPage(base44.entities.Sharpener, query, filters.sort, filters.page),
+      ])
+    ).then(([count, pageItems]) => {
       if (cancelled) return;
       setTotal(count);
       setItems(pageItems);

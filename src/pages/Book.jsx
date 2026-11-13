@@ -5,7 +5,7 @@ import { base44 } from '@/api/base44Client';
 import FilterPanel from '@/components/browse/FilterPanel';
 import BookEntry from '@/components/book/BookEntry';
 import BookCover from '@/components/book/BookCover';
-import { buildQuery, readFilters } from '@/lib/filters';
+import { buildSearchQuery, readFilters } from '@/lib/filters';
 
 export default function Book() {
   const [searchParams] = useSearchParams();
@@ -27,15 +27,15 @@ export default function Book() {
     let cancelled = false;
     setLoading(true);
 
-    const query =
-      scope === 'selection' && ids.length
-        ? { id: { $in: ids } }
-        : scope === 'all'
-          ? {}
-          : buildQuery(filters);
+    const queryForThisBook = async () => {
+      if (scope === 'selection' && ids.length) return { id: { $in: ids } };
+      if (scope === 'all') return {};
+      return buildSearchQuery(filters);
+    };
 
     // Page through every match so "The entire archive" includes all of it.
     const fetchAll = async () => {
+      const query = await queryForThisBook();
       let all = [];
       let cursor;
       do {
