@@ -18,6 +18,7 @@ import SwapList from '@/pages/SwapList';
 import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
+import Admin from '@/pages/Admin';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -56,6 +57,7 @@ const AuthenticatedApp = () => {
         <Route path="/about" element={<About />} />
         <Route path="/classic" element={<ClassicStropper />} />
         <Route path="/advertising" element={<Advertising />} />
+        <Route path="/admin" element={<Admin />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
