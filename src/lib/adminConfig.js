@@ -247,6 +247,53 @@ export const ADMIN_ENTITIES = {
     ],
   },
 
+  Patent: {
+    label: 'Patents',
+    singular: 'patent',
+    titleField: 'title',
+    defaultSort: 'year',
+    viewPath: (r) => `/patents/${r.id}`,
+    searchFields: ['title', 'number', 'patent_id', 'notes'],
+    filters: ['country', 'verified'],
+    bulkFields: ['verified', 'country'],
+    columns: [
+      { key: 'drawing_urls', label: '', kind: 'thumb' },
+      { key: 'country', label: 'Country' },
+      { key: 'number', label: 'Number' },
+      { key: 'title', label: 'Title' },
+      { key: 'inventors', label: 'Inventor' },
+      { key: 'year', label: 'Year' },
+      { key: 'verified', label: 'Verified', kind: 'bool' },
+    ],
+    sections: [
+      {
+        title: 'Patent',
+        fields: [
+          { key: 'country', label: 'Country', kind: 'select', options: ['US', 'GB', 'DE', 'FR', 'CA', 'CH', 'AT', 'IT', 'SE', 'AU', 'Other'], required: true },
+          { key: 'number', label: 'Number', kind: 'text', required: true },
+          { key: 'patent_id', label: 'Full ID with kind code (e.g. US959496A)', kind: 'text' },
+          { key: 'title', label: 'Title', kind: 'text', wide: true },
+          { key: 'inventors', label: 'Inventors (one per line)', kind: 'list' },
+          { key: 'assignees', label: 'Assigned to (one per line)', kind: 'list' },
+          { key: 'grant_date', label: 'Grant date', kind: 'date' },
+          { key: 'year', label: 'Year (for sorting)', kind: 'number' },
+          { key: 'maker_id', label: 'Linked maker', kind: 'ref', entity: 'Maker' },
+          { key: 'verified', label: 'Verified against the patent record', kind: 'checkbox' },
+          { key: 'notes', label: 'Notes', kind: 'textarea', wide: true },
+        ],
+      },
+      {
+        title: 'Drawings and links',
+        fields: [
+          { key: 'drawing_urls', label: 'Drawing sheets (first is main)', kind: 'images', wide: true },
+          { key: 'pdf_url', label: 'Full patent PDF', kind: 'url', wide: true },
+          { key: 'dates_on_items', label: 'Dates as marked on the pieces (one per line)', kind: 'list', wide: true },
+          { key: 'sharpener_ids', label: 'Sharpener record IDs (one per line)', kind: 'list', wide: true },
+        ],
+      },
+    ],
+  },
+
   ArchiveItem: {
     label: 'Classic archive',
     singular: 'archive item',
