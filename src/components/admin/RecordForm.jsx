@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUp, ImagePlus, Loader2, Trash2, X } from 'lucide-react'
 import { base44 } from '@/api/base44Client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { allFields } from '@/lib/adminConfig';
+import { cached, limited } from '@/lib/limited';
 
 export const inputClass =
   'mt-1 h-10 w-full rounded-lg border border-hair bg-white px-3 text-sm text-ink focus:border-oxblood focus:outline-none focus:ring-1 focus:ring-oxblood';
@@ -131,8 +132,7 @@ function ImagesField({ value, onChange, single }) {
 function RefField({ field, value, onChange }) {
   const [options, setOptions] = useState([]);
   useEffect(() => {
-    base44.entities[field.entity]
-      .filter({}, 'name', 2000, 0, ['id', 'name'])
+    cached(`ref:${field.entity}`, () => base44.entities[field.entity].filter({}, 'name', 2000, 0, ['id', 'name']), 300000)
       .then((rows) => setOptions(rows || []))
       .catch(() => setOptions([]));
   }, [field.entity]);
@@ -230,8 +230,8 @@ export default function RecordForm({ config, entityName, open, onOpenChange, rec
       const payload = fromForm(config, form, mode === 'edit' ? record : null);
       const entity = base44.entities[entityName];
       const saved = mode === 'edit' && record?.id
-        ? await entity.update(record.id, payload)
-        : await entity.create(payload);
+        ? await limited(() => entity.update(record.id, payload))
+        : await limited(() => entity.create(payload));
       await onSaved?.(saved || { ...record, ...payload });
       onOpenChange(false);
     } catch (err) {
