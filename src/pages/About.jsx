@@ -28,6 +28,18 @@ const FOUNDER_LINKS = [
   { label: 'ShaveWorld.org — International Organization for Shaving Memorabilia', href: 'http://www.shaveworld.org/' },
 ];
 
+// Modern illustrations in a vintage style — decorative only, not period ads.
+const ILLUSTRATIONS = [
+  {
+    src: 'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/0861f2705_illustration-blade-sharpener.jpg',
+    alt: 'Vintage-style illustration of a man using a safety razor blade sharpener',
+  },
+  {
+    src: 'https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/771f1fbfc_illustration-razor-strop.jpg',
+    alt: 'Vintage-style illustration of a man stropping a straight razor on a hanging leather strop',
+  },
+];
+
 const linkCls =
   'font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood';
 
@@ -218,6 +230,28 @@ export default function About() {
               ShaveWorld.org
             </a>
           </div>
+
+          <figure>
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
+              {ILLUSTRATIONS.map((img) => (
+                <img
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="w-full rounded-[10px] border border-hair"
+                />
+              ))}
+            </div>
+            <figcaption className="mt-2 text-[12px] leading-relaxed text-steel">
+              Modern illustrations in a vintage style, not original period ads. For real ads from
+              the era, see{' '}
+              <Link to="/advertising" className={linkCls}>
+                Period advertising
+              </Link>
+              .
+            </figcaption>
+          </figure>
         </aside>
       </section>
     </div>
