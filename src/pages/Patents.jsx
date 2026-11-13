@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Pagination from '@/components/browse/Pagination';
+import PatentLookup from '@/components/patents/PatentLookup';
 import { COUNTRY_NAMES, formatGrantDate, patentLabel } from '@/lib/patents';
 
 const PAGE = 48;
@@ -109,7 +110,11 @@ export default function Patents() {
         </p>
       </header>
 
-      <div className="mt-8 flex flex-col gap-3 md:flex-row md:items-center">
+      <PatentLookup />
+
+      <h2 className="mt-12 font-heading text-xl font-bold text-ink sm:text-2xl">The full patent list</h2>
+
+      <div className="mt-6 flex flex-col gap-3 md:flex-row md:items-center">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-steel" />
           <input
