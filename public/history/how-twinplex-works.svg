@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720">
+<rect width="1000" height="720" fill="#f7f3ea"/>
+<text x="50" y="62" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="13" letter-spacing="3" fill="#680000">HOW IT WORKS</text>
+<text x="50" y="108" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="38" fill="#1b2333">How a Twinplex stropper works</text>
+<text x="50" y="136" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#59617a">Drawn from Floyd's 1910 patent, U.S. 959,496</text>
+<svg x="50" y="160" width="900" height="520" viewBox="0 0 900 520">
+<g font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#1b2333">
+ <g fill="none" stroke="#1b2333" stroke-width="3">
+  <rect x="120" y="90" width="560" height="330" rx="34"/>
+  <circle cx="300" cy="255" r="105"/><circle cx="500" cy="255" r="105"/>
+  <circle cx="300" cy="255" r="80" stroke="#680000" stroke-width="10" opacity=".85"/>
+  <circle cx="500" cy="255" r="80" stroke="#680000" stroke-width="10" opacity=".85"/>
+  <circle cx="300" cy="255" r="8" fill="#1b2333"/><circle cx="500" cy="255" r="8" fill="#1b2333"/>
+  <path d="M400 70 V 440" stroke="#010068" stroke-width="7"/>
+  <rect x="382" y="44" width="36" height="30" rx="5" stroke="#010068"/>
+  <path d="M680 255 H 760 V 150"/><circle cx="760" cy="132" r="20"/>
+  <path d="M250 150 a 70 70 0 0 1 100 0" stroke="#010068" stroke-width="3"/><path d="M342 140 l 10 12 l -15 4" stroke="#010068"/>
+  <path d="M550 150 a 70 70 0 0 0 -100 0" stroke="#010068" stroke-width="3"/><path d="M458 140 l -10 12 l 15 4" stroke="#010068"/>
+ </g>
+ <g>
+  <text x="400" y="30" text-anchor="middle" font-weight="600" fill="#010068">Blade holder</text>
+  <text x="800" y="128">Crank</text>
+  <text x="300" y="395" text-anchor="middle">Leather-faced roller</text>
+  <text x="500" y="395" text-anchor="middle">Leather-faced roller</text>
+  <text x="400" y="475" text-anchor="middle" fill="#59617a">The blade sits between two rollers and both edges are stropped at once.</text>
+  <text x="400" y="500" text-anchor="middle" fill="#59617a">The holder flips the blade over so the other face gets the same strokes.</text>
+ </g>
+</g></svg>
+<text x="960" y="702" text-anchor="end" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="2" fill="#9aa0b3">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+</svg>
