@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { NAV_LINKS, SITE } from '@/lib/site';
+import { cached } from '@/lib/limited';
 
 const signIn = () => base44.auth.redirectToLogin(window.location.href);
 
@@ -88,7 +89,7 @@ export default function SiteHeader() {
   const [me, setMe] = useState(null);
 
   useEffect(() => {
-    base44.auth.me().then(setMe).catch(() => setMe(null));
+    cached('me', () => base44.auth.me()).then(setMe).catch(() => setMe(null));
   }, []);
 
   return (
