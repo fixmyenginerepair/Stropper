@@ -79,6 +79,7 @@ function AccountButtons({ me, onNavigate, mobile }) {
   }
   return (
     <>
+      <Link to="/dashboard" onClick={onNavigate} className={ghost}>My dashboard</Link>
       {me.role === 'admin' && (
         <Link to="/admin" onClick={onNavigate} className={solid}>Backend</Link>
       )}

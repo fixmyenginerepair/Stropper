@@ -68,6 +68,17 @@
     },
     "sharpener_collection_size": {
       "type": "string"
+    },
+    "user_id": {
+      "description": "Linked collector account (private)",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "string"
     }
   },
   "required": [

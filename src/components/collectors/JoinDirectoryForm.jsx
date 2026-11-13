@@ -41,6 +41,9 @@ export default function JoinDirectoryForm() {
     }, {});
 
     try {
+      // A signed-in submission is linked to the collector's own account.
+      const me = await base44.auth.me().catch(() => null);
+      if (me?.id) payload.user_id = me.id;
       await base44.entities.Collector.create(payload);
       setDone(true);
       setForm(EMPTY);
