@@ -17,6 +17,7 @@ import Collectors from '@/pages/Collectors';
 import SwapList from '@/pages/SwapList';
 import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
+import Advertising from '@/pages/Advertising';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -54,6 +55,7 @@ const AuthenticatedApp = () => {
         <Route path="/swap-list" element={<SwapList />} />
         <Route path="/about" element={<About />} />
         <Route path="/classic" element={<ClassicStropper />} />
+        <Route path="/advertising" element={<Advertising />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
