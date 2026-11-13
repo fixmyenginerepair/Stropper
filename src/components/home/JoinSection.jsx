@@ -12,15 +12,23 @@ export default function JoinSection() {
           <p className="eyebrow text-oxblood">Collectors</p>
           <h2 className="mt-3 font-heading text-xl font-bold text-ink">Join the collectors</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-steel">
-            Sign in to keep your own collector ID against every sharpener you own, add notes and
-            help the archive grow.
+            Sign in with your collector account to keep your own collector ID against every
+            sharpener you own, add notes and help the archive grow.
           </p>
-          <button
-            onClick={signIn}
-            className="mt-6 text-sm font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood"
-          >
-            Collector sign in
-          </button>
+          <div className="mt-6 flex flex-col gap-2.5 text-sm font-semibold">
+            <button
+              onClick={signIn}
+              className="text-left text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood"
+            >
+              Collector sign in
+            </button>
+            <Link
+              to="/register"
+              className="text-left text-ink underline decoration-ink/20 underline-offset-4 hover:text-oxblood hover:decoration-oxblood"
+            >
+              Create a collector account
+            </Link>
+          </div>
         </div>
 
         <div className="rounded-[10px] border border-hair bg-white p-7">
