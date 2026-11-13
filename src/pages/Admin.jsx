@@ -7,6 +7,7 @@ import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
 import UsersPanel from '@/components/admin/UsersPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
+import { cached, limited } from '@/lib/limited';
 
 const TABS = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -25,21 +26,22 @@ function Overview({ goTo }) {
 
   useEffect(() => {
     const S = base44.entities.Sharpener;
+    const c = (key, fn) => cached(`stats:${key}`, fn, 30000);
     Promise.all([
-      S.count({}),
-      S.count({ $or: [{ images: { $exists: false } }, { images: { $size: 0 } }] }).catch(() => null),
-      S.count({ is_double: true }),
-      base44.entities.Maker.count({}),
-      base44.entities.Article.count({}),
-      base44.entities.Article.count({ status: 'Draft' }),
-      base44.entities.PeriodAd.count({}),
-      base44.entities.Collector.count({}),
-      base44.entities.Collector.count({ approved: { $ne: true } }),
-      S.filter({}, '-updated_date', 8),
+      c('s', () => S.count({})),
+      c('nophoto', () => S.count({ $or: [{ images: { $exists: false } }, { images: { $size: 0 } }] })).catch(() => null),
+      c('doubles', () => S.count({ is_double: true })),
+      c('makers', () => base44.entities.Maker.count({})),
+      c('articles', () => base44.entities.Article.count({})),
+      c('drafts', () => base44.entities.Article.count({ status: 'Draft' })),
+      c('ads', () => base44.entities.PeriodAd.count({})),
+      c('collectors', () => base44.entities.Collector.count({})),
+      c('pending', () => base44.entities.Collector.count({ approved: { $ne: true } })),
+      limited(() => S.filter({}, '-updated_date', 8)),
     ]).then(([sharpeners, noPhoto, doubles, makers, articles, drafts, ads, collectors, pending, latest]) => {
       setStats({ sharpeners, noPhoto, doubles, makers, articles, drafts, ads, collectors, pending });
       setRecent(latest || []);
-    });
+    }).catch(() => setStats({}));
   }, []);
 
   const tile = (label, value, tab, note) => (
@@ -84,7 +86,7 @@ export default function Admin() {
   const [, setTick] = useState(0);
 
   useEffect(() => {
-    base44.auth.me().then(setMe).catch(() => setMe(null));
+    cached('me', () => base44.auth.me()).then(setMe).catch(() => setMe(null));
   }, []);
 
   const goTo = (key) => {
