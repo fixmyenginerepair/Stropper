@@ -1,0 +1,90 @@
+{
+  "name": "PeriodAd",
+  "properties": {
+    "advertiser": {
+      "description": "Company and address as printed",
+      "type": "string"
+    },
+    "audience": {
+      "default": "Consumer",
+      "enum": [
+        "Consumer",
+        "Trade (dealers)"
+      ],
+      "type": "string"
+    },
+    "brand": {
+      "description": "Product brand, e.g. Valet AutoStrop",
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "maker_id": {
+      "description": "Linked Maker record",
+      "type": "string"
+    },
+    "prices_quoted": {
+      "type": "string"
+    },
+    "publication": {
+      "description": "Magazine or paper it ran in",
+      "type": "string"
+    },
+    "published_date": {
+      "description": "Date as printed, e.g. 1928-05-26 or c. 1925",
+      "type": "string"
+    },
+    "sharpener_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "source_note": {
+      "description": "Where the image came from",
+      "type": "string"
+    },
+    "summary": {
+      "description": "What the ad says and why it matters",
+      "type": "string"
+    },
+    "title": {
+      "description": "Headline of the ad",
+      "type": "string"
+    },
+    "year": {
+      "description": "Year for sorting; approximate if undated",
+      "type": "number"
+    },
+    "year_approximate": {
+      "default": false,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "title",
+    "image"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

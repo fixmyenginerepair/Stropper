@@ -111,7 +111,17 @@ export default function Admin() {
           {me ? (
             <button onClick={() => base44.auth.logout('/')} className="mt-6 rounded-lg border border-hair px-5 py-2.5 text-sm font-semibold text-ink hover:border-oxblood">Sign out</button>
           ) : (
-            <button onClick={() => base44.auth.redirectToLogin(window.location.href)} className="mt-6 rounded-lg bg-navy px-5 py-2.5 text-sm font-semibold text-white">Collector sign in</button>
+            <div className="mt-6 flex flex-col items-center gap-3">
+              <Link
+                to={`/login?returnTo=${encodeURIComponent('/admin')}`}
+                className="rounded-lg bg-navy px-5 py-2.5 text-sm font-semibold text-white"
+              >
+                Sign in
+              </Link>
+              <Link to="/register" className="text-[13px] text-steel underline decoration-steel/30 underline-offset-4 hover:text-oxblood">
+                Collector without an account? Create one
+              </Link>
+            </div>
           )}
         </div>
       </div>

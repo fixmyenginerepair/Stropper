@@ -19,6 +19,11 @@ import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
 import Admin from '@/pages/Admin';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
+import Mfa from '@/pages/Mfa';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -59,6 +64,11 @@ const AuthenticatedApp = () => {
         <Route path="/advertising" element={<Advertising />} />
         <Route path="/admin" element={<Admin />} />
       </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/mfa" element={<Mfa />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

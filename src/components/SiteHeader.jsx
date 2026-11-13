@@ -5,7 +5,10 @@ import { base44 } from '@/api/base44Client';
 import { NAV_LINKS, SITE } from '@/lib/site';
 import { cached } from '@/lib/limited';
 
-const signIn = () => base44.auth.redirectToLogin(window.location.href);
+const signIn = () => {
+  const back = window.location.pathname + window.location.search;
+  window.location.href = `/login?returnTo=${encodeURIComponent(back)}`;
+};
 
 // Polished straight-razor blade used as the banner's bottom edge.
 // Spine on top, honed edge underneath, shoulder at left, round toe at right.
