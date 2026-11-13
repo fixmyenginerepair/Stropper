@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><pattern id="h" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#fff" opacity=".035"/></pattern></defs>
+<rect width="1600" height="900" fill="#010068"/><rect width="1600" height="900" fill="url(#h)"/>
+<rect x="44" y="44" width="1512" height="812" fill="none" stroke="#f7f3ea" stroke-opacity=".55" stroke-width="2"/>
+<rect x="56" y="56" width="1488" height="788" fill="none" stroke="#f7f3ea" stroke-opacity=".25"/>
+<text x="130" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="7" fill="#e9b9b9">MAKER HISTORY</text>
+<text x="130" y="325" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="70" fill="#f7f3ea">AutoStrop Safety</text><text x="130" y="398" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="70" fill="#f7f3ea">Razor Co.</text>
+<rect x="130" y="438" width="170" height="6" fill="#680000" stroke="#f7f3ea" stroke-opacity=".35"/>
+<text x="130" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" fill="#f7f3ea" fill-opacity=".85">New York · Toronto · London</text>
+<text x="130" y="544" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f7f3ea" fill-opacity=".6">The self-stropping Valet razor · 1906 – 1930</text>
+<text x="130" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" letter-spacing="4" fill="#f7f3ea" fill-opacity=".45">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+<svg x="960" y="200" width="520" height="460" viewBox="0 0 420 360">
+<g fill="none" stroke="#f7f3ea" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M10 150 H 400" stroke-width="22" stroke="#f7f3ea" opacity=".18"/>
+  <path d="M10 139 H 400 M10 161 H 400" stroke-width="2.5"/>
+  <rect x="120" y="95" width="170" height="110" rx="12"/>
+  <path d="M138 112 H 272 M138 188 H 272" stroke-width="2.5" opacity=".7"/>
+  <path d="M205 205 V 330" stroke-width="12"/>
+  <path d="M195 238 H 215 M195 262 H 215 M195 286 H 215" stroke-width="2.5"/>
+  <path d="M60 110 l -30 40 l 30 40 M350 110 l 30 40 l -30 40" stroke-width="3.5"/>
+</g></svg>
+</svg>
