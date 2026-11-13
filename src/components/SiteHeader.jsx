@@ -73,6 +73,7 @@ function Dropdown({ label, active, align = 'left', children, icon: Icon }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const timer = useRef(null);
+  const hovering = useRef(false);
   const { pathname } = useLocation();
 
   useEffect(() => setOpen(false), [pathname]);
@@ -85,14 +86,16 @@ function Dropdown({ label, active, align = 'left', children, icon: Icon }) {
     return () => { document.removeEventListener('mousedown', onDoc); document.removeEventListener('keydown', onKey); };
   }, [open]);
 
-  const enter = () => { clearTimeout(timer.current); setOpen(true); };
-  const leave = () => { timer.current = setTimeout(() => setOpen(false), 150); };
+  const enter = () => { hovering.current = true; clearTimeout(timer.current); setOpen(true); };
+  const leave = () => { hovering.current = false; timer.current = setTimeout(() => setOpen(false), 150); };
+  // With a mouse the menu is already open on hover, so a click keeps it open; keyboard/touch toggles.
+  const toggle = () => setOpen((v) => (hovering.current ? true : !v));
 
   return (
     <div ref={ref} className="relative" onMouseEnter={enter} onMouseLeave={leave}>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         aria-expanded={open}
         aria-haspopup="true"
         className={`flex items-center gap-1 whitespace-nowrap rounded-md px-2 py-1.5 text-sm transition-colors ${
