@@ -99,29 +99,32 @@ function build(p: Raw, g: any, makerOf: Map<string, string>) {
 }
 
 export default async function (req: Request) {
-  if (req.headers.get('x-import-secret') !== SECRET) return Response.json({ error: 'Forbidden' }, { status: 403 });
+  if (req.headers.get('x-import-secret') !== SECRET) return new Response('forbidden', { status: 403 });
   const url = new URL(req.url);
   const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
   const start = Number(body.start ?? url.searchParams.get('start') ?? 0);
   const count = Number(body.count ?? url.searchParams.get('count') ?? 60);
 
+  try {
   const base44 = createClientFromRequest(req);
   const S = base44.asServiceRole.entities.Sharpener;
   const P = base44.asServiceRole.entities.Patent;
 
   const existing: any[] = [];
-  for (let skip = 0; ; skip += 1000) {
-    const chunk = await P.filter({}, 'created_date', 1000, skip, ['id', 'country', 'number']);
+  for (let skip = 0; ; skip += 500) {
+    const chunk = await P.filter({}, 'created_date', 500, skip, ['id', 'country', 'number']);
     existing.push(...(chunk || []));
-    if (!chunk || chunk.length < 1000) break;
+    if (!chunk || chunk.length < 500) break;
   }
   const have = new Set(existing.map((e: any) => e.country + e.number));
 
   if (body.action === 'dedupe') {
     const seen = new Set<string>(); const extra: string[] = [];
     for (const e of existing) { const k = e.country + e.number; if (seen.has(k)) extra.push(e.id); else seen.add(k); }
-    for (let i = 0; i < extra.length; i += 20) await Promise.all(extra.slice(i, i + 20).map((id) => P.delete(id)));
-    return Response.json({ before: existing.length, deleted: extra.length, after: existing.length - extra.length });
+    const limit = Number(body.limit ?? 150);
+    const batch = extra.slice(0, limit);
+    for (let i = 0; i < batch.length; i += 10) await Promise.all(batch.slice(i, i + 10).map((id) => P.delete(id)));
+    return Response.json({ before: existing.length, duplicates: extra.length, deleted: batch.length, remaining: extra.length - batch.length });
   }
 
   const rows: any[] = [];
@@ -143,4 +146,7 @@ export default async function (req: Request) {
   }
   if (out.length) await P.bulkCreate(out);
   return Response.json({ total: all.length, start, count, existing: existing.length, created: out.length, skipped: slice.length - todo.length, verified: out.filter((r) => r.verified).length, next: start + count < all.length ? start + count : null });
+  } catch (e) {
+    return Response.json({ error: String((e as any)?.message || e) }, { status: 500 });
+  }
 }
