@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { ChevronDown, Menu, UserRound, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { NAV_LINKS, SITE } from '@/lib/site';
+import { NAV_GROUPS, SITE } from '@/lib/site';
 import { cached } from '@/lib/limited';
 
 const signIn = () => {
@@ -66,35 +66,109 @@ function RazorBlade() {
   );
 }
 
-function AccountButtons({ me, onNavigate, mobile }) {
-  const solid = mobile
-    ? 'my-2 rounded-lg bg-white px-5 py-3 text-center text-sm font-semibold text-navy'
-    : 'whitespace-nowrap rounded-lg bg-white px-3.5 py-2 text-[12.5px] font-semibold text-navy transition-colors hover:bg-white/90 xl:px-5 xl:py-2.5 xl:text-sm';
-  const ghost = mobile
-    ? 'mb-4 py-2 text-left text-sm text-white/80'
-    : 'whitespace-nowrap text-[12.5px] text-white/75 hover:text-white xl:text-sm';
+const isActivePath = (pathname, to) => pathname === to || pathname.startsWith(`${to}/`);
 
-  if (!me) {
-    return <button onClick={signIn} className={solid}>Collector sign in</button>;
-  }
+// Dropdown that opens on hover (desktop pointer) or click, closes on Escape / outside click.
+function Dropdown({ label, active, align = 'left', children, icon: Icon }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const timer = useRef(null);
+  const { pathname } = useLocation();
+
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDoc = (e) => { if (!ref.current?.contains(e.target)) setOpen(false); };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('mousedown', onDoc); document.removeEventListener('keydown', onKey); };
+  }, [open]);
+
+  const enter = () => { clearTimeout(timer.current); setOpen(true); };
+  const leave = () => { timer.current = setTimeout(() => setOpen(false), 150); };
+
   return (
-    <>
-      <Link to="/dashboard" onClick={onNavigate} className={ghost}>My dashboard</Link>
-      {me.role === 'admin' && (
-        <Link to="/admin" onClick={onNavigate} className={solid}>Backend</Link>
+    <div ref={ref} className="relative" onMouseEnter={enter} onMouseLeave={leave}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={`flex items-center gap-1 whitespace-nowrap rounded-md px-2 py-1.5 text-sm transition-colors ${
+          active || open ? 'text-white' : 'text-white/75 hover:text-white'
+        }`}
+      >
+        {Icon && <Icon className="h-4 w-4" />}
+        {label}
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+        {active && <span className="absolute inset-x-2 -bottom-1 h-0.5 rounded bg-[#c0392b]" />}
+      </button>
+      {open && (
+        <div className={`absolute top-full z-50 pt-3 ${align === 'right' ? 'right-0' : 'left-0'}`}>
+          <div className="w-72 overflow-hidden rounded-[10px] border border-hair bg-white py-2 shadow-[0_18px_40px_-12px_rgba(1,0,104,0.45)]">
+            {children}
+          </div>
+        </div>
       )}
-      <button onClick={() => base44.auth.logout('/')} className={ghost}>Sign out</button>
-    </>
+    </div>
+  );
+}
+
+function MenuItem({ to, label, note, onClick }) {
+  return (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={({ isActive }) =>
+        `block border-l-2 px-4 py-2.5 transition-colors ${
+          isActive ? 'border-oxblood bg-frost' : 'border-transparent hover:border-oxblood/40 hover:bg-frost/70'
+        }`
+      }
+    >
+      <span className="block text-[14px] font-semibold text-ink">{label}</span>
+      {note && <span className="block text-[12.5px] text-steel">{note}</span>}
+    </NavLink>
+  );
+}
+
+function AccountMenu({ me }) {
+  if (!me) {
+    return (
+      <button
+        onClick={signIn}
+        className="ml-2 whitespace-nowrap rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-white/90"
+      >
+        Collector sign in
+      </button>
+    );
+  }
+  const name = (me.full_name || me.email || 'Account').split(' ')[0];
+  return (
+    <div className="ml-2">
+      <Dropdown label={name} icon={UserRound} align="right">
+        <MenuItem to="/dashboard" label="My dashboard" note="Your profile and pieces" />
+        {me.role === 'admin' && <MenuItem to="/admin" label="Backend" note="Edit the archive" />}
+        <div className="my-1 border-t border-hair" />
+        <button onClick={() => base44.auth.logout('/')} className="block w-full px-4 py-2.5 text-left text-[14px] font-semibold text-oxblood hover:bg-frost/70">
+          Sign out
+        </button>
+      </Dropdown>
+    </div>
   );
 }
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [me, setMe] = useState(null);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     cached('me', () => base44.auth.me()).then(setMe).catch(() => setMe(null));
   }, []);
+  useEffect(() => setOpen(false), [pathname]);
+
+  const close = () => setOpen(false);
 
   return (
     <header className="sticky top-0 z-50">
@@ -109,21 +183,36 @@ export default function SiteHeader() {
             />
           </Link>
 
-          <nav className="hidden min-w-0 items-center gap-x-2.5 lg:flex xl:gap-x-5 2xl:gap-x-7">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  `whitespace-nowrap text-[12.5px] transition-colors xl:text-sm ${
-                    isActive ? 'text-white' : 'text-white/75 hover:text-white'
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-            <AccountButtons me={me} />
+          <nav className="hidden items-center gap-x-1 lg:flex xl:gap-x-3" aria-label="Main">
+            {NAV_GROUPS.map((group) =>
+              group.children ? (
+                <Dropdown
+                  key={group.label}
+                  label={group.label}
+                  active={group.children.some((c) => isActivePath(pathname, c.to))}
+                >
+                  {group.children.map((c) => <MenuItem key={c.to} {...c} />)}
+                </Dropdown>
+              ) : (
+                <NavLink
+                  key={group.to}
+                  to={group.to}
+                  className={({ isActive }) =>
+                    `relative whitespace-nowrap rounded-md px-2 py-1.5 text-sm transition-colors ${
+                      isActive ? 'text-white' : 'text-white/75 hover:text-white'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      {group.label}
+                      {isActive && <span className="absolute inset-x-2 -bottom-1 h-0.5 rounded bg-[#c0392b]" />}
+                    </>
+                  )}
+                </NavLink>
+              )
+            )}
+            <AccountMenu me={me} />
           </nav>
 
           <button
@@ -139,21 +228,43 @@ export default function SiteHeader() {
 
       {open && (
         <nav className="border-t border-white/10 bg-navy lg:hidden">
-          <div className="archive-container py-2">
-            <div className="grid grid-cols-2 gap-x-5 sm:grid-cols-3">
-              {NAV_LINKS.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-white/10 py-2.5 text-[13.5px] text-white/80"
-                >
-                  {link.label}
+          <div className="archive-container max-h-[calc(100vh-110px)] overflow-y-auto py-4">
+            <div className="grid gap-6 sm:grid-cols-2">
+              {NAV_GROUPS.filter((g) => g.children).map((group) => (
+                <div key={group.label}>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">{group.label}</p>
+                  <div className="mt-1">
+                    {group.children.map((c) => (
+                      <NavLink
+                        key={c.to}
+                        to={c.to}
+                        onClick={close}
+                        className={({ isActive }) => `block border-b border-white/10 py-2.5 text-[15px] ${isActive ? 'text-white' : 'text-white/80'}`}
+                      >
+                        {c.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-6 border-t border-white/10 pt-3">
+              {NAV_GROUPS.filter((g) => !g.children).map((g) => (
+                <NavLink key={g.to} to={g.to} onClick={close} className={({ isActive }) => `py-1.5 text-[15px] ${isActive ? 'text-white' : 'text-white/80'}`}>
+                  {g.label}
                 </NavLink>
               ))}
             </div>
-            <div className="flex flex-col pt-2">
-              <AccountButtons me={me} mobile onNavigate={() => setOpen(false)} />
+            <div className="mt-4 border-t border-white/10 pt-4">
+              {me ? (
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <Link to="/dashboard" onClick={close} className="text-[15px] text-white/80">My dashboard</Link>
+                  {me.role === 'admin' && <Link to="/admin" onClick={close} className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-navy">Backend</Link>}
+                  <button onClick={() => base44.auth.logout('/')} className="text-[15px] text-white/80">Sign out</button>
+                </div>
+              ) : (
+                <button onClick={signIn} className="w-full rounded-lg bg-white px-5 py-3 text-sm font-semibold text-navy">Collector sign in</button>
+              )}
             </div>
           </div>
         </nav>
