@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 // One-off importer: builds the Patent table from the patent numbers recorded on Sharpener records.
 // Protected by a secret header; delete this function after the import.
-const SECRET = '2074506e08b6404326a868179da80f94';
+const SECRET = '0bd9530234d6621bbab296b91a5eb36b';
 
 const CC: [string, string][] = [
   ['GERMANY DRP', 'DE'], ['GERMANY', 'DE'], ['GER', 'DE'], ['DRP', 'DE'], ['ENGLAND', 'GB'], ['ENG', 'GB'], ['UK', 'GB'],
@@ -109,6 +109,21 @@ export default async function (req: Request) {
   const S = base44.asServiceRole.entities.Sharpener;
   const P = base44.asServiceRole.entities.Patent;
 
+  const existing: any[] = [];
+  for (let skip = 0; ; skip += 1000) {
+    const chunk = await P.filter({}, 'created_date', 1000, skip, ['id', 'country', 'number']);
+    existing.push(...(chunk || []));
+    if (!chunk || chunk.length < 1000) break;
+  }
+  const have = new Set(existing.map((e: any) => e.country + e.number));
+
+  if (body.action === 'dedupe') {
+    const seen = new Set<string>(); const extra: string[] = [];
+    for (const e of existing) { const k = e.country + e.number; if (seen.has(k)) extra.push(e.id); else seen.add(k); }
+    for (let i = 0; i < extra.length; i += 20) await Promise.all(extra.slice(i, i + 20).map((id) => P.delete(id)));
+    return Response.json({ before: existing.length, deleted: extra.length, after: existing.length - extra.length });
+  }
+
   const rows: any[] = [];
   for (let skip = 0; ; skip += 500) {
     const chunk = await S.filter({ patent: { $nin: [null, ''] } }, 'legacy_id', 500, skip, ['id', 'patent', 'maker_id']);
@@ -118,9 +133,6 @@ export default async function (req: Request) {
   const makerOf = new Map(rows.filter((r) => r.maker_id).map((r) => [r.id, r.maker_id]));
   const all = parseAll(rows);
   const slice = all.slice(start, start + count);
-
-  const existing = await P.filter({ $or: slice.map((p) => ({ country: p.country, number: p.number })) }, 'number', 500, 0, ['country', 'number']).catch(() => []);
-  const have = new Set((existing || []).map((e: any) => e.country + e.number));
   const todo = slice.filter((p) => !have.has(p.country + p.number));
 
   const out: any[] = [];
@@ -130,5 +142,5 @@ export default async function (req: Request) {
     group.forEach((p, j) => out.push(build(p, found[j], makerOf)));
   }
   if (out.length) await P.bulkCreate(out);
-  return Response.json({ total: all.length, start, count, created: out.length, skipped: slice.length - todo.length, verified: out.filter((r) => r.verified).length, next: start + count < all.length ? start + count : null });
+  return Response.json({ total: all.length, start, count, existing: existing.length, created: out.length, skipped: slice.length - todo.length, verified: out.filter((r) => r.verified).length, next: start + count < all.length ? start + count : null });
 }
