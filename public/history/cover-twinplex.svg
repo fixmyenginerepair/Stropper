@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><pattern id="h" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#fff" opacity=".035"/></pattern></defs>
+<rect width="1600" height="900" fill="#010068"/><rect width="1600" height="900" fill="url(#h)"/>
+<rect x="44" y="44" width="1512" height="812" fill="none" stroke="#f7f3ea" stroke-opacity=".55" stroke-width="2"/>
+<rect x="56" y="56" width="1488" height="788" fill="none" stroke="#f7f3ea" stroke-opacity=".25"/>
+<text x="130" y="254" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="7" fill="#e9b9b9">MAKER HISTORY</text>
+<text x="130" y="360" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="96" fill="#f7f3ea">Twinplex</text>
+<rect x="130" y="400" width="170" height="6" fill="#680000" stroke="#f7f3ea" stroke-opacity=".35"/>
+<text x="130" y="464" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" fill="#f7f3ea" fill-opacity=".85">St. Louis, Missouri · later Chicago, Illinois</text>
+<text x="130" y="506" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f7f3ea" fill-opacity=".6">Razor-blade stroppers · 1910s – late 1950s</text>
+<text x="130" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" letter-spacing="4" fill="#f7f3ea" fill-opacity=".45">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+<svg x="960" y="200" width="520" height="460" viewBox="0 0 420 360">
+<g fill="none" stroke="#f7f3ea" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <rect x="40" y="70" width="300" height="190" rx="22"/>
+  <rect x="58" y="88" width="264" height="154" rx="14" stroke-width="2.5" opacity=".6"/>
+  <circle cx="135" cy="165" r="52"/><circle cx="245" cy="165" r="52"/>
+  <circle cx="135" cy="165" r="38" stroke-width="2.5" stroke-dasharray="6 7"/><circle cx="245" cy="165" r="38" stroke-width="2.5" stroke-dasharray="6 7"/>
+  <circle cx="135" cy="165" r="6" fill="#f7f3ea"/><circle cx="245" cy="165" r="6" fill="#f7f3ea"/>
+  <path d="M190 40 V 290" stroke-width="3.5"/><rect x="176" y="22" width="28" height="22" rx="4"/>
+  <path d="M340 165 H 392 V 92" /><circle cx="392" cy="80" r="14"/>
+  <path d="M60 300 H 320" stroke-width="2.5" opacity=".5"/>
+</g></svg>
+</svg>
