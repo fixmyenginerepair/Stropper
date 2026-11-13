@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from '@/lib/archive';
+import { PAGE_SIZE, rarityBandValues } from '@/lib/archive';
 
 export const SORT_PARAMS = {
   name: 'name',
@@ -52,7 +52,11 @@ export function buildQuery(filters) {
   // Prefix match so the home page families (Rollers, Hone …) find
   // Rollers-1 … Rollers-4 and Hone-Carborundum.
   if (filters.type) query.type = { $regex: `^${filters.type}`, $options: 'i' };
-  if (filters.rarity) query.rarity = filters.rarity;
+  if (filters.rarity) {
+    // A rarity band (common, rare, unique) covers several ratings at once.
+    const band = rarityBandValues(filters.rarity);
+    query.rarity = band ? { $in: band } : filters.rarity;
+  }
   if (filters.collector) {
     query.collection = { $regex: `^${filters.collector}`, $options: 'i' };
   }

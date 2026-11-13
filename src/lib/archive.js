@@ -143,6 +143,20 @@ export const RARITY_LABELS = {
   T: 'Trade / one-off',
 };
 
+// Quick bands for the browse filters, grouping the fine 1–9 scale into the
+// three words collectors use: common, rare and unique.
+export const RARITY_BANDS = [
+  { key: 'common', label: 'Common', range: '1–3', values: ['1', '2', '3'] },
+  { key: 'rare', label: 'Rare', range: '4–7', values: ['4', '5', '6', '7'] },
+  { key: 'unique', label: 'Unique', range: '8–9', values: ['8', '9'] },
+  { key: 'trade', label: 'Trade', range: 'T', values: ['T'] },
+];
+
+export function rarityBandValues(rarity) {
+  const band = RARITY_BANDS.find((item) => item.key === rarity);
+  return band ? band.values : null;
+}
+
 export const SORT_OPTIONS = [
   { value: 'name', label: 'Name A–Z' },
   { value: 'updated', label: 'Recently updated' },

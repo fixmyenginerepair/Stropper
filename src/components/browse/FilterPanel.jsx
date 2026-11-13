@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import {
   ALPHABET,
   COUNTRY_VALUES,
+  RARITY_BANDS,
   RARITY_LABELS,
   RARITY_VALUES,
   SHARPENER_TYPES,
+  rarityBandValues,
 } from '@/lib/archive';
 
 const fieldClass =
@@ -111,16 +113,40 @@ export default function FilterPanel({ values, onApply, onClear }) {
         ))}
       </select>
 
+      <p className={labelClass}>Rarity</p>
+      <div className="mt-2 grid grid-cols-2 gap-1.5">
+        {RARITY_BANDS.map((band) => {
+          const active = values.rarity === band.key;
+          return (
+            <button
+              key={band.key}
+              type="button"
+              onClick={() => onApply({ rarity: active ? '' : band.key })}
+              className={`rounded-lg border px-2 py-2 text-left transition-colors ${
+                active
+                  ? 'border-oxblood bg-oxblood text-white'
+                  : 'border-hair text-ink hover:border-oxblood hover:text-oxblood'
+              }`}
+            >
+              <span className="block text-[13px] font-semibold leading-tight">{band.label}</span>
+              <span className={`block text-[11px] ${active ? 'text-white/70' : 'text-steel'}`}>
+                {band.range}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
       <label htmlFor="filter-rarity" className={labelClass}>
-        Rarity
+        Exact rating
       </label>
       <select
         id="filter-rarity"
-        value={values.rarity}
+        value={rarityBandValues(values.rarity) ? '' : values.rarity}
         onChange={(e) => onApply({ rarity: e.target.value })}
         className={`mt-2 ${fieldClass}`}
       >
-        <option value="">Any rarity</option>
+        <option value="">All ratings</option>
         {RARITY_VALUES.map((value) => (
           <option key={value} value={value}>
             {value === 'T' ? 'T — trade / one-off' : `${value} — ${RARITY_LABELS[value]}`}
