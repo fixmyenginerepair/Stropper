@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720">
+<rect width="1000" height="720" fill="#f7f3ea"/>
+<text x="50" y="62" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="13" letter-spacing="3" fill="#680000">HOW IT WORKS</text>
+<text x="50" y="108" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="38" fill="#1b2333">How the AutoStrop strops itself</text>
+<text x="50" y="136" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#59617a">After Gaisman's 1904 patent, U.S. 759,262</text>
+<svg x="50" y="160" width="900" height="520" viewBox="0 0 900 520">
+<g font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#1b2333">
+ <g fill="none" stroke="#1b2333" stroke-width="3">
+  <path d="M40 220 H 860" stroke="#680000" stroke-width="34" opacity=".18"/>
+  <path d="M40 203 H 860 M40 237 H 860" stroke="#680000" stroke-width="3"/>
+  <rect x="330" y="140" width="240" height="160" rx="16"/>
+  <path d="M352 168 L 548 160" stroke="#010068" stroke-width="5"/>
+  <path d="M352 272 L 548 280" stroke="#010068" stroke-width="5" opacity=".35"/>
+  <path d="M450 300 V 440" stroke-width="16"/>
+  <path d="M170 170 l -60 50 l 60 50 M730 170 l 60 50 l -60 50" stroke="#010068" stroke-width="4"/>
+ </g>
+ <text x="450" y="118" text-anchor="middle" font-weight="600" fill="#010068">Blade rocks to meet the strop</text>
+ <text x="90" y="300" fill="#680000">Leather strop threaded</text><text x="90" y="322" fill="#680000">through the razor head</text>
+ <text x="450" y="475" text-anchor="middle" fill="#59617a">The strop runs through the head with the blade still in place. Each pass tips the</text>
+ <text x="450" y="500" text-anchor="middle" fill="#59617a">blade so its edge meets the leather. There is no need to take the razor apart.</text>
+</g></svg>
+<text x="960" y="702" text-anchor="end" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="2" fill="#9aa0b3">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+</svg>
