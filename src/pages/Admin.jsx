@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
-  Archive, BookOpen, Factory, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
+  Archive, BookOpen, Factory, FileBadge, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
@@ -13,6 +13,7 @@ const TABS = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
   { key: 'Sharpener', label: 'Sharpeners', icon: Scissors },
   { key: 'Maker', label: 'Makers', icon: Factory },
+  { key: 'Patent', label: 'Patents', icon: FileBadge },
   { key: 'Article', label: 'Articles', icon: BookOpen },
   { key: 'PeriodAd', label: 'Period ads', icon: Megaphone },
   { key: 'Collector', label: 'Collectors', icon: Users },
