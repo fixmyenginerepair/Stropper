@@ -40,6 +40,7 @@ export default function SharpenerDetail() {
   const [inBook, setInBook] = useState(false);
   const [missing, setMissing] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [maker, setMaker] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,6 +52,12 @@ export default function SharpenerDetail() {
         if (cancelled) return;
         setSharpener(record);
         setInBook(readBook().includes(record.id));
+        setMaker(null);
+        if (record.maker_id) {
+          base44.entities.Maker.get(record.maker_id)
+            .then((m) => !cancelled && setMaker(m))
+            .catch(() => {});
+        }
         return base44.entities.Sharpener.filter(
           { name: { $gt: record.name } },
           { sort: 'name', limit: 1 }
@@ -164,6 +171,7 @@ export default function SharpenerDetail() {
 
           <dl className="mt-8 border-t border-hair">
             <Row label="Manufacturer" value={sharpener.manufacturer} />
+            {maker && <Row label="Maker history" value={`About ${maker.name}`} to={`/makers/${maker.id}`} />}
             <Row
               label="Type"
               value={sharpener.type}
