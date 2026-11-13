@@ -25,16 +25,22 @@ function toForm(config, record) {
 }
 
 // Form values -> record payload
-function fromForm(config, form) {
+function fromForm(config, form, original) {
   const out = {};
   allFields(config).forEach((f) => {
     const v = form[f.key];
-    if (f.kind === 'number') out[f.key] = v === '' || v === null ? null : Number(v);
-    else if (f.kind === 'list') out[f.key] = String(v || '').split('\n').map((s) => s.trim()).filter(Boolean);
-    else if (f.kind === 'images' || f.kind === 'checkbox') out[f.key] = v;
-    else out[f.key] = typeof v === 'string' ? v.trim() : v;
-    // Empty enum values must be omitted rather than sent as ''
-    if (f.kind === 'select' && !out[f.key]) out[f.key] = null;
+    let next;
+    if (f.kind === 'number') next = v === '' || v === null ? null : Number(v);
+    else if (f.kind === 'list') next = String(v || '').split('\n').map((s) => s.trim()).filter(Boolean);
+    else if (f.kind === 'images' || f.kind === 'checkbox') next = v;
+    else next = typeof v === 'string' ? v.trim() : v;
+
+    const empty = next === null || next === '' || next === undefined;
+    if (!empty) out[f.key] = next;
+    // Only clear a field that previously held a value; never send blanks for untouched fields
+    else if (original && original[f.key] !== undefined && original[f.key] !== null && original[f.key] !== '') {
+      out[f.key] = null;
+    }
   });
   return out;
 }
@@ -221,7 +227,7 @@ export default function RecordForm({ config, entityName, open, onOpenChange, rec
     setSaving(true);
     setError('');
     try {
-      const payload = fromForm(config, form);
+      const payload = fromForm(config, form, mode === 'edit' ? record : null);
       const entity = base44.entities[entityName];
       const saved = mode === 'edit' && record?.id
         ? await entity.update(record.id, payload)
