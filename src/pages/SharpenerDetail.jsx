@@ -8,6 +8,7 @@ import CommentsSection from '@/components/detail/CommentsSection';
 import RecordForm from '@/components/admin/RecordForm';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { formatValue, rarityLabel } from '@/lib/archive';
+import { patentLabel } from '@/lib/patents';
 import { SITE } from '@/lib/site';
 import { addToBook, bookHref, readBook } from '@/lib/myBook';
 
