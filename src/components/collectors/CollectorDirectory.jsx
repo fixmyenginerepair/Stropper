@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Search } from 'lucide-react';
 import { COLLECTION_TYPES, contactHref } from '@/lib/collectors';
 
@@ -106,7 +107,14 @@ export default function CollectorDirectory({ collectors, loading }) {
               {!loading &&
                 rows.map((row) => (
                   <tr key={row.id} className="border-t border-hair/70 hover:bg-frost/50">
-                    <td className={`${td} font-medium text-ink`}>{row.name}</td>
+                    <td className={`${td} font-medium`}>
+                      <Link
+                        to={`/collectors/${row.id}`}
+                        className="text-ink underline decoration-hair underline-offset-4 transition-colors hover:text-oxblood hover:decoration-oxblood"
+                      >
+                        {row.name}
+                      </Link>
+                    </td>
                     <td className={`${td} text-steel`}>{row.country || '—'}</td>
                     <td className={`${td} text-steel`}>{row.collection_type || '—'}</td>
                     <td className={`${td} text-steel`}>{row.main_collection_size || '—'}</td>
@@ -139,7 +147,12 @@ export default function CollectorDirectory({ collectors, loading }) {
           {!loading &&
             rows.map((row) => (
               <li key={row.id} className="px-4 py-4">
-                <p className="font-heading text-[15px] font-bold leading-snug text-ink">{row.name}</p>
+                <Link
+                  to={`/collectors/${row.id}`}
+                  className="font-heading text-[15px] font-bold leading-snug text-ink hover:text-oxblood"
+                >
+                  {row.name}
+                </Link>
                 <p className="mt-0.5 text-[13px] text-steel">
                   {[row.country, row.collection_type].filter(Boolean).join(' · ') || '—'}
                 </p>
