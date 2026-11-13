@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><pattern id="h" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#fff" opacity=".035"/></pattern></defs>
+<rect width="1600" height="900" fill="#010068"/><rect width="1600" height="900" fill="url(#h)"/>
+<rect x="44" y="44" width="1512" height="812" fill="none" stroke="#f7f3ea" stroke-opacity=".55" stroke-width="2"/>
+<rect x="56" y="56" width="1488" height="788" fill="none" stroke="#f7f3ea" stroke-opacity=".25"/>
+<text x="130" y="254" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="7" fill="#e9b9b9">MAKER HISTORY</text>
+<text x="130" y="360" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="96" fill="#f7f3ea">J. R. Torrey</text>
+<rect x="130" y="400" width="170" height="6" fill="#680000" stroke="#f7f3ea" stroke-opacity=".35"/>
+<text x="130" y="464" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" fill="#f7f3ea" fill-opacity=".85">Worcester, Massachusetts</text>
+<text x="130" y="506" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f7f3ea" fill-opacity=".6">Strops from 1858 · razors from 1880</text>
+<text x="130" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" letter-spacing="4" fill="#f7f3ea" fill-opacity=".45">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+<svg x="960" y="200" width="520" height="460" viewBox="0 0 420 360">
+<g fill="none" stroke="#f7f3ea" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="110" cy="30" r="16"/><path d="M110 46 V 64"/>
+  <rect x="78" y="64" width="64" height="18" rx="4"/>
+  <path d="M86 82 V 300 H 134 V 82"/><path d="M110 88 V 296" stroke-width="2" stroke-dasharray="4 8" opacity=".6"/>
+  <rect x="80" y="300" width="60" height="44" rx="8"/>
+<g transform="translate(190,40) scale(.55)">
+  <path d="M40 200 C 120 150 260 145 380 160 L 385 205 C 270 214 150 222 40 230 Z"/>
+  <path d="M60 212 C 150 196 260 190 372 190" stroke-width="3" opacity=".6"/>
+  <path d="M40 230 L 20 252 C 60 280 140 300 220 304 L 226 286 C 150 282 80 266 48 246" />
+  <circle cx="40" cy="214" r="8" fill="#f7f3ea"/></g>
+</g></svg>
+</svg>
