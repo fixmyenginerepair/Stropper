@@ -19,6 +19,9 @@ import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
 import Admin from '@/pages/Admin';
+import History from '@/pages/History';
+import ArticleDetail from '@/pages/ArticleDetail';
+import MakerDetail from '@/pages/MakerDetail';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -63,6 +66,9 @@ const AuthenticatedApp = () => {
         <Route path="/classic" element={<ClassicStropper />} />
         <Route path="/advertising" element={<Advertising />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/history/:slug" element={<ArticleDetail />} />
+        <Route path="/makers/:id" element={<MakerDetail />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
