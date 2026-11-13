@@ -33,7 +33,7 @@ const BANDS = [14, 34, 66, 86];
 export default function BookCover({ count, variant = 'framed' }) {
   return (
     <section className={variant === 'bare' ? BARE : FRAMED}>
-      <div className="book-3d group relative mx-auto max-w-[420px] pb-[10px] pr-[12px] [perspective:1400px] print:p-0">
+      <div className="book-3d group relative mx-auto max-w-[420px] pb-[12px] pr-[14px] print:p-0">
         {/* Back board and page block, seen past the front cover */}
         <div
           aria-hidden="true"
@@ -42,7 +42,7 @@ export default function BookCover({ count, variant = 'framed' }) {
         />
         <div
           aria-hidden="true"
-          className="absolute bottom-[4px] left-[12px] right-[5px] top-[6px] rounded-r-[5px] print:hidden"
+          className="absolute bottom-[5px] left-[12px] right-[6px] top-[6px] rounded-r-[5px] print:hidden"
           style={{
             background:
               'repeating-linear-gradient(90deg, #f7f1e1 0 1px, #ddd2b6 1px 2px), linear-gradient(#efe6cf, #e6dbbf)',
@@ -51,7 +51,7 @@ export default function BookCover({ count, variant = 'framed' }) {
         />
         <div
           aria-hidden="true"
-          className="absolute bottom-[4px] left-[12px] right-[9px] h-[7px] print:hidden"
+          className="absolute bottom-[5px] left-[12px] right-[10px] h-[7px] print:hidden"
           style={{ background: 'repeating-linear-gradient(180deg, #f7f1e1 0 1px, #d8ccae 1px 2px)' }}
         />
         {/* Ribbon marker */}
@@ -66,7 +66,7 @@ export default function BookCover({ count, variant = 'framed' }) {
 
         {/* Front cover */}
         <div
-          className="relative flex overflow-hidden rounded-l-[3px] rounded-r-[8px] transition-transform duration-500 [transform-origin:left_center] [transform:rotateY(-7deg)] group-hover:[transform:rotateY(-2deg)] motion-reduce:[transform:none] print:[transform:none]"
+          className="relative flex overflow-hidden rounded-l-[3px] rounded-r-[8px] transition-transform duration-300 group-hover:-translate-y-0.5 motion-reduce:transition-none print:transform-none"
           style={{ backgroundImage: CLOTH, boxShadow: '0 24px 50px -20px rgba(0,0,0,.75), inset -1px 0 0 rgba(255,255,255,.08)' }}
         >
           {/* Leather spine with raised bands and gilt rules */}
