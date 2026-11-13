@@ -24,6 +24,8 @@ import Admin from '@/pages/Admin';
 import History from '@/pages/History';
 import ArticleDetail from '@/pages/ArticleDetail';
 import MakerDetail from '@/pages/MakerDetail';
+import Patents from '@/pages/Patents';
+import PatentDetail from '@/pages/PatentDetail';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -73,6 +75,8 @@ const AuthenticatedApp = () => {
         <Route path="/history" element={<History />} />
         <Route path="/history/:slug" element={<ArticleDetail />} />
         <Route path="/makers/:id" element={<MakerDetail />} />
+        <Route path="/patents" element={<Patents />} />
+        <Route path="/patents/:id" element={<PatentDetail />} />
         <Route
           element={
             <ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />
