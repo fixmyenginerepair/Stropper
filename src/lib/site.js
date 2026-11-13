@@ -12,6 +12,7 @@ export const NAV_LINKS = [
   { label: 'Collectors', to: '/collectors' },
   { label: 'Swap List', to: '/swap-list' },
   { label: 'The Book', to: '/book' },
+  { label: 'History', to: '/history' },
   { label: 'Ads', to: '/advertising' },
   { label: 'About', to: '/about' },
   { label: 'Classic', to: '/classic' },
