@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
-import AdminSharpenerEditor from '@/components/detail/AdminSharpenerEditor';
+import RecordForm from '@/components/admin/RecordForm';
+import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { formatValue, rarityLabel } from '@/lib/archive';
 import { SITE } from '@/lib/site';
 import { addToBook, bookHref, readBook } from '@/lib/myBook';
@@ -38,6 +39,7 @@ export default function SharpenerDetail() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [inBook, setInBook] = useState(false);
   const [missing, setMissing] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -102,10 +104,15 @@ export default function SharpenerDetail() {
     );
   }
 
-  const save = async (changes) => {
-    const updated = await base44.entities.Sharpener.update(sharpener.id, changes);
-    setSharpener((prev) => ({ ...prev, ...changes, ...(updated || {}) }));
-    return true;
+  const reload = async () => {
+    const fresh = await base44.entities.Sharpener.get(sharpener.id);
+    setSharpener(fresh);
+  };
+
+  const remove = async () => {
+    if (!window.confirm(`Delete "${sharpener.name}" from the archive? This cannot be undone.`)) return;
+    await base44.entities.Sharpener.delete(sharpener.id);
+    navigate('/admin?tab=Sharpener');
   };
 
   const addToMyBook = () => {
@@ -203,7 +210,31 @@ export default function SharpenerDetail() {
                 Add to my book
               </button>
             )}
-            {isAdmin && <AdminSharpenerEditor sharpener={sharpener} onSaved={save} />}
+            {isAdmin && (
+              <>
+                <button
+                  onClick={() => setEditing(true)}
+                  className="flex h-11 items-center gap-2 rounded-lg border border-ink/20 bg-white px-4 text-sm font-semibold text-ink transition-colors hover:border-oxblood hover:text-oxblood"
+                >
+                  <Pencil className="h-4 w-4" /> Edit entry
+                </button>
+                <button
+                  onClick={remove}
+                  className="flex h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-oxblood hover:bg-oxblood/10"
+                >
+                  <Trash2 className="h-4 w-4" /> Delete
+                </button>
+                <RecordForm
+                  config={ADMIN_ENTITIES.Sharpener}
+                  entityName="Sharpener"
+                  open={editing}
+                  onOpenChange={setEditing}
+                  record={sharpener}
+                  mode="edit"
+                  onSaved={reload}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
