@@ -1,0 +1,115 @@
+{
+  "name": "Patent",
+  "properties": {
+    "assignees": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "country": {
+      "description": "Issuing country code",
+      "enum": [
+        "US",
+        "GB",
+        "DE",
+        "FR",
+        "CA",
+        "CH",
+        "AT",
+        "IT",
+        "SE",
+        "AU",
+        "Other"
+      ],
+      "type": "string"
+    },
+    "dates_on_items": {
+      "description": "Dates as written in the collection records",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "drawing_urls": {
+      "description": "Drawing sheets; first is main",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "google_url": {
+      "type": "string"
+    },
+    "grant_date": {
+      "format": "date",
+      "type": "string"
+    },
+    "inventors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "maker_id": {
+      "description": "Linked Maker record",
+      "type": "string"
+    },
+    "notes": {
+      "description": "Notes on the patent and its connection to the collection (markdown)",
+      "type": "string"
+    },
+    "number": {
+      "description": "Patent number as recorded, e.g. 959496",
+      "type": "string"
+    },
+    "patent_id": {
+      "description": "Full ID with kind code, e.g. US959496A",
+      "type": "string"
+    },
+    "pdf_url": {
+      "type": "string"
+    },
+    "sharpener_ids": {
+      "description": "Pieces in the collection that cite this patent",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "title": {
+      "type": "string"
+    },
+    "verified": {
+      "default": false,
+      "description": "Matched to an online patent record",
+      "type": "boolean"
+    },
+    "year": {
+      "description": "Grant year, for sorting",
+      "type": "number"
+    }
+  },
+  "required": [
+    "number",
+    "country"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}
