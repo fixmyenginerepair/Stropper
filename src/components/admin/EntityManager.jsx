@@ -12,6 +12,7 @@ import RecordForm, { inputClass } from '@/components/admin/RecordForm';
 import Pagination from '@/components/browse/Pagination';
 import { allFields, choicesFor, fieldByKey } from '@/lib/adminConfig';
 import { downloadCsv, parseCsv, toCsv } from '@/lib/csv';
+import { clearCache, limited } from '@/lib/limited';
 
 const PAGE = 50;
 const SYSTEM_FIELDS = ['id', 'created_date', 'updated_date', 'created_by'];
@@ -51,7 +52,10 @@ export default function EntityManager({ entityName, config, onChanged }) {
   const [notice, setNotice] = useState('');
   const [bulk, setBulk] = useState({ field: '', value: '' });
   const importRef = useRef(null);
-  const entity = base44.entities[entityName];
+  const requestId = useRef(0);
+  // base44.entities returns a new handle on every access, so pin it per table.
+  // (Using it directly as a hook dependency caused an endless reload loop.)
+  const entity = useMemo(() => base44.entities[entityName], [entityName]);
 
   // Reset when switching tables
   useEffect(() => {
@@ -82,15 +86,19 @@ export default function EntityManager({ entityName, config, onChanged }) {
   }, [term, filters, config]);
 
   const load = useCallback(async () => {
+    const id = ++requestId.current;
     setLoading(true);
     try {
       const [count, items] = await Promise.all([
-        entity.count(query),
-        entity.filter(query, sort, PAGE, (page - 1) * PAGE),
+        limited(() => entity.count(query)),
+        limited(() => entity.filter(query, sort, PAGE, (page - 1) * PAGE)),
       ]);
+      if (id !== requestId.current) return; // a newer search replaced this one
       setTotal(count || 0);
       setRows(items || []);
+      setNotice('');
     } catch (err) {
+      if (id !== requestId.current) return;
       setNotice(`Could not load: ${err?.message || err}`);
       setRows([]);
     }
@@ -101,7 +109,7 @@ export default function EntityManager({ entityName, config, onChanged }) {
   useEffect(() => { setSelected(new Set()); }, [query, page, sort]);
 
   const flash = (msg) => { setNotice(msg); setTimeout(() => setNotice(''), 5000); };
-  const refresh = async (msg) => { if (msg) flash(msg); await load(); onChanged?.(); };
+  const refresh = async (msg) => { if (msg) flash(msg); clearCache('ref:'); await load(); onChanged?.(); };
 
   const toggleSort = (key) => {
     if (!key || key === 'images' || key === 'image' || key === 'cover_image') return;
@@ -122,7 +130,7 @@ export default function EntityManager({ entityName, config, onChanged }) {
       setBusy('Deleting…');
       try {
         for (let i = 0; i < records.length; i += 10) {
-          await Promise.all(records.slice(i, i + 10).map((r) => entity.delete(r.id)));
+          await Promise.all(records.slice(i, i + 10).map((r) => limited(() => entity.delete(r.id))));
         }
         setSelected(new Set());
         setEditor((e) => ({ ...e, open: false }));
@@ -153,7 +161,8 @@ export default function EntityManager({ entityName, config, onChanged }) {
     setBusy('Updating…');
     try {
       for (let i = 0; i < ids.length; i += 200) {
-        await entity.bulkUpdate(ids.slice(i, i + 200).map((id) => ({ id, [bulk.field]: value })));
+        const batch = ids.slice(i, i + 200).map((id) => ({ id, [bulk.field]: value }));
+        await limited(() => entity.bulkUpdate(batch));
       }
       setBulk({ field: '', value: '' });
       await refresh(`Updated ${bulkField.label} on ${ids.length} record${ids.length === 1 ? '' : 's'}.`);
@@ -169,7 +178,7 @@ export default function EntityManager({ entityName, config, onChanged }) {
     try {
       const all = [];
       for (let skip = 0; ; skip += 500) {
-        const chunk = await entity.filter(query, sort, 500, skip);
+        const chunk = await limited(() => entity.filter(query, sort, 500, skip));
         all.push(...(chunk || []));
         if (!chunk || chunk.length < 500) break;
       }
@@ -214,8 +223,14 @@ export default function EntityManager({ entityName, config, onChanged }) {
       action: async () => {
         setBusy('Importing…');
         try {
-          for (let i = 0; i < creates.length; i += 200) await entity.bulkCreate(creates.slice(i, i + 200));
-          for (let i = 0; i < updates.length; i += 200) await entity.bulkUpdate(updates.slice(i, i + 200));
+          for (let i = 0; i < creates.length; i += 200) {
+            const batch = creates.slice(i, i + 200);
+            await limited(() => entity.bulkCreate(batch));
+          }
+          for (let i = 0; i < updates.length; i += 200) {
+            const batch = updates.slice(i, i + 200);
+            await limited(() => entity.bulkUpdate(batch));
+          }
           await refresh(`Imported: ${creates.length} added, ${updates.length} updated.`);
         } catch (err) {
           flash(`Import failed: ${err?.message || err}`);
