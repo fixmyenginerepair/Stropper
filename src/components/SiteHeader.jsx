@@ -69,10 +69,10 @@ function RazorBlade() {
 function AccountButtons({ me, onNavigate, mobile }) {
   const solid = mobile
     ? 'my-2 rounded-lg bg-white px-5 py-3 text-center text-sm font-semibold text-navy'
-    : 'rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-white/90';
+    : 'whitespace-nowrap rounded-lg bg-white px-3.5 py-2 text-[12.5px] font-semibold text-navy transition-colors hover:bg-white/90 xl:px-5 xl:py-2.5 xl:text-sm';
   const ghost = mobile
     ? 'mb-4 py-2 text-left text-sm text-white/80'
-    : 'text-sm text-white/75 hover:text-white';
+    : 'whitespace-nowrap text-[12.5px] text-white/75 hover:text-white xl:text-sm';
 
   if (!me) {
     return <button onClick={signIn} className={solid}>Collector sign in</button>;
@@ -101,16 +101,20 @@ export default function SiteHeader() {
       <div className="archive-container">
         <div className="flex h-[76px] items-center justify-between sm:h-[88px]">
           <Link to="/" className="flex shrink-0 items-center" aria-label="Stropper.com home">
-            <img src={SITE.logo} alt="Stropper.com" className="h-12 w-auto sm:h-[60px]" />
+            <img
+              src={SITE.logo}
+              alt="Stropper.com"
+              className="h-12 w-auto object-contain sm:h-[60px] lg:max-w-[170px] xl:max-w-none"
+            />
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden min-w-0 items-center gap-x-2.5 lg:flex xl:gap-x-5 2xl:gap-x-7">
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `text-sm transition-colors ${
+                  `whitespace-nowrap text-[12.5px] transition-colors xl:text-sm ${
                     isActive ? 'text-white' : 'text-white/75 hover:text-white'
                   }`
                 }
@@ -134,17 +138,19 @@ export default function SiteHeader() {
 
       {open && (
         <nav className="border-t border-white/10 bg-navy lg:hidden">
-          <div className="archive-container flex flex-col py-2">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setOpen(false)}
-                className="border-b border-white/10 py-3 text-sm text-white/80 last:border-0"
-              >
-                {link.label}
-              </NavLink>
-            ))}
+          <div className="archive-container py-2">
+            <div className="grid grid-cols-2 gap-x-5 sm:grid-cols-3">
+              {NAV_LINKS.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-white/10 py-2.5 text-[13.5px] text-white/80"
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
             <div className="flex flex-col pt-2">
               <AccountButtons me={me} mobile onNavigate={() => setOpen(false)} />
             </div>
