@@ -42,6 +42,7 @@ export default function SharpenerDetail() {
   const [missing, setMissing] = useState(false);
   const [editing, setEditing] = useState(false);
   const [maker, setMaker] = useState(null);
+  const [patents, setPatents] = useState([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -54,6 +55,10 @@ export default function SharpenerDetail() {
         setSharpener(record);
         setInBook(readBook().includes(record.id));
         setMaker(null);
+        setPatents([]);
+        base44.entities.Patent.filter({ sharpener_ids: record.id }, 'year', 20)
+          .then((rows) => !cancelled && setPatents(rows || []))
+          .catch(() => {});
         if (record.maker_id) {
           base44.entities.Maker.get(record.maker_id)
             .then((m) => !cancelled && setMaker(m))
@@ -184,6 +189,18 @@ export default function SharpenerDetail() {
               to={sharpener.country ? `/browse?country=${encodeURIComponent(sharpener.country)}` : null}
             />
             <Row label="Patent" value={sharpener.patent} />
+            {patents.length > 0 && (
+              <div className="flex flex-col gap-1 border-b border-hair py-3 sm:flex-row sm:gap-6">
+                <dt className="w-40 shrink-0 text-[12px] font-semibold uppercase tracking-[0.12em] text-steel">Patent drawings</dt>
+                <dd className="flex flex-wrap gap-2">
+                  {patents.map((p) => (
+                    <Link key={p.id} to={`/patents/${p.id}`} className="rounded-full border border-hair bg-white px-3 py-1 text-[13px] text-oxblood hover:border-oxblood" title={p.title || ''}>
+                      {patentLabel(p)}{p.grant_date ? ` (${p.grant_date.slice(0, 4)})` : ''}
+                    </Link>
+                  ))}
+                </dd>
+              </div>
+            )}
             <Row label="Blade" value={sharpener.blade} />
             <Row
               label="Collection"
