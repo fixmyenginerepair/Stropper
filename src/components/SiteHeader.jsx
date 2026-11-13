@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -62,8 +62,34 @@ function RazorBlade() {
   );
 }
 
+function AccountButtons({ me, onNavigate, mobile }) {
+  const solid = mobile
+    ? 'my-2 rounded-lg bg-white px-5 py-3 text-center text-sm font-semibold text-navy'
+    : 'rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-white/90';
+  const ghost = mobile
+    ? 'mb-4 py-2 text-left text-sm text-white/80'
+    : 'text-sm text-white/75 hover:text-white';
+
+  if (!me) {
+    return <button onClick={signIn} className={solid}>Collector sign in</button>;
+  }
+  return (
+    <>
+      {me.role === 'admin' && (
+        <Link to="/admin" onClick={onNavigate} className={solid}>Backend</Link>
+      )}
+      <button onClick={() => base44.auth.logout('/')} className={ghost}>Sign out</button>
+    </>
+  );
+}
+
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [me, setMe] = useState(null);
+
+  useEffect(() => {
+    base44.auth.me().then(setMe).catch(() => setMe(null));
+  }, []);
 
   return (
     <header className="sticky top-0 z-50">
@@ -88,12 +114,7 @@ export default function SiteHeader() {
                 {link.label}
               </NavLink>
             ))}
-            <button
-              onClick={signIn}
-              className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-white/90"
-            >
-              Collector sign in
-            </button>
+            <AccountButtons me={me} />
           </nav>
 
           <button
@@ -120,12 +141,9 @@ export default function SiteHeader() {
                 {link.label}
               </NavLink>
             ))}
-            <button
-              onClick={signIn}
-              className="my-4 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-navy"
-            >
-              Collector sign in
-            </button>
+            <div className="flex flex-col pt-2">
+              <AccountButtons me={me} mobile onNavigate={() => setOpen(false)} />
+            </div>
           </div>
         </nav>
       )}
