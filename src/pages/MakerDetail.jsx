@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Markdown, { SourceList } from '@/components/history/Markdown';
 import SharpenerCard from '@/components/SharpenerCard';
+import MakerTimeline from '@/components/makers/MakerTimeline';
 
 const SHOW = 24;
 
@@ -82,6 +83,8 @@ export default function MakerDetail() {
             <p className="eyebrow text-oxblood">Maker{years && ` · ${years}`}</p>
             <h1 className="mt-3 font-heading text-[2rem] font-bold leading-tight text-ink sm:text-[2.5rem]">{maker.name}</h1>
             <div className="max-w-[720px]"><Markdown>{maker.history}</Markdown></div>
+
+            <MakerTimeline maker={maker} pieces={pieces} />
 
             {articles.map((a) => (
               <Link key={a.id} to={`/history/${a.slug || a.id}`} className="mt-8 flex max-w-[720px] items-center justify-between gap-4 rounded-[10px] border border-hair bg-white p-5 transition-colors hover:border-oxblood">
