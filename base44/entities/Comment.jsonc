@@ -1,0 +1,52 @@
+{
+  "name": "Comment",
+  "type": "object",
+  "properties": {
+    "sharpener_id": {
+      "type": "string",
+      "description": "The sharpener this comment belongs to"
+    },
+    "body": {
+      "type": "string",
+      "description": "The comment text"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Display name copied from the commenter's profile"
+    }
+  },
+  "required": [
+    "sharpener_id",
+    "body"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
+import CommentsSection from '@/components/detail/CommentsSection';
 import RecordForm from '@/components/admin/RecordForm';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { formatValue, rarityLabel } from '@/lib/archive';
@@ -246,6 +247,8 @@ export default function SharpenerDetail() {
           </div>
         </div>
       </div>
+
+      <CommentsSection sharpenerId={sharpener.id} />
 
       <div className="mt-14 flex flex-col gap-4 border-t border-hair pt-6 sm:flex-row sm:items-center sm:justify-between">
         <button
