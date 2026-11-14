@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import PhotoZoom from '@/components/detail/PhotoZoom';
 
 const yearLabel = (ad) => (ad.year ? `${ad.year_approximate ? 'c. ' : ''}${ad.year}` : 'Undated');
 
@@ -31,8 +32,12 @@ function AdCard({ ad, onOpen }) {
 }
 
 function AdViewer({ ad, onClose }) {
+  const [zoom, setZoom] = useState(false);
+  const zoomRef = useRef(false);
+  zoomRef.current = zoom;
+
   useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose();
+    const onKey = (e) => e.key === 'Escape' && !zoomRef.current && onClose();
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
@@ -61,10 +66,11 @@ function AdViewer({ ad, onClose }) {
         >
           <X className="h-5 w-5" />
         </button>
-        <div className="bg-[#f4f1ea]">
+        <div className="bg-[#f4f1ea]" data-no-zoom>
           <img
             src={ad.image}
             alt={ad.title}
+            onClick={() => setZoom(true)}
             className="mx-auto max-h-[70vh] w-auto max-w-full cursor-zoom-in md:max-h-[80vh]"
           />
           <p className="py-1.5 text-center text-[12px] text-steel">Tap the ad to zoom in</p>
@@ -94,6 +100,11 @@ function AdViewer({ ad, onClose }) {
           </dl>
         </div>
       </div>
+      {zoom && (
+        <div onClick={(e) => e.stopPropagation()}>
+          <PhotoZoom src={ad.image} alt={ad.title} onClose={() => setZoom(false)} />
+        </div>
+      )}
     </div>
   );
 }
