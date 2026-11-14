@@ -43,27 +43,32 @@ function AdViewer({ ad, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-black/80 p-4 sm:p-8"
+      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto overscroll-contain bg-black/80 p-3 sm:p-8"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={ad.title}
     >
       <div
-        className="relative my-auto grid w-full max-w-5xl gap-6 rounded-[12px] bg-white p-4 sm:p-6 md:grid-cols-[3fr_2fr]"
+        className="relative my-auto grid w-full min-w-0 max-w-5xl gap-6 rounded-[12px] bg-white p-3 sm:p-6 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-ink shadow hover:bg-white"
+          className="absolute right-2 top-2 z-10 rounded-full bg-white/90 p-2.5 text-ink shadow hover:bg-white"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
         </button>
-        <a href={ad.image} target="_blank" rel="noreferrer" className="block bg-[#f4f1ea]">
-          <img src={ad.image} alt={ad.title} className="mx-auto max-h-[80vh] w-auto" />
-        </a>
+        <div className="bg-[#f4f1ea]">
+          <img
+            src={ad.image}
+            alt={ad.title}
+            className="mx-auto max-h-[70vh] w-auto max-w-full cursor-zoom-in md:max-h-[80vh]"
+          />
+          <p className="py-1.5 text-center text-[12px] text-steel">Tap the ad to zoom in</p>
+        </div>
         <div>
           <p className="eyebrow text-oxblood">
             {yearLabel(ad)} · {ad.audience || 'Consumer'} ad
