@@ -16,7 +16,6 @@ import SharpenerDetail from '@/pages/SharpenerDetail';
 import Book from '@/pages/Book';
 import Collectors from '@/pages/Collectors';
 import CollectorDetail from '@/pages/CollectorDetail';
-import SwapList from '@/pages/SwapList';
 import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
@@ -67,7 +66,6 @@ const AuthenticatedApp = () => {
         <Route path="/book" element={<Book />} />
         <Route path="/collectors" element={<Collectors />} />
         <Route path="/collectors/:id" element={<CollectorDetail />} />
-        <Route path="/swap-list" element={<SwapList />} />
         <Route path="/about" element={<About />} />
         <Route path="/classic" element={<ClassicStropper />} />
         <Route path="/advertising" element={<Advertising />} />

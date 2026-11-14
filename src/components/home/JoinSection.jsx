@@ -7,7 +7,7 @@ const signIn = () => base44.auth.redirectToLogin(window.location.href);
 export default function JoinSection() {
   return (
     <section className="archive-container py-12 sm:py-16 lg:py-20">
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         <div className="rounded-[10px] border border-hair bg-white p-7">
           <p className="eyebrow text-oxblood">Collectors</p>
           <h2 className="mt-3 font-heading text-xl font-bold text-ink">Join the collectors</h2>
@@ -29,20 +29,6 @@ export default function JoinSection() {
               Create a collector account
             </Link>
           </div>
-        </div>
-
-        <div className="rounded-[10px] border border-hair bg-white p-7">
-          <p className="eyebrow text-oxblood">Swaps</p>
-          <h2 className="mt-3 font-heading text-xl font-bold text-ink">Swap list</h2>
-          <p className="mt-3 text-[15px] leading-relaxed text-steel">
-            Double-ups and spare sharpeners that collectors are willing to trade or pass on.
-          </p>
-          <Link
-            to="/swap-list"
-            className="mt-6 inline-block text-sm font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood"
-          >
-            See the swap list
-          </Link>
         </div>
 
         <div className="rounded-[10px] border border-hair bg-white p-7">
