@@ -76,8 +76,8 @@ export default function Book() {
         </p>
       </header>
 
-      <div className="mt-9 grid gap-8 lg:grid-cols-[280px_1fr] print:block">
-        <aside className="space-y-4 print:hidden lg:sticky lg:top-[104px] lg:self-start">
+      <div className="mt-9 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[280px_minmax(0,1fr)] print:block">
+        <aside className="min-w-0 space-y-4 print:hidden lg:sticky lg:top-[104px] lg:self-start">
           <div className="rounded-[10px] border border-hair bg-white p-5">
             <h2 className="font-heading text-lg font-bold text-ink">What to include</h2>
             {ids.length > 0 && (
@@ -159,7 +159,7 @@ export default function Book() {
           )}
         </aside>
 
-        <div>
+        <div className="min-w-0">
           <div className="flex flex-col gap-3 border-b border-hair pb-4 sm:flex-row sm:items-center sm:justify-between print:hidden">
             <p className="text-[15px] text-ink">
               <span className="font-semibold">{loading ? '…' : items.length}</span> entries in this
@@ -188,7 +188,9 @@ export default function Book() {
             ) : (
               <div
                 className={
-                  layout === 'compact' ? 'book-grid grid gap-3 sm:grid-cols-2' : 'book-list space-y-5'
+                  layout === 'compact'
+                    ? 'book-grid grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2'
+                    : 'book-list space-y-5'
                 }
               >
                 {items.map((sharpener, index) => (
