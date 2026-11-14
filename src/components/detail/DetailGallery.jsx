@@ -20,6 +20,7 @@ export default function DetailGallery({ sharpener }) {
           type="button"
           onClick={() => setZoomed(true)}
           aria-label={`Enlarge photo of ${sharpener.name}`}
+          data-no-zoom
           className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-frost"
         >
           <Image
@@ -51,7 +52,12 @@ export default function DetailGallery({ sharpener }) {
       </div>
 
       {zoomed && (
-        <PhotoZoom src={main} alt={sharpener.name} onClose={() => setZoomed(false)} />
+        <PhotoZoom
+          images={images}
+          startIndex={active}
+          alt={sharpener.name}
+          onClose={() => setZoomed(false)}
+        />
       )}
     </div>
   );
