@@ -67,7 +67,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[260px] sm:h-[420px] lg:h-[480px]">
+        <div data-no-zoom className="relative h-[260px] sm:h-[420px] lg:h-[480px]">
           <img
             src={HERO_IMAGE}
             alt="A straight razor resting on an oxblood leather strop"
