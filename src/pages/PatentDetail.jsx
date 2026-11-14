@@ -69,9 +69,9 @@ export default function PatentDetail() {
         <div>
           {sheets.length > 0 ? (
             <>
-              <a href={sheets[sheet]} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-[10px] border border-hair bg-[#fbf9f4]">
-                <img src={sheets[sheet]} alt={`Drawing sheet ${sheet + 1} of ${patentLabel(patent)}`} className="mx-auto max-h-[760px] w-full object-contain p-3 mix-blend-multiply" />
-              </a>
+              <div className="block overflow-hidden rounded-[10px] border border-hair bg-[#fbf9f4]">
+                <img src={sheets[sheet]} alt={`Drawing sheet ${sheet + 1} of ${patentLabel(patent)}`} className="mx-auto max-h-[760px] w-full cursor-zoom-in object-contain p-3 mix-blend-multiply" />
+              </div>
               {sheets.length > 1 && (
                 <div className="mt-3 flex gap-2">
                   {sheets.map((src, i) => (
