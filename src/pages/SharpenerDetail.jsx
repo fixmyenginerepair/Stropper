@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
+import ValueGuide from '@/components/detail/ValueGuide';
 import CommentsSection from '@/components/detail/CommentsSection';
 import RecordForm from '@/components/admin/RecordForm';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
@@ -175,6 +176,8 @@ export default function SharpenerDetail() {
               </p>
             </div>
           </div>
+
+          <ValueGuide sharpener={sharpener} />
 
           <dl className="mt-8 border-t border-hair">
             <Row label="Manufacturer" value={sharpener.manufacturer} />

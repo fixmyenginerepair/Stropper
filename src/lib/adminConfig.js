@@ -63,6 +63,8 @@ export const ADMIN_ENTITIES = {
           { key: 'legacy_id', label: 'Old stropper.com ID', kind: 'number' },
           { key: 'rarity', label: 'Rarity', kind: 'select', options: RARITY },
           { key: 'value', label: 'Estimated value ($)', kind: 'number' },
+          { key: 'value_low', label: 'Value range — low ($)', kind: 'number' },
+          { key: 'value_high', label: 'Value range — high ($)', kind: 'number' },
           { key: 'acquired_year', label: 'Year acquired', kind: 'number' },
           { key: 'is_double', label: 'Double — show on the swap list', kind: 'checkbox' },
           { key: 'comment', label: 'Comment', kind: 'textarea', wide: true },

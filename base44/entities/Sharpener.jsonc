@@ -159,6 +159,14 @@
       "description": "Estimated value in USD",
       "type": "number"
     },
+    "value_low": {
+      "description": "Low end of the researched price range, in USD",
+      "type": "number"
+    },
+    "value_high": {
+      "description": "High end of the researched price range, in USD",
+      "type": "number"
+    },
     "year_made": {
       "description": "Approximate year of manufacture, used for the timeline",
       "type": "number"
