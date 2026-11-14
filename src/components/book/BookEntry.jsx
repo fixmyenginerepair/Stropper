@@ -2,10 +2,10 @@ import { formatValue, rarityLabel, sharpenerImage } from '@/lib/archive';
 
 const Line = ({ label, value }) => (
   <div className="flex gap-2 border-b border-hair py-1.5 text-[13px] last:border-0">
-    <span className="w-32 shrink-0 font-semibold uppercase tracking-[0.08em] text-steel text-[10px] pt-1">
+    <span className="w-24 shrink-0 pt-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-steel sm:w-32">
       {label}
     </span>
-    <span className={value ? 'text-ink' : 'text-steel'}>{value || 'Not recorded'}</span>
+    <span className={`min-w-0 break-words ${value ? 'text-ink' : 'text-steel'}`}>{value || 'Not recorded'}</span>
   </div>
 );
 
@@ -16,19 +16,19 @@ const CompactLine = ({ label, value }) =>
       <span className="shrink-0 font-semibold uppercase tracking-[0.06em] text-steel text-[9px] pt-[1px]">
         {label}
       </span>
-      <span className="text-ink">{value}</span>
+      <span className="min-w-0 break-words text-ink">{value}</span>
     </div>
   ) : null;
 
 function CompactEntry({ sharpener, index }) {
   const rarity = sharpener.rarity ? `${sharpener.rarity} — ${rarityLabel(sharpener.rarity)}` : '';
   return (
-    <article className="book-entry book-entry--compact flex gap-3 rounded-[10px] border border-hair bg-white p-3">
+    <article className="book-entry book-entry--compact flex min-w-0 gap-3 rounded-[10px] border border-hair bg-white p-3 [overflow-wrap:anywhere]">
       <img
         src={sharpenerImage(sharpener)}
         alt={sharpener.name}
         loading="eager"
-        className="h-24 w-24 shrink-0 rounded-md bg-frost object-cover print:h-[1.1in] print:w-[1.1in]"
+        className="h-20 w-20 shrink-0 rounded-md bg-frost object-cover sm:h-24 sm:w-24 print:h-[1.1in] print:w-[1.1in]"
       />
       <div className="min-w-0">
         <p className="text-[9px] font-semibold uppercase tracking-[0.1em] text-oxblood">
@@ -56,8 +56,8 @@ export default function BookEntry({ sharpener, index, compact = false }) {
   if (compact) return <CompactEntry sharpener={sharpener} index={index} />;
 
   return (
-    <article className="book-entry book-entry--full rounded-[10px] border border-hair bg-white p-6 print:rounded-none print:border-0 print:p-0">
-      <div className="grid gap-6 sm:grid-cols-[200px_1fr]">
+    <article className="book-entry book-entry--full min-w-0 rounded-[10px] border border-hair bg-white p-4 [overflow-wrap:anywhere] sm:p-6 print:rounded-none print:border-0 print:p-0">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 sm:grid-cols-[200px_minmax(0,1fr)]">
         <div className="overflow-hidden rounded-lg bg-frost">
           <img
             src={sharpenerImage(sharpener)}
