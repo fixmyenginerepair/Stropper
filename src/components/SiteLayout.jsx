@@ -23,8 +23,8 @@ const zoomTarget = (target) => {
 export default function SiteLayout() {
   const [zoom, setZoom] = useState(null);
 
+  // Capture phase, so pages that stop click propagation still get zoom.
   const onClick = useCallback((event) => {
-    if (event.defaultPrevented) return;
     const hit = zoomTarget(event.target);
     if (hit) setZoom(hit);
   }, []);
@@ -32,7 +32,7 @@ export default function SiteLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-frost">
       <SiteHeader />
-      <main className="zoomable flex-1" onClick={onClick}>
+      <main className="zoomable min-w-0 flex-1" onClickCapture={onClick}>
         <Outlet />
       </main>
       <SiteFooter />
