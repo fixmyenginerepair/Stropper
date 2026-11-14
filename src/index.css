@@ -60,6 +60,43 @@
 
   html {
     -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Never let one wide element push the whole page sideways on a phone.
+     `clip` (unlike `hidden`) keeps the sticky header working. */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  img,
+  svg,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+
+  /* Long names, URLs and patent numbers wrap instead of stretching the layout. */
+  main p,
+  main h1,
+  main h2,
+  main h3,
+  main dd,
+  main td,
+  main li {
+    overflow-wrap: break-word;
+  }
+
+  /* Pictures that open in the zoom viewer when tapped. */
+  main.zoomable img {
+    cursor: zoom-in;
+  }
+  main.zoomable a img,
+  main.zoomable button img,
+  main.zoomable [data-no-zoom] img {
+    cursor: inherit;
   }
 
   body {
