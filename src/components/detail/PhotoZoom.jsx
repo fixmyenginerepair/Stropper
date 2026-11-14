@@ -215,7 +215,7 @@ export default function PhotoZoom({ src, images, startIndex = 0, alt = '', onClo
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex flex-col bg-ink/95"
+      className="fixed inset-0 z-[100] flex flex-col bg-ink"
       style={{ height: '100dvh', overscrollBehavior: 'contain' }}
       role="dialog"
       aria-modal="true"
