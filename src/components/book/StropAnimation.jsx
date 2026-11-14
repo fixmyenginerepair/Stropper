@@ -60,6 +60,11 @@ const CSS = `
   43%{transform:rotate(-3deg)}
   93%{transform:rotate(3deg)}
 }
+/* Phones: keep the stroke, drop the sub-pixel strop sway that forces the
+   textured leather filter to repaint every frame (causes flicker on iOS). */
+@media (max-width: 640px){
+  .sr-strop,.sr-ring{animation:none}
+}
 @media (prefers-reduced-motion: reduce){
   .sr-move,.sr-burnish,.sr-tilt,.sr-flip,.sr-spineflash,.sr-glint,.sr-reflect,.sr-strop,.sr-ring{animation:none}
   .sr-move,.sr-burnish{transform:translateX(260px)}
