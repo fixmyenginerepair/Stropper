@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><pattern id="h" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#fff" opacity=".035"/></pattern></defs>
+<rect width="1600" height="900" fill="#010068"/><rect width="1600" height="900" fill="url(#h)"/>
+<rect x="44" y="44" width="1512" height="812" fill="none" stroke="#f7f3ea" stroke-opacity=".55" stroke-width="2"/>
+<rect x="56" y="56" width="1488" height="788" fill="none" stroke="#f7f3ea" stroke-opacity=".25"/>
+<text x="130" y="245" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="7" fill="#e9b9b9">MAKER HISTORY</text>
+<text x="130" y="325" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="70" fill="#f7f3ea">Rolls Razor</text><text x="130" y="398" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="70" fill="#f7f3ea">Ltd.</text>
+<rect x="130" y="438" width="170" height="6" fill="#680000" stroke="#f7f3ea" stroke-opacity=".35"/>
+<text x="130" y="502" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" fill="#f7f3ea" fill-opacity=".85">Battersea · Cricklewood, London</text>
+<text x="130" y="544" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="26" fill="#f7f3ea" fill-opacity=".6">The razor stropped and honed in its case · 1921 – 1964</text>
+<text x="130" y="814" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="18" letter-spacing="4" fill="#f7f3ea" fill-opacity=".45">STROPPER.COM ARCHIVE · ILLUSTRATION</text>
+<svg x="960" y="200" width="520" height="460" viewBox="0 0 420 360">
+<g fill="none" stroke="#f7f3ea" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <rect x="30" y="62" width="300" height="46" rx="12"/>
+  <path d="M56 74 L72 100 M70 74 L86 100 M84 74 L100 100 M98 74 L114 100 M112 74 L128 100 M126 74 L142 100 M140 74 L156 100 M154 74 L170 100 M168 74 L184 100 M182 74 L198 100 M196 74 L212 100 M210 74 L226 100 M224 74 L240 100 M238 74 L254 100 M252 74 L268 100 M266 74 L282 100 M280 74 L296 100 M294 74 L310 100" stroke-width="2" opacity=".35"/>
+  <path d="M48 108 V124 M312 108 V124" stroke-width="3.5"/>
+  <rect x="30" y="124" width="300" height="120" rx="16"/>
+  <rect x="50" y="144" width="260" height="60" rx="8" stroke-width="2.5" opacity=".7"/>
+  <path d="M74 160 H286 L280 188 H80 Z"/>
+  <path d="M84 182 H276" stroke-width="2.5" opacity=".6"/>
+  <path d="M58 232 V216 H76 V226 H66 V221 M84 232 V216 H102 V226 H92 V221 M110 232 V216 H128 V226 H118 V221 M136 232 V216 H154 V226 H144 V221 M162 232 V216 H180 V226 H170 V221 M188 232 V216 H206 V226 H196 V221 M214 232 V216 H232 V226 H222 V221 M240 232 V216 H258 V226 H248 V221 M266 232 V216 H284 V226 H274 V221" stroke-width="2.5" opacity=".75"/>
+  <path d="M330 176 H384" stroke-width="7"/>
+  <circle cx="394" cy="176" r="11" fill="#f7f3ea"/>
+  <path d="M120 296 H280 M136 284 L120 296 L136 308 M264 284 L280 296 L264 308" stroke-width="3.5"/>
+</g></svg>
+</svg>
