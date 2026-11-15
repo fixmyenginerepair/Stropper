@@ -117,8 +117,12 @@ export default function Advertising() {
 
   useEffect(() => {
     base44.entities.PeriodAd.list('year', 500).then((rows) => {
-      setAds(Array.isArray(rows) ? rows : rows?.items || []);
+      const list = Array.isArray(rows) ? rows : rows?.items || [];
+      setAds(list);
       setLoading(false);
+      // Deep link from the home page: /advertising?ad=<id>
+      const wanted = new URLSearchParams(window.location.search).get('ad');
+      if (wanted) setOpen(list.find((a) => a.id === wanted) || null);
     });
   }, []);
 
