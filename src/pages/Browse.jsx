@@ -138,7 +138,7 @@ export default function Browse() {
           ) : (
             <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
               {items.map((sharpener) => (
-                <SharpenerCard key={sharpener.id} sharpener={sharpener} showType />
+                <SharpenerCard key={sharpener.id} sharpener={sharpener} showType showRarity />
               ))}
             </div>
           )}

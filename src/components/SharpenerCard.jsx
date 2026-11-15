@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 import SharpenerTypeBadge from '@/components/SharpenerTypeBadge';
+import RarityBandBadge from '@/components/RarityBandBadge';
 import { sharpenerImage, typeCountryLine } from '@/lib/archive';
 
-export default function SharpenerCard({ sharpener, showType = false }) {
+export default function SharpenerCard({ sharpener, showType = false, showRarity = false }) {
   return (
     <Link
       to={`/sharpener/${sharpener.id}`}
@@ -17,6 +18,9 @@ export default function SharpenerCard({ sharpener, showType = false }) {
         />
         {showType && (
           <SharpenerTypeBadge type={sharpener.type} className="absolute left-2 top-2 z-10" />
+        )}
+        {showRarity && (
+          <RarityBandBadge rarity={sharpener.rarity} className="absolute right-2 top-2 z-10" />
         )}
       </div>
       <div className="p-4">
