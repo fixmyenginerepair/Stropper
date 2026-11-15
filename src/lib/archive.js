@@ -152,6 +152,12 @@ export const RARITY_BANDS = [
   { key: 'trade', label: 'Trade', range: 'T', values: ['T'] },
 ];
 
+// The band a given 1–9 (or T) rating falls into.
+export function rarityBand(rarity) {
+  const value = String(rarity ?? '');
+  return RARITY_BANDS.find((band) => band.values.includes(value)) || null;
+}
+
 export function rarityBandValues(rarity) {
   const band = RARITY_BANDS.find((item) => item.key === rarity);
   return band ? band.values : null;
