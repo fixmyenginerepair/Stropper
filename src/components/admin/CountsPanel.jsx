@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Minus, Plus, Search } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { clearCache, limited } from '@/lib/limited';
+import { copiesOf as qty, FOUNDER_COLLECTION } from '@/lib/collectionCounts';
 
 const PAGE = 100;
-const qty = (r) => (Number.isFinite(Number(r.copies)) && r.copies !== null && r.copies !== '' ? Number(r.copies) : 1);
 const fmt = (n) => Number(n || 0).toLocaleString();
 
 // Collection counts: one row per piece, with an editable "copies owned" number.
@@ -15,7 +15,7 @@ export default function CountsPanel() {
   const [error, setError] = useState('');
   const [q, setQ] = useState('');
   const [type, setType] = useState('');
-  const [owner, setOwner] = useState('');
+  const [owner, setOwner] = useState(FOUNDER_COLLECTION);
   const [onlyMulti, setOnlyMulti] = useState(false);
   const [shown, setShown] = useState(PAGE);
   const [saving, setSaving] = useState({});
@@ -80,6 +80,7 @@ export default function CountsPanel() {
       try {
         await limited(() => base44.entities.Sharpener.update(id, { copies: n === '' ? 1 : n }));
         clearCache('stats:');
+        clearCache('counts:');
         setSaving((s) => ({ ...s, [id]: 'saved' }));
       } catch {
         setSaving((s) => ({ ...s, [id]: 'error' }));
