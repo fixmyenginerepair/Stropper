@@ -34,6 +34,14 @@ export default function History() {
           Who made these sharpeners, where, and why. Each history is built from patents, period
           advertising, museum records and the markings on the pieces in this archive.
         </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link to="/map" className="rounded-lg bg-navy px-5 py-2.5 text-sm font-semibold text-white hover:bg-navy/90">
+            See the makers on a map
+          </Link>
+          <Link to="/how-it-works" className="rounded-lg border border-ink/20 bg-white px-5 py-2.5 text-sm font-semibold text-ink hover:border-oxblood hover:text-oxblood">
+            How the sharpeners worked
+          </Link>
+        </div>
       </header>
 
       <section className="mt-10">
