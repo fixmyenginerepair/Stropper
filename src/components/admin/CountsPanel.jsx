@@ -103,7 +103,7 @@ export default function CountsPanel() {
     <div>
       <div className="grid gap-4 sm:grid-cols-3">
         {stat('Different pieces', fmt(totals.pieces), 'One per catalogued sharpener')}
-        {stat('Total with copies', fmt(totals.copies), `${fmt(totals.copies - totals.pieces)} extra copies`)}
+        {stat('Total count', fmt(totals.copies), `${fmt(totals.copies - totals.pieces)} more than different pieces`)}
         {stat('Types', fmt(totals.types.length), 'Categories in use')}
       </div>
 
@@ -111,7 +111,7 @@ export default function CountsPanel() {
         <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-ink">Counts by type</summary>
         <table className="w-full text-[14px]">
           <thead className="border-t border-hair bg-frost text-left text-[11px] uppercase tracking-[0.12em] text-steel">
-            <tr><th className="px-4 py-2">Type</th><th className="px-4 py-2 text-right">Different</th><th className="px-4 py-2 text-right">With copies</th></tr>
+            <tr><th className="px-4 py-2">Type</th><th className="px-4 py-2 text-right">Different</th><th className="px-4 py-2 text-right">Total count</th></tr>
           </thead>
           <tbody className="divide-y divide-hair">
             {totals.types.map((t) => (
@@ -141,12 +141,12 @@ export default function CountsPanel() {
           </select>
         )}
         <label className="flex items-center gap-2 text-sm text-ink">
-          <input type="checkbox" checked={onlyMulti} onChange={(e) => setOnlyMulti(e.target.checked)} /> Only 2+ copies
+          <input type="checkbox" checked={onlyMulti} onChange={(e) => setOnlyMulti(e.target.checked)} /> Only count 2+
         </label>
       </div>
 
       <p className="mt-3 text-[13px] text-steel">
-        {fmt(filtered.length)} pieces · {fmt(filtered.reduce((s, r) => s + qty(r), 0))} with copies. Type a number and it saves on its own.
+        {fmt(filtered.length)} pieces · total count {fmt(filtered.reduce((s, r) => s + qty(r), 0))}. Type a number and it saves on its own.
       </p>
 
       <div className="mt-2 overflow-x-auto rounded-[10px] border border-hair bg-white">
@@ -156,7 +156,7 @@ export default function CountsPanel() {
               <th className="px-3 py-2">Old ID</th>
               <th className="px-3 py-2">Name</th>
               <th className="px-3 py-2">Type</th>
-              <th className="px-3 py-2 text-center">Copies</th>
+              <th className="px-3 py-2 text-center">Count</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-hair">
