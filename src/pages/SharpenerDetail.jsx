@@ -6,6 +6,8 @@ import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
 import ValueGuide from '@/components/detail/ValueGuide';
 import CommentsSection from '@/components/detail/CommentsSection';
+import HowItWorksSection from '@/components/HowItWorks';
+import { mechanismForType } from '@/lib/mechanisms';
 import RecordForm from '@/components/admin/RecordForm';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { formatValue, rarityLabel } from '@/lib/archive';
@@ -268,6 +270,8 @@ export default function SharpenerDetail() {
           </div>
         </div>
       </div>
+
+      <HowItWorksSection mechanism={mechanismForType(sharpener.type)} />
 
       <CommentsSection sharpenerId={sharpener.id} />
 
