@@ -35,7 +35,7 @@ export default function CountsPanel() {
           cursor = page.has_more ? page.next_cursor : null;
         } while (cursor && !cancelled);
         if (!cancelled) setRows(all.map(({ id, name, type: t, legacy_id, collection, copies }) => ({ id, name, type: t, legacy_id, collection, copies })));
-      } catch (e) {
+      } catch {
         if (!cancelled) setError('Could not load the collection. Refresh to try again.');
       }
     })();
