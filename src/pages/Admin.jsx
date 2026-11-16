@@ -60,7 +60,7 @@ function Overview({ goTo }) {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {tile('Sharpeners', stats?.sharpeners?.toLocaleString(), 'Sharpener',
           stats && [stats.noPhoto ? `${stats.noPhoto} without photos` : null, `${stats.doubles} on swap list`].filter(Boolean).join(' · '))}
-        {tile('Collection counts', 'Open', 'counts', 'Different pieces & total with copies')}
+        {tile('Collection counts', 'Open', 'counts', 'Different pieces & total count')}
         {tile('Makers', stats?.makers, 'Maker')}
         {tile('Articles', stats?.articles, 'Article', stats?.drafts ? `${stats.drafts} drafts` : null)}
         {tile('Period ads', stats?.ads, 'PeriodAd')}
