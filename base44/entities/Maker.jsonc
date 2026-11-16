@@ -35,6 +35,18 @@
       "description": "Founders, inventors, notable figures",
       "type": "string"
     },
+    "lat": {
+      "description": "Latitude of the maker's main works, for the map",
+      "type": "number"
+    },
+    "lng": {
+      "description": "Longitude of the maker's main works, for the map",
+      "type": "number"
+    },
+    "map_place": {
+      "description": "Short place name shown on the makers map, e.g. St. Louis",
+      "type": "string"
+    },
     "name": {
       "description": "Company or inventor name, e.g. AutoStrop Safety Razor Co.",
       "type": "string"
@@ -61,6 +73,7 @@
   "required": [
     "name"
   ],
+  "type": "object",
   "rls": {
     "create": {
       "user_condition": {
@@ -77,6 +90,5 @@
         "role": "admin"
       }
     }
-  },
-  "type": "object"
+  }
 }
