@@ -13,6 +13,7 @@ export const NAV_GROUPS = [
     children: [
       { label: 'Browse the archive', to: '/browse', note: 'Search and filter every piece' },
       { label: 'Full list', to: '/list', note: 'Every sharpener, A–Z' },
+      { label: 'How they work', to: '/how-it-works', note: 'Animated diagrams of each type' },
       { label: 'The Book', to: '/book', note: 'Print the archive as a book' },
     ],
   },
@@ -37,6 +38,7 @@ export const NAV_LINKS = [
   { label: 'The Book', to: '/book' },
   { label: 'History', to: '/history' },
   { label: 'Patents', to: '/patents' },
+  { label: 'How they work', to: '/how-it-works' },
   { label: 'Ads', to: '/advertising' },
   { label: 'About', to: '/about' },
   { label: 'Classic', to: '/classic' },
