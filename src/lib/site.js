@@ -21,6 +21,7 @@ export const NAV_GROUPS = [
     label: 'History',
     children: [
       { label: 'Makers & stories', to: '/history', note: 'The companies behind the pieces' },
+      { label: 'Makers map', to: '/map', note: 'Where the sharpeners were made' },
       { label: 'Patents', to: '/patents', note: 'Original drawings and inventors' },
       { label: 'Period advertising', to: '/advertising', note: 'Ads from the era' },
       { label: 'Classic Stropper.com', to: '/classic', note: 'The original site, preserved' },
@@ -37,6 +38,7 @@ export const NAV_LINKS = [
   { label: 'Collectors', to: '/collectors' },
   { label: 'The Book', to: '/book' },
   { label: 'History', to: '/history' },
+  { label: 'Map', to: '/map' },
   { label: 'Patents', to: '/patents' },
   { label: 'How they work', to: '/how-it-works' },
   { label: 'Ads', to: '/advertising' },
