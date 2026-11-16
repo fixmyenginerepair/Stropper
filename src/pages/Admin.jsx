@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
-  Archive, BookOpen, Factory, FileBadge, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
+  Archive, BookOpen, Factory, FileBadge, Hash, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
 import UsersPanel from '@/components/admin/UsersPanel';
+import CountsPanel from '@/components/admin/CountsPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { cached, limited } from '@/lib/limited';
 
 const TABS = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { key: 'counts', label: 'Collection counts', icon: Hash },
   { key: 'Sharpener', label: 'Sharpeners', icon: Scissors },
   { key: 'Maker', label: 'Makers', icon: Factory },
   { key: 'Patent', label: 'Patents', icon: FileBadge },
@@ -58,6 +60,7 @@ function Overview({ goTo }) {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {tile('Sharpeners', stats?.sharpeners?.toLocaleString(), 'Sharpener',
           stats && [stats.noPhoto ? `${stats.noPhoto} without photos` : null, `${stats.doubles} on swap list`].filter(Boolean).join(' · '))}
+        {tile('Collection counts', 'Open', 'counts', 'Different pieces & total with copies')}
         {tile('Makers', stats?.makers, 'Maker')}
         {tile('Articles', stats?.articles, 'Article', stats?.drafts ? `${stats.drafts} drafts` : null)}
         {tile('Period ads', stats?.ads, 'PeriodAd')}
@@ -165,6 +168,7 @@ export default function Admin() {
         <section className="min-w-0">
           {current.key === 'overview' && <Overview goTo={goTo} />}
           {current.key === 'users' && <UsersPanel me={me} />}
+          {current.key === 'counts' && <CountsPanel />}
           {config && <EntityManager key={current.key} entityName={current.key} config={config} onChanged={() => setTick((t) => t + 1)} />}
         </section>
       </div>
