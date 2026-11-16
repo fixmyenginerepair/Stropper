@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SITE } from '@/lib/site';
+import { useCollectionCounts } from '@/lib/collectionCounts';
 
 // --- About the Founder -------------------------------------------------------
 // Paste asset URLs here after uploading in Base44 > Assets (leave '' to hide).
@@ -17,7 +18,6 @@ const PRESENTATION = {
 const FOUNDER_FACTS = [
   ['Name', 'Thomas V. “Tom” Willard'],
   ['Service', 'Colonel, U.S. Air Force (Ret.)'],
-  ['Collection', '1,500+ razor sharpeners & stroppers'],
   ['Founded', 'Stropper.com & ShaveWorld.org'],
 ];
 
@@ -44,6 +44,16 @@ const linkCls =
   'font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood';
 
 function AboutFounder() {
+  const counts = useCollectionCounts();
+  const total = counts ? counts.total.toLocaleString() : '1,500+';
+  const facts = [
+    FOUNDER_FACTS[0],
+    FOUNDER_FACTS[1],
+    ['Collection', counts
+      ? `${counts.total.toLocaleString()} razor sharpeners & stroppers (${counts.pieces.toLocaleString()} different)`
+      : '1,500+ razor sharpeners & stroppers'],
+    ...FOUNDER_FACTS.slice(2),
+  ];
   return (
     <section id="founder" className="border-b border-hair bg-white">
       <div className="archive-container py-12 sm:py-16">
@@ -57,7 +67,7 @@ function AboutFounder() {
             <p>
               Tom Willard, a retired Colonel of the United States Air Force, has assembled one of the
               largest collections of razor strops and sharpeners in the world. In his own survey of
-              the field’s leading stropper collections, his collection of more than 1,500 pieces
+              the field’s leading stropper collections, his collection of {counts ? total : 'more than 1,500'} pieces
               heads the list — ahead of collectors in Germany, France, the Netherlands and Scandinavia.
             </p>
             <p>
@@ -80,7 +90,7 @@ function AboutFounder() {
             </p>
 
             <dl className="grid gap-px overflow-hidden rounded-[10px] border border-hair bg-hair sm:grid-cols-2">
-              {FOUNDER_FACTS.map(([k, v]) => (
+              {facts.map(([k, v]) => (
                 <div key={k} className="bg-white px-4 py-3">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-steel">{k}</dt>
                   <dd className="mt-1 text-[15px] font-semibold text-ink">{v}</dd>
