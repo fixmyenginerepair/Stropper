@@ -66,7 +66,7 @@ export const ADMIN_ENTITIES = {
           { key: 'value_low', label: 'Value range — low ($)', kind: 'number' },
           { key: 'value_high', label: 'Value range — high ($)', kind: 'number' },
           { key: 'acquired_year', label: 'Year acquired', kind: 'number' },
-          { key: 'copies', label: 'Copies owned', kind: 'number' },
+          { key: 'copies', label: 'Count', kind: 'number' },
           { key: 'is_double', label: 'Double — show on the swap list', kind: 'checkbox' },
           { key: 'comment', label: 'Comment', kind: 'textarea', wide: true },
         ],
