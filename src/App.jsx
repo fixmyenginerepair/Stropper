@@ -20,6 +20,7 @@ import About from '@/pages/About';
 import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
 import HowItWorks from '@/pages/HowItWorks';
+import MakersMap from '@/pages/MakersMap';
 import Admin from '@/pages/Admin';
 import History from '@/pages/History';
 import ArticleDetail from '@/pages/ArticleDetail';
@@ -71,6 +72,7 @@ const AuthenticatedApp = () => {
         <Route path="/classic" element={<ClassicStropper />} />
         <Route path="/advertising" element={<Advertising />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/map" element={<MakersMap />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/history" element={<History />} />
         <Route path="/history/:slug" element={<ArticleDetail />} />
