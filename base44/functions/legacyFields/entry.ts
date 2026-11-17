@@ -16,6 +16,16 @@ export default async function (req: Request) {
   try {
     const body = await req.json();
     const base44 = createClientFromRequest(req);
+    if (body.collectorsList) {
+      const rows = await base44.asServiceRole.entities.Collector.filter({}, 'name', 500, 0, ['id', 'name', 'country', 'collection_type', 'email']);
+      return Response.json({ rows }, { headers: CORS });
+    }
+    if (Array.isArray(body.collectorEmails)) {
+      const C = base44.asServiceRole.entities.Collector;
+      const batch = body.collectorEmails.filter((u: any) => u.id && u.email).map((u: any) => ({ id: u.id, email: u.email }));
+      for (let i = 0; i < batch.length; i += 100) await C.bulkUpdate(batch.slice(i, i + 100));
+      return Response.json({ updated: batch.length }, { headers: CORS });
+    }
     const S = base44.asServiceRole.entities.Sharpener;
     const all: any[] = [];
     for (let skip = 0; ; skip += 500) {
