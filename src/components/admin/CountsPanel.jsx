@@ -51,19 +51,19 @@ export default function CountsPanel() {
     scoped.forEach((r) => {
       const k = r.type || 'Unknown';
       const t = byType.get(k) || { type: k, pieces: 0, copies: 0 };
-      t.pieces += 1;
+      if (qty(r) > 0) t.pieces += 1;
       t.copies += qty(r);
       copies += qty(r);
       byType.set(k, t);
     });
-    return { pieces: scoped.length, copies, types: [...byType.values()].sort((a, b) => b.copies - a.copies) };
+    return { pieces: scoped.filter((r) => qty(r) > 0).length, catalogued: scoped.length, copies, types: [...byType.values()].sort((a, b) => b.copies - a.copies) };
   }, [scoped]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return scoped.filter((r) =>
       (!type || (r.type || 'Unknown') === type) &&
-      (!onlyMulti || qty(r) > 1) &&
+      (!onlyMulti || qty(r) !== 1) &&
       (!needle || (r.name || '').toLowerCase().includes(needle) || String(r.legacy_id ?? '') === needle)
     );
   }, [scoped, q, type, onlyMulti]);
@@ -102,7 +102,7 @@ export default function CountsPanel() {
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-3">
-        {stat('Different pieces', fmt(totals.pieces), 'One per catalogued sharpener')}
+        {stat('Different pieces', fmt(totals.pieces), `Count 1 or more · ${fmt(totals.catalogued)} catalogued, ${fmt(totals.catalogued - totals.pieces)} at 0`)}
         {stat('Total count', fmt(totals.copies), `${fmt(totals.copies - totals.pieces)} more than different pieces`)}
         {stat('Types', fmt(totals.types.length), 'Categories in use')}
       </div>
@@ -141,7 +141,7 @@ export default function CountsPanel() {
           </select>
         )}
         <label className="flex items-center gap-2 text-sm text-ink">
-          <input type="checkbox" checked={onlyMulti} onChange={(e) => setOnlyMulti(e.target.checked)} /> Only count 2+
+          <input type="checkbox" checked={onlyMulti} onChange={(e) => setOnlyMulti(e.target.checked)} /> Only count 2+ (or 0)
         </label>
       </div>
 
