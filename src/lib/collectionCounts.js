@@ -12,7 +12,7 @@ export const copiesOf = (r) => {
 };
 
 // Reads every record and adds up the copies field.
-// pieces = different sharpeners catalogued; total = all sharpeners counting copies.
+// pieces = different sharpeners owned (count 1+); total = sum of the count field (old site's mycount).
 export function fetchCollectionCounts(collection = FOUNDER_COLLECTION) {
   return cached(`counts:${collection || 'all'}`, async () => {
     const query = collection ? { collection } : {};
@@ -21,7 +21,7 @@ export function fetchCollectionCounts(collection = FOUNDER_COLLECTION) {
     let cursor;
     do {
       const page = await base44.entities.Sharpener.filter(query, { sort: 'name', limit: 200, ...(cursor ? { cursor } : {}) });
-      (page.items || []).forEach((r) => { pieces += 1; total += copiesOf(r); });
+      (page.items || []).forEach((r) => { const n = copiesOf(r); if (n > 0) pieces += 1; total += n; });
       cursor = page.has_more ? page.next_cursor : null;
     } while (cursor);
     return { pieces, total };
