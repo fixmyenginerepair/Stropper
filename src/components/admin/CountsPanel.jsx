@@ -16,7 +16,7 @@ export default function CountsPanel() {
   const [q, setQ] = useState('');
   const [type, setType] = useState('');
   const [owner, setOwner] = useState(FOUNDER_COLLECTION);
-  const [onlyMulti, setOnlyMulti] = useState(false);
+  const [countFilter, setCountFilter] = useState('');
   const [shown, setShown] = useState(PAGE);
   const [saving, setSaving] = useState({});
   const timers = useRef({});
@@ -63,12 +63,12 @@ export default function CountsPanel() {
     const needle = q.trim().toLowerCase();
     return scoped.filter((r) =>
       (!type || (r.type || 'Unknown') === type) &&
-      (!onlyMulti || qty(r) !== 1) &&
+      (!countFilter || (countFilter === '0' ? qty(r) === 0 : countFilter === '1' ? qty(r) === 1 : qty(r) >= 2)) &&
       (!needle || (r.name || '').toLowerCase().includes(needle) || String(r.legacy_id ?? '') === needle)
     );
-  }, [scoped, q, type, onlyMulti]);
+  }, [scoped, q, type, countFilter]);
 
-  useEffect(() => setShown(PAGE), [q, type, owner, onlyMulti]);
+  useEffect(() => setShown(PAGE), [q, type, owner, countFilter]);
 
   const setCopies = (id, value) => {
     const n = value === '' ? '' : Math.max(0, Math.floor(Number(value)));
@@ -140,9 +140,12 @@ export default function CountsPanel() {
             {owners.map((o) => <option key={o} value={o}>{o}</option>)}
           </select>
         )}
-        <label className="flex items-center gap-2 text-sm text-ink">
-          <input type="checkbox" checked={onlyMulti} onChange={(e) => setOnlyMulti(e.target.checked)} /> Only count 2+ (or 0)
-        </label>
+        <select value={countFilter} onChange={(e) => setCountFilter(e.target.value)} className="rounded-lg border border-hair bg-white px-3 py-2 text-sm">
+          <option value="">Any count</option>
+          <option value="0">Count 0</option>
+          <option value="1">Count 1</option>
+          <option value="2">Count 2+</option>
+        </select>
       </div>
 
       <p className="mt-3 text-[13px] text-steel">
