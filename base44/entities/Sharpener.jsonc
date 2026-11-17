@@ -4,6 +4,11 @@
     "acquired_year": {
       "type": "number"
     },
+    "added_date": {
+      "description": "Date the entry was added on the old stropper.com (adddate)",
+      "format": "date",
+      "type": "string"
+    },
     "blade": {
       "type": "string"
     },
@@ -16,7 +21,40 @@
     },
     "copies": {
       "default": 1,
-      "description": "How many copies of this piece the collector owns (blank counts as 1)",
+      "description": "Count: how many of this piece the collector owns (old site's mycount)",
+      "type": "number"
+    },
+    "cost1": {
+      "description": "Cost 1 from the old database (private)",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "number"
+    },
+    "cost2": {
+      "description": "Cost 2 from the old database (private)",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "number"
+    },
+    "cost3": {
+      "description": "Cost 3 from the old database (private)",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
       "type": "number"
     },
     "country": {
@@ -60,6 +98,20 @@
     "description": {
       "type": "string"
     },
+    "editors_note": {
+      "description": "Editors field from the old database",
+      "type": "string"
+    },
+    "has_box": {
+      "default": false,
+      "description": "Comes with its original box (old site's box = x)",
+      "type": "boolean"
+    },
+    "has_instructions": {
+      "default": false,
+      "description": "Comes with original instructions (old site's instructions = x)",
+      "type": "boolean"
+    },
     "images": {
       "description": "Photo URLs, first is main",
       "items": {
@@ -78,6 +130,10 @@
     },
     "legacy_id": {
       "description": "ID on the old stropper.com",
+      "type": "number"
+    },
+    "lister_id": {
+      "description": "Who listed the entry on the old site (lister_id)",
       "type": "number"
     },
     "maker_id": {
