@@ -45,6 +45,8 @@ function clusterPlaces(panel, places) {
 const LEFT_LABELS = new Set(['Geneva, NY', 'Lucerne']);
 // Same, matched on any place inside a shared pin (keys are lower-case place names).
 const LEFT_KEYS = new Set(['adrian, mi', 'swanton, oh']);
+// Pins whose label sits centred above them (the Rhineland is crowded).
+const ABOVE_KEYS = new Set(['solingen']);
 
 function MapPanel({ panel, places, selected, onSelect }) {
   return (
@@ -64,6 +66,8 @@ function MapPanel({ panel, places, selected, onSelect }) {
           const { x, y } = project(panel, place.lat, place.lng);
           const active = selected === place.key || (place.parts || []).includes(selected);
           const left = LEFT_LABELS.has(place.name) || (place.parts || []).some((k) => LEFT_KEYS.has(k));
+          const above = (place.parts || []).some((k) => ABOVE_KEYS.has(k));
+          const label = above && place.parts.length > 1 ? `${place.first} +${place.parts.length - 1}` : place.label || place.name;
           return (
             <g
               key={place.key}
@@ -87,9 +91,9 @@ function MapPanel({ panel, places, selected, onSelect }) {
                 </text>
               )}
               <text
-                x={left ? x - 16 : x + 16}
-                y={y + 6}
-                textAnchor={left ? 'end' : 'start'}
+                x={above ? x : left ? x - 16 : x + 16}
+                y={above ? y - 16 : y + 6}
+                textAnchor={above ? 'middle' : left ? 'end' : 'start'}
                 fontSize="18"
                 fontWeight={active ? 700 : 600}
                 fill="#1B2333"
@@ -98,7 +102,7 @@ function MapPanel({ panel, places, selected, onSelect }) {
                 paintOrder="stroke"
                 style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
               >
-                {place.label || place.name}
+                {label}
               </text>
             </g>
           );
