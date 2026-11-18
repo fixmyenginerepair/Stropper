@@ -24,11 +24,12 @@ const STATIC = [
 
 async function all(entity, fields) {
   const rows = [];
+  const seen = new Set();
   for (let skip = 0; ; skip += 500) {
-    const res = await fetch(`${API}/${entity}?limit=500&skip=${skip}&sort=created_date&fields=${fields}`);
+    const res = await fetch(`${API}/${entity}?limit=500&skip=${skip}&sort=id&fields=${fields}`);
     if (!res.ok) throw new Error(`${entity}: HTTP ${res.status}`);
     const page = await res.json();
-    rows.push(...page);
+    for (const r of page) if (!seen.has(r.id)) { seen.add(r.id); rows.push(r); }
     if (page.length < 500) break;
   }
   return rows;
