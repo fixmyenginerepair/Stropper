@@ -12,10 +12,12 @@ const EDITABLE = [
 const escapeRegex = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // A record may only be bound to the signed-in account when the account really
-// owns it: it was created by this user, or it is a trusted legacy import.
-// A record created by someone else is never claimed, whatever it says.
+// owns it: it was created by this user, it is a trusted legacy import, or an
+// admin has approved it (admins now add every collector listing themselves).
 const isOwnedBy = (row, user) =>
-  (row.created_by_id && row.created_by_id === user.id) || row.from_legacy_site === true;
+  (row.created_by_id && row.created_by_id === user.id) ||
+  row.from_legacy_site === true ||
+  row.approved === true;
 
 // Finds the collector record that belongs to the signed-in user: linked by
 // user_id first, otherwise claimed through an exact e-mail match.
