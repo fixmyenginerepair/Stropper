@@ -3,11 +3,12 @@ import { Image } from '@/components/ui/image';
 import SharpenerTypeBadge from '@/components/SharpenerTypeBadge';
 import RarityBandBadge from '@/components/RarityBandBadge';
 import { sharpenerImage, typeCountryLine } from '@/lib/archive';
+import { sharpenerPath } from '@/lib/slugs';
 
 export default function SharpenerCard({ sharpener, showType = false, showRarity = false }) {
   return (
     <Link
-      to={`/sharpener/${sharpener.id}`}
+      to={sharpenerPath(sharpener)}
       className="group block overflow-hidden rounded-[10px] border border-hair bg-white transition-colors duration-200 hover:border-oxblood"
     >
       <div className="relative aspect-square overflow-hidden bg-frost">

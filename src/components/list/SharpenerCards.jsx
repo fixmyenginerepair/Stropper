@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 import { formatValue, sharpenerImage } from '@/lib/archive';
+import { sharpenerPath } from '@/lib/slugs';
 
 const listValue = (value) => {
   const formatted = formatValue(value);
@@ -32,7 +33,7 @@ export default function SharpenerCards({ items, loading, startIndex }) {
         return (
           <li key={item.id}>
             <Link
-              to={`/sharpener/${item.id}`}
+              to={sharpenerPath(item)}
               className="flex gap-3 px-4 py-3 transition-colors active:bg-frost/70"
             >
               <span className="h-14 w-14 shrink-0 overflow-hidden rounded border border-hair bg-frost">

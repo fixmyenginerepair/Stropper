@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
 import { sharpenerImage, typeCountryLine } from '@/lib/archive';
+import { sharpenerPath } from '@/lib/slugs';
 
 // The popular families the carousel draws from, with the browse link each one opens.
 const CATEGORIES = [
@@ -162,7 +163,7 @@ export default function FeaturedCarousel() {
                 className="featured-rise flex flex-wrap items-center gap-x-6 gap-y-3 pt-4"
               >
                 <Link
-                  to={`/sharpener/${slide.id}`}
+                  to={sharpenerPath(slide)}
                   className="group inline-flex items-center gap-2 font-mono text-[13px] font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:text-oxblood hover:decoration-oxblood"
                 >
                   Open this piece

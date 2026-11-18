@@ -5,6 +5,7 @@ import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import SharpenerCard from '@/components/SharpenerCard';
 import { COUNTRY_NAMES, formatGrantDate, googlePatentsUrl, patentLabel } from '@/lib/patents';
+import { sharpenerPath } from '@/lib/slugs';
 
 function Row({ label, children }) {
   if (!children || (Array.isArray(children) && !children.length)) return null;
@@ -89,7 +90,7 @@ export default function PatentDetail() {
             </>
           ) : photo ? (
             <>
-              <Link to={`/sharpener/${photo.piece.id}`} className="block overflow-hidden rounded-[10px] border border-hair bg-white">
+              <Link to={sharpenerPath(photo.piece)} className="block overflow-hidden rounded-[10px] border border-hair bg-white">
                 <img src={photo.src} alt={photo.piece.name} className="mx-auto max-h-[760px] w-full object-contain" />
               </Link>
               {photos.length > 1 && (
@@ -102,7 +103,7 @@ export default function PatentDetail() {
                 </div>
               )}
               <p className="mt-2 text-[12.5px] text-steel">
-                No patent drawing found online yet. Shown instead: <Link to={`/sharpener/${photo.piece.id}`} className="text-oxblood hover:underline">{photo.piece.name}</Link> from the collection, which is marked with this patent.
+                No patent drawing found online yet. Shown instead: <Link to={sharpenerPath(photo.piece)} className="text-oxblood hover:underline">{photo.piece.name}</Link> from the collection, which is marked with this patent.
               </p>
             </>
           ) : (

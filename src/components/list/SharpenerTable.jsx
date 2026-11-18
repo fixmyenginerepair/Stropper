@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 import { formatValue, sharpenerImage } from '@/lib/archive';
+import { sharpenerPath } from '@/lib/slugs';
 
 const th =
   'whitespace-nowrap border-b border-hair px-3 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.14em] text-steel';
@@ -51,7 +52,7 @@ export default function SharpenerTable({ items, loading, startIndex }) {
                 </td>
                 <td className={td}>
                   <Link
-                    to={`/sharpener/${item.id}`}
+                    to={sharpenerPath(item)}
                     className="flex items-center gap-3 text-ink transition-colors hover:text-oxblood"
                   >
                     <span className="h-10 w-10 shrink-0 overflow-hidden rounded border border-hair bg-frost">

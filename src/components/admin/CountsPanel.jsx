@@ -4,6 +4,7 @@ import { Minus, Plus, Search } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { clearCache, limited } from '@/lib/limited';
 import { copiesOf as qty, FOUNDER_COLLECTION } from '@/lib/collectionCounts';
+import { sharpenerPath } from '@/lib/slugs';
 
 const PAGE = 100;
 const fmt = (n) => Number(n || 0).toLocaleString();
@@ -166,7 +167,7 @@ export default function CountsPanel() {
             {filtered.slice(0, shown).map((r) => (
               <tr key={r.id}>
                 <td className="px-3 py-1.5 tabular-nums text-steel">{r.legacy_id ?? ''}</td>
-                <td className="px-3 py-1.5"><Link to={`/sharpener/${r.id}`} className="text-ink hover:text-oxblood">{r.name}</Link></td>
+                <td className="px-3 py-1.5"><Link to={sharpenerPath(r)} className="text-ink hover:text-oxblood">{r.name}</Link></td>
                 <td className="px-3 py-1.5 text-steel">{r.type || ''}</td>
                 <td className="px-3 py-1.5">
                   <div className="flex items-center justify-center gap-1">

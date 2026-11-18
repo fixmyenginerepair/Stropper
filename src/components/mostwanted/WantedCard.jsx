@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 import { RARITY_LABELS, sharpenerImage, typeCountryLine } from '@/lib/archive';
+import { sharpenerPath } from '@/lib/slugs';
 
 export default function WantedCard({ sharpener }) {
   return (
     <Link
-      to={`/sharpener/${sharpener.id}`}
+      to={sharpenerPath(sharpener)}
       className="group flex flex-col overflow-hidden rounded-2xl border border-hair bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-oxblood/40 hover:shadow-[0_18px_40px_-24px_rgba(27,35,51,0.45)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-frost">

@@ -10,6 +10,7 @@ import CountsPanel from '@/components/admin/CountsPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { cached, limited } from '@/lib/limited';
 import BookSection from '@/components/home/BookSection';
+import { sharpenerPath } from '@/lib/slugs';
 
 const TABS = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -75,7 +76,7 @@ function Overview({ goTo }) {
         {recent.map((r) => (
           <li key={r.id} className="flex items-center gap-3 px-4 py-2.5 text-[14px]">
             {r.images?.[0] ? <img src={r.images[0]} alt="" className="h-9 w-9 rounded border border-hair object-cover" /> : <span className="h-9 w-9 rounded border border-hair bg-frost" />}
-            <Link to={`/sharpener/${r.id}`} className="flex-1 truncate text-ink hover:text-oxblood">{r.name}</Link>
+            <Link to={sharpenerPath(r)} className="flex-1 truncate text-ink hover:text-oxblood">{r.name}</Link>
             <span className="text-[12.5px] text-steel">{r.updated_date ? new Date(r.updated_date).toLocaleString() : ''}</span>
           </li>
         ))}
