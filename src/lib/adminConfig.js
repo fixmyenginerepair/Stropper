@@ -1,6 +1,8 @@
 // Field set-up for every table the admin backend manages.
 // Field kinds: text, textarea, markdown, number, select, checkbox, list, images, date, url
 
+import { sharpenerPath } from '@/lib/slugs';
+
 const SHARPENER_TYPES = [
   'Allegro Type', 'Auto Strop', 'Barber', 'Barber Accessories', 'Accessories', 'Blade Holder',
   'Blade Holder & Hone', 'Blades', 'Circular', 'Edge-Bak', 'Electric', 'Handle-like Ingersoll',
@@ -25,7 +27,7 @@ export const ADMIN_ENTITIES = {
     singular: 'sharpener',
     titleField: 'name',
     defaultSort: 'name',
-    viewPath: (r) => `/sharpener/${r.id}`,
+    viewPath: (r) => sharpenerPath(r),
     searchFields: ['name', 'description', 'manufacturer', 'patent', 'comment', 'collection'],
     numericSearchField: 'legacy_id',
     filters: ['type', 'country', 'rarity', 'is_double'],
