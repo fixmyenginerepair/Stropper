@@ -34,15 +34,15 @@ async function loadSharpener(param) {
 // Structured data for search engines and AI answer engines.
 function sharpenerJsonLd(s, maker) {
   const url = sharpenerUrl(s);
-  const props = [
-    ['Type', s.type],
-    ['Country of origin', s.country],
-    ['Patent', s.patent],
-    ['Rarity (1–10)', s.rarity],
-    ['Year made', s.year_made],
-  ]
-    .filter(([, v]) => v)
-    .map(([name, value]) => ({ '@type': 'PropertyValue', name, value: String(value) }));
+  const facts = [
+    s.type && `Type: ${s.type}`,
+    s.manufacturer && `Made by ${s.manufacturer}`,
+    s.country && `Country: ${s.country}`,
+    s.year_made && `Year: ${s.year_made}`,
+    s.patent && `Patent: ${s.patent}`,
+    s.rarity && `Rarity ${s.rarity} of 10`,
+  ].filter(Boolean);
+  const description = [s.description, facts.join('. ')].filter(Boolean).join('. ');
   return [
     {
       '@context': 'https://schema.org',
@@ -52,17 +52,14 @@ function sharpenerJsonLd(s, maker) {
       isPartOf: { '@type': 'WebSite', name: SITE.name, url: SITE_ORIGIN },
       mainEntity: {
         '@type': 'Thing',
-        additionalType: 'https://schema.org/Product',
         name: s.name,
-        description: s.description || undefined,
+        description: description || undefined,
         image: s.images?.length ? s.images : undefined,
         url,
         identifier: s.legacy_id ? `stropper-${Math.round(s.legacy_id)}` : s.id,
         ...(maker
           ? { subjectOf: { '@type': 'Organization', name: maker.name, url: `${SITE_ORIGIN}/makers/${maker.id}` } }
           : {}),
-        ...(s.manufacturer ? { disambiguatingDescription: `Made by ${s.manufacturer}` } : {}),
-        ...(props.length ? { additionalProperty: props } : {}),
       },
     },
     {
@@ -111,6 +108,8 @@ export default function SharpenerDetail() {
   const [patents, setPatents] = useState([]);
 
   useEffect(() => {
+    // Already showing this piece (we just swapped in its readable address).
+    if (sharpener && (id === sharpenerSlug(sharpener) || id === sharpener.id)) return undefined;
     let cancelled = false;
     setMissing(false);
     setSharpener(null);
