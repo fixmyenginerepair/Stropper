@@ -1,0 +1,8 @@
+{
+  "type": "microsoft_word",
+  "scopes": [
+    "User.Read",
+    "offline_access",
+    "Files.ReadWrite"
+  ]
+}
