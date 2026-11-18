@@ -270,7 +270,11 @@ export default function AdShowcase() {
                   {ad.summary}
                 </p>
               )}
-              {ad.prices_quoted && (
+              {thenAndNow(ad) ? (
+                <div className="ad-text mt-5 max-w-md" style={{ animationDelay: '180ms' }}>
+                  <ThenNow ad={ad} />
+                </div>
+              ) : ad.prices_quoted && (
                 <div
                   className="ad-text mt-5 inline-flex max-w-full items-start gap-3 rounded-lg border border-dashed border-oxblood/40 bg-white/55 px-4 py-2.5"
                   style={{ animationDelay: '180ms' }}
