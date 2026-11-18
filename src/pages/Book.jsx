@@ -1,13 +1,40 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Printer } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Lock, Printer } from 'lucide-react';
+import useIsAdmin from '@/lib/useIsAdmin';
 import { base44 } from '@/api/base44Client';
 import FilterPanel from '@/components/browse/FilterPanel';
 import BookEntry from '@/components/book/BookEntry';
 import BookCover from '@/components/book/BookCover';
 import { buildSearchQuery, readFilters } from '@/lib/filters';
 
+// Printing the book is for admins only.
 export default function Book() {
+  const isAdmin = useIsAdmin();
+  if (isAdmin === undefined) {
+    return <div className="archive-container py-24 text-center text-steel">Checking your access…</div>;
+  }
+  if (!isAdmin) {
+    return (
+      <div className="archive-container py-24">
+        <div className="mx-auto max-w-md rounded-[10px] border border-hair bg-white p-8 text-center">
+          <Lock className="mx-auto h-8 w-8 text-oxblood" />
+          <h1 className="mt-4 font-heading text-2xl font-bold text-ink">The Book</h1>
+          <p className="mt-2 text-[15px] text-steel">Printing the archive as a book is available to the site admins.</p>
+          <Link
+            to={`/login?returnTo=${encodeURIComponent('/admin?tab=book')}`}
+            className="mt-6 inline-block rounded-lg bg-navy px-5 py-2.5 text-sm font-semibold text-white"
+          >
+            Admin sign in
+          </Link>
+        </div>
+      </div>
+    );
+  }
+  return <BookBuilder />;
+}
+
+function BookBuilder() {
   const [searchParams] = useSearchParams();
   const idsParam = searchParams.get('ids');
   const ids = idsParam ? idsParam.split(',').filter(Boolean) : [];
