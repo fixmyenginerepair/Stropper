@@ -7,9 +7,11 @@ import Pagination from '@/components/browse/Pagination';
 import SharpenerCard from '@/components/SharpenerCard';
 import { PAGE_SIZE, SORT_OPTIONS } from '@/lib/archive';
 import { buildSearchQuery, fetchResultPage, filtersToParams, readFilters } from '@/lib/filters';
+import useIsAdmin from '@/lib/useIsAdmin';
 
 export default function Browse() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const isAdmin = useIsAdmin();
   const filters = readFilters(searchParams);
   const paramsKey = searchParams.toString();
 
@@ -98,12 +100,12 @@ export default function Browse() {
                   </option>
                 ))}
               </select>
-              <Link
+              {isAdmin && <Link
                 to={`/book${bookParams ? `?${bookParams}` : ''}`}
                 className="flex h-10 items-center gap-2 rounded-lg border border-hair bg-white px-4 text-sm font-medium text-ink transition-colors hover:border-oxblood hover:text-oxblood"
               >
                 <Printer className="h-4 w-4" /> Print these as a book
-              </Link>
+              </Link>}
             </div>
           </div>
 
