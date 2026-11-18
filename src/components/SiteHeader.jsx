@@ -151,7 +151,7 @@ function AccountMenu({ me }) {
     <div className="ml-2">
       <Dropdown label={name} icon={UserRound} align="right">
         <MenuItem to="/dashboard" label="My dashboard" note="Your profile and pieces" />
-        {me.role === 'admin' && <MenuItem to="/admin" label="Backend" note="Edit the archive" />}
+        {me.role === 'admin' && <MenuItem to="/admin" label="Admin" note="Edit the archive" />}
         <div className="my-1 border-t border-hair" />
         <button onClick={() => base44.auth.logout('/')} className="block w-full px-4 py-2.5 text-left text-[14px] font-semibold text-oxblood hover:bg-frost/70">
           Sign out
@@ -262,7 +262,7 @@ export default function SiteHeader() {
               {me ? (
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                   <Link to="/dashboard" onClick={close} className="text-[15px] text-white/80">My dashboard</Link>
-                  {me.role === 'admin' && <Link to="/admin" onClick={close} className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-navy">Backend</Link>}
+                  {me.role === 'admin' && <Link to="/admin" onClick={close} className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-navy">Admin</Link>}
                   <button onClick={() => base44.auth.logout('/')} className="text-[15px] text-white/80">Sign out</button>
                 </div>
               ) : (
