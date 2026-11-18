@@ -44,6 +44,7 @@ export function formatMoney(value, currency) {
 export function thenAndNow(ad) {
   if (!ad || !ad.price_then || !ad.price_currency) return null;
   const today = priceToday(ad.price_then, ad.price_currency, ad.year);
+  if (!today) return null;
   return {
     printed: ad.price_printed || formatMoney(ad.price_then, ad.price_currency),
     item: ad.price_item || '',
