@@ -14,6 +14,8 @@ export const NAV_GROUPS = [
       { label: 'Browse the archive', to: '/browse', note: 'Search and filter every piece' },
       { label: 'Full list', to: '/list', note: 'Every sharpener, A–Z' },
       { label: 'How they work', to: '/how-it-works', note: 'Animated diagrams of each type' },
+      { label: 'Identify your sharpener', to: '/identify', note: 'Found one? Find out what it is' },
+      { label: 'Most wanted', to: '/most-wanted', note: 'Rarity checklist for collectors' },
     ],
   },
   {
@@ -39,6 +41,8 @@ export const NAV_LINKS = [
   { label: 'Map', to: '/map' },
   { label: 'Patents', to: '/patents' },
   { label: 'How they work', to: '/how-it-works' },
+  { label: 'Identify', to: '/identify' },
+  { label: 'Most wanted', to: '/most-wanted' },
   { label: 'Ads', to: '/advertising' },
   { label: 'About', to: '/about' },
   { label: 'Classic', to: '/classic' },
