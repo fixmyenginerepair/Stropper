@@ -32,8 +32,9 @@ function clusterPlaces(panel, places) {
         near.key = `${near.key}|${p.key}`;
         near.makers = [...near.makers, ...p.makers];
         near.parts.push(p.key);
+        near.label = `${near.parts.length > 1 ? near.label.replace(/ \+\d+$/, '') : near.label} +${near.parts.length - 1}`;
       } else {
-        out.push({ ...p, x, y, parts: [p.key] });
+        out.push({ ...p, x, y, parts: [p.key], label: p.name });
       }
     });
   return out;
@@ -94,7 +95,7 @@ function MapPanel({ panel, places, selected, onSelect }) {
                 paintOrder="stroke"
                 style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
               >
-                {place.name}
+                {place.label || place.name}
               </text>
             </g>
           );
