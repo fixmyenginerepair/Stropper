@@ -16,6 +16,29 @@ const inPanel = (panel, lat, lng) => {
   return lng >= lon0 && lng <= lon1 && lat >= lat0 && lat <= lat1;
 };
 
+// Places closer than this (in map units) share one pin, e.g. "Boston · Milton",
+// so neighbouring towns don't stack their pins on top of each other.
+const MERGE_DISTANCE = 22;
+
+function clusterPlaces(panel, places) {
+  const out = [];
+  [...places]
+    .sort((a, b) => b.makers.length - a.makers.length)
+    .forEach((p) => {
+      const { x, y } = project(panel, p.lat, p.lng);
+      const near = out.find((c) => Math.hypot(c.x - x, c.y - y) < MERGE_DISTANCE);
+      if (near) {
+        near.name = `${near.name} · ${p.name}`;
+        near.key = `${near.key}|${p.key}`;
+        near.makers = [...near.makers, ...p.makers];
+        near.parts.push(p.key);
+      } else {
+        out.push({ ...p, x, y, parts: [p.key] });
+      }
+    });
+  return out;
+}
+
 // Labels that would collide with a neighbour go on the left of the pin.
 const LEFT_LABELS = new Set(['Geneva, NY', 'Lucerne']);
 
@@ -35,7 +58,7 @@ function MapPanel({ panel, places, selected, onSelect }) {
         <path d={panel.borders} fill="none" stroke="#cdc6b6" strokeWidth="0.7" />
         {places.map((place) => {
           const { x, y } = project(panel, place.lat, place.lng);
-          const active = selected === place.key;
+          const active = selected === place.key || (place.parts || []).includes(selected);
           const left = LEFT_LABELS.has(place.name);
           return (
             <g
@@ -148,10 +171,12 @@ export default function MakersMap() {
   const unplaced = makers.filter((m) => typeof m.lat !== 'number' || typeof m.lng !== 'number');
   const panelPlaces = MAP_PANELS.map((panel) => ({
     panel,
-    places: places.filter((p) => inPanel(panel, p.lat, p.lng)),
+    places: clusterPlaces(panel, places.filter((p) => inPanel(panel, p.lat, p.lng))),
   }));
   const elsewhere = places.filter((p) => !MAP_PANELS.some((panel) => inPanel(panel, p.lat, p.lng)));
-  const current = places.find((p) => p.key === selected);
+  const current =
+    panelPlaces.flatMap((p) => p.places).find((p) => p.key === selected) ||
+    places.find((p) => p.key === selected);
 
   const select = (key) => {
     setSelected(key);
