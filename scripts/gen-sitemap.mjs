@@ -1,6 +1,7 @@
 // Builds public/sitemap.xml with every public page and record on stropper.com.
 // Run with: npm run sitemap   (then publish the app)
 import { writeFileSync } from 'node:fs';
+import { sharpenerPath } from '../src/lib/slugs.js';
 
 const APP = '6aef7ea3490a3928d32a4982';
 const API = `https://stroppercom-d32a4982.base44.app/api/apps/${APP}/entities`;
@@ -41,7 +42,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const urls = STATIC.map(([path, priority, changefreq]) => ({ loc: SITE + path, priority, changefreq }));
 
 const [sharpeners, makers, patents, articles, collectors] = await Promise.all([
-  all('Sharpener', 'id,updated_date'),
+  all('Sharpener', 'id,name,legacy_id,updated_date'),
   all('Maker', 'id,updated_date'),
   all('Patent', 'id,updated_date'),
   all('Article', 'id,slug,status,updated_date'),
@@ -52,7 +53,7 @@ for (const r of makers) urls.push({ loc: `${SITE}/makers/${r.id}`, lastmod: day(
 for (const r of articles.filter((a) => a.status === 'Published')) {
   urls.push({ loc: `${SITE}/history/${encodeURIComponent(r.slug || r.id)}`, lastmod: day(r.updated_date), priority: '0.7' });
 }
-for (const r of sharpeners) urls.push({ loc: `${SITE}/sharpener/${r.id}`, lastmod: day(r.updated_date), priority: '0.6' });
+for (const r of sharpeners) urls.push({ loc: `${SITE}${sharpenerPath(r)}`, lastmod: day(r.updated_date), priority: '0.6' });
 for (const r of patents) urls.push({ loc: `${SITE}/patents/${r.id}`, lastmod: day(r.updated_date), priority: '0.5' });
 for (const r of collectors.filter((c) => c.approved)) {
   urls.push({ loc: `${SITE}/collectors/${r.id}`, lastmod: day(r.updated_date), priority: '0.3' });

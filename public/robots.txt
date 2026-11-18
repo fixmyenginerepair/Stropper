@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /mfa
+Disallow: /oauth/
+
+Sitemap: https://stropper.com/sitemap.xml
