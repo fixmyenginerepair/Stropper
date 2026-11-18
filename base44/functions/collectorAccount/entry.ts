@@ -11,20 +11,31 @@ const EDITABLE = [
 
 const escapeRegex = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+// A record may only be bound to the signed-in account when the account really
+// owns it: it was created by this user, or it is a trusted legacy import.
+// A record created by someone else is never claimed, whatever it says.
+const isOwnedBy = (row, user) =>
+  (row.created_by_id && row.created_by_id === user.id) || row.from_legacy_site === true;
+
 // Finds the collector record that belongs to the signed-in user: linked by
 // user_id first, otherwise claimed through an exact e-mail match.
 async function resolveCollector(base44, user) {
   const rows = await base44.asServiceRole.entities.Collector.list('name', 1000);
   const list = Array.isArray(rows) ? rows : rows?.items || [];
 
-  const linked = list.find((row) => row.user_id && row.user_id === user.id);
+  const linked = list.find(
+    (row) => row.user_id && row.user_id === user.id && isOwnedBy(row, user)
+  );
   if (linked) return linked;
 
   const email = String(user.email || '').trim().toLowerCase();
   if (!email) return null;
 
   const claimable = list.find(
-    (row) => !row.user_id && String(row.email || '').trim().toLowerCase() === email
+    (row) =>
+      !row.user_id &&
+      isOwnedBy(row, user) &&
+      String(row.email || '').trim().toLowerCase() === email
   );
   if (!claimable) return null;
 
@@ -53,13 +64,18 @@ export default async function (req) {
         if (input[key] !== undefined) payload[key] = String(input[key] ?? '').trim();
       }
 
-      const saved = profile
-        ? await base44.asServiceRole.entities.Collector.update(profile.id, payload)
-        : await base44.asServiceRole.entities.Collector.create({
-            ...payload,
-            user_id: user.id,
-            approved: false,
-          });
+      let saved;
+      if (profile) {
+        saved = await base44.asServiceRole.entities.Collector.update(profile.id, payload);
+      } else {
+        // Create as the signed-in user so the record carries their created_by_id
+        // as proof of ownership, then link the account with the service role.
+        const created = await base44.entities.Collector.create(payload);
+        saved = await base44.asServiceRole.entities.Collector.update(created.id, {
+          user_id: user.id,
+          approved: false,
+        });
+      }
 
       return Response.json({ profile: saved });
     }

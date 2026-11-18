@@ -70,9 +70,19 @@
       "type": "string"
     },
     "user_id": {
-      "description": "Linked collector account (private)",
+      "description": "Linked collector account (private); set by the backend only, never from the browser",
       "rls": {
+        "create": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
         "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "update": {
           "user_condition": {
             "role": "admin"
           }
