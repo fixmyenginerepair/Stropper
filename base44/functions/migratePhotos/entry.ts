@@ -60,7 +60,7 @@ export default async function (req) {
     const q = entity === 'Article'
       ? { $or: [{ images: { $regex: 'jsdelivr' } }, { cover_image: { $regex: 'jsdelivr' } }, { body: { $regex: 'jsdelivr' } }] }
       : { images: { $regex: 'jsdelivr' } };
-    const rows = rowsOf(await E.filter(q, 'name', limit + exclude.size)).filter((r) => !exclude.has(r.id)).slice(0, limit);
+    const rows = rowsOf(await E.filter(q, body.sort === '-name' ? '-name' : 'name', limit + exclude.size)).filter((r) => !exclude.has(r.id)).slice(0, limit);
 
     const cache = {};
     const done = [];
