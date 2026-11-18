@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ThenNow from '@/components/ThenNow';
+import { thenAndNow } from '@/lib/inflation';
 
 // Home-page showcase for the Period Advertising collection: a rotating
 // "clipping" on aged paper, a filmstrip of every ad, swipe on phones.
