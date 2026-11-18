@@ -183,6 +183,7 @@ function StillUnsure({ mailto }) {
 }
 
 export default function Identify() {
+  useEffect(() => { document.title = 'Identify Your Razor Blade Sharpener | Stropper.com'; }, []);
   const [params, setParams] = useSearchParams();
   // The path of answers lives in the URL, so a result can be shared or bookmarked.
   const path = useMemo(() => (params.get('a') || '').split('.').filter(Boolean).map(Number), [params]);

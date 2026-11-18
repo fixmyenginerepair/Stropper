@@ -16,6 +16,7 @@ const TYPE_LABELS = {
 };
 
 export default function HowItWorks() {
+  useEffect(() => { document.title = 'How Razor Blade Sharpeners Work | Stropper.com'; }, []);
   const { hash } = useLocation();
 
   useEffect(() => {

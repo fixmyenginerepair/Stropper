@@ -25,6 +25,7 @@ const writeHave = (set) => {
 };
 
 export default function MostWanted() {
+  useEffect(() => { document.title = 'Most Wanted Razor Blade Sharpeners: Rarity Checklist | Stropper.com'; }, []);
   const [rows, setRows] = useState(null);
   const [levels, setLevels] = useState(['9', '8']);
   const [have, setHave] = useState(readHave);

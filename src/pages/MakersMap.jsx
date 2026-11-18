@@ -105,6 +105,7 @@ function MakerLinks({ maker, story }) {
 }
 
 export default function MakersMap() {
+  useEffect(() => { document.title = 'Map of Razor Blade Sharpener Makers | Stropper.com'; }, []);
   const [makers, setMakers] = useState([]);
   const [stories, setStories] = useState({});
   const [selected, setSelected] = useState(null);
