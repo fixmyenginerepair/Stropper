@@ -124,9 +124,6 @@ export default function Admin() {
               >
                 Sign in
               </Link>
-              <Link to="/register" className="text-[13px] text-steel underline decoration-steel/30 underline-offset-4 hover:text-oxblood">
-                Collector without an account? Create one
-              </Link>
             </div>
           )}
         </div>
