@@ -227,7 +227,7 @@ export default function SharpenerDetail() {
             >
               Contact the collector
             </a>
-            {inBook ? (
+            {isAdmin && (inBook ? (
               <Link
                 to={bookHref(readBook())}
                 className="rounded-lg border border-ink/20 bg-white px-6 py-3 text-sm font-semibold text-oxblood transition-colors hover:border-oxblood"
@@ -241,7 +241,7 @@ export default function SharpenerDetail() {
               >
                 Add to my book
               </button>
-            )}
+            ))}
             {isAdmin && (
               <>
                 <button
