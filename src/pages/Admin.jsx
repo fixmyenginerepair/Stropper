@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
-  Archive, BookOpen, Factory, FileBadge, Hash, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
+  Archive, BookOpen, BookMarked, Factory, FileBadge, Hash, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
@@ -9,6 +9,7 @@ import UsersPanel from '@/components/admin/UsersPanel';
 import CountsPanel from '@/components/admin/CountsPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { cached, limited } from '@/lib/limited';
+import BookSection from '@/components/home/BookSection';
 
 const TABS = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -20,6 +21,7 @@ const TABS = [
   { key: 'PeriodAd', label: 'Period ads', icon: Megaphone },
   { key: 'Collector', label: 'Collectors', icon: Users },
   { key: 'ArchiveItem', label: 'Classic archive', icon: Archive },
+  { key: 'book', label: 'The Book', icon: BookMarked },
   { key: 'users', label: 'Users & access', icon: UserCog },
 ];
 
@@ -108,7 +110,7 @@ export default function Admin() {
       <div className="archive-container py-24">
         <div className="mx-auto max-w-md rounded-[10px] border border-hair bg-white p-8 text-center">
           <Lock className="mx-auto h-8 w-8 text-oxblood" />
-          <h1 className="mt-4 font-heading text-2xl font-bold text-ink">Collector backend</h1>
+          <h1 className="mt-4 font-heading text-2xl font-bold text-ink">Admin</h1>
           <p className="mt-2 text-[15px] text-steel">
             {me ? 'Your account does not have admin access. Ask the site owner to make you an admin.' : 'Sign in with an admin account to manage the archive.'}
           </p>
@@ -139,7 +141,7 @@ export default function Admin() {
     <div className="archive-container py-8 lg:py-10">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow text-oxblood">Collector backend</p>
+          <p className="eyebrow text-oxblood">Admin</p>
           <h1 className="mt-2 font-heading text-[1.9rem] font-bold leading-tight text-ink">{current.label}</h1>
         </div>
         <div className="flex items-center gap-3 text-[13px] text-steel">
@@ -169,6 +171,11 @@ export default function Admin() {
           {current.key === 'overview' && <Overview goTo={goTo} />}
           {current.key === 'users' && <UsersPanel me={me} />}
           {current.key === 'counts' && <CountsPanel />}
+          {current.key === 'book' && (
+            <div className="overflow-hidden rounded-[12px]">
+              <BookSection />
+            </div>
+          )}
           {config && <EntityManager key={current.key} entityName={current.key} config={config} onChanged={() => setTick((t) => t + 1)} />}
         </section>
       </div>
