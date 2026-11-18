@@ -12,8 +12,8 @@ export default function JoinSection() {
           <p className="eyebrow text-oxblood">Collectors</p>
           <h2 className="mt-3 font-heading text-xl font-bold text-ink">Join the collectors</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-steel">
-            Sign in with your collector account to keep your own collector ID against every
-            sharpener you own, add notes and help the archive grow.
+            Collector accounts and directory listings are set up by the site admins. If you would
+            like to be listed, write to the webmaster with your name, country and what you collect.
           </p>
           <div className="mt-6 flex flex-col gap-2.5 text-sm font-semibold">
             <button
@@ -22,12 +22,12 @@ export default function JoinSection() {
             >
               Collector sign in
             </button>
-            <Link
-              to="/register"
+            <a
+              href={`mailto:${SITE.webmaster}?subject=${encodeURIComponent('Collector listing request')}`}
               className="text-left text-ink underline decoration-ink/20 underline-offset-4 hover:text-oxblood hover:decoration-oxblood"
             >
-              Create a collector account
-            </Link>
+              Ask to be listed
+            </a>
           </div>
         </div>
 
