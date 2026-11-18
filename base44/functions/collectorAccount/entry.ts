@@ -54,6 +54,10 @@ export default async function (req) {
     const profile = await resolveCollector(base44, user);
 
     if (action === 'save') {
+      // Collector listings are added, edited and deleted by admins only.
+      if (user.role !== 'admin') {
+        return Response.json({ error: 'Only the site admins can change collector listings' }, { status: 403 });
+      }
       const input = body?.profile || {};
       const name = String(input.name || '').trim();
       if (!name) return Response.json({ error: 'A name is required' }, { status: 400 });
