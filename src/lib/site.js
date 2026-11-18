@@ -14,7 +14,6 @@ export const NAV_GROUPS = [
       { label: 'Browse the archive', to: '/browse', note: 'Search and filter every piece' },
       { label: 'Full list', to: '/list', note: 'Every sharpener, A–Z' },
       { label: 'How they work', to: '/how-it-works', note: 'Animated diagrams of each type' },
-      { label: 'The Book', to: '/book', note: 'Print the archive as a book' },
     ],
   },
   {
@@ -36,7 +35,6 @@ export const NAV_LINKS = [
   { label: 'Browse', to: '/browse' },
   { label: 'List', to: '/list' },
   { label: 'Collectors', to: '/collectors' },
-  { label: 'The Book', to: '/book' },
   { label: 'History', to: '/history' },
   { label: 'Map', to: '/map' },
   { label: 'Patents', to: '/patents' },
