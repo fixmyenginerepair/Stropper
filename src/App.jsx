@@ -36,6 +36,8 @@ import ResetPassword from '@/pages/ResetPassword';
 import Mfa from '@/pages/Mfa';
 import OAuthConsent from '@/pages/OAuthConsent';
 import Dashboard from '@/pages/Dashboard';
+import Compare from '@/pages/Compare';
+import LegacyRedirect from '@/pages/LegacyRedirect';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -68,6 +70,12 @@ const AuthenticatedApp = () => {
         <Route path="/browse" element={<Browse />} />
         <Route path="/list" element={<FullList />} />
         <Route path="/sharpener/:id" element={<SharpenerDetail />} />
+        <Route path="/compare" element={<Compare />} />
+        {/* Addresses from the original PHP site */}
+        <Route path="/home" element={<LegacyRedirect />} />
+        <Route path="/home/*" element={<LegacyRedirect />} />
+        <Route path="/stropper_count.php" element={<LegacyRedirect />} />
+        <Route path="/index.php" element={<LegacyRedirect />} />
         <Route path="/book" element={<Book />} />
         <Route path="/collectors" element={<Collectors />} />
         <Route path="/collectors/:id" element={<CollectorDetail />} />
