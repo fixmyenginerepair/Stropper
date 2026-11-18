@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
 import { setPageMeta, setRecordSeo } from '@/lib/pageMeta';
@@ -106,17 +106,22 @@ export default function SharpenerDetail() {
   const [editing, setEditing] = useState(false);
   const [maker, setMaker] = useState(null);
   const [patents, setPatents] = useState([]);
+  const loadRef = useRef(0);
 
   useEffect(() => {
     // Already showing this piece (we just swapped in its readable address).
     if (sharpener && (id === sharpenerSlug(sharpener) || id === sharpener.id)) return undefined;
-    let cancelled = false;
+    // Each load gets a number; replies from an older load are ignored. (Not an
+    // effect cleanup: swapping in the readable address re-runs this effect, and
+    // the lookups already under way for that same piece must still land.)
+    const req = ++loadRef.current;
+    const stale = () => loadRef.current !== req;
     setMissing(false);
     setSharpener(null);
 
     loadSharpener(id)
       .then((record) => {
-        if (cancelled) return;
+        if (stale()) return;
         // Show the readable address (and forward old record-ID links to it).
         if (record.name && id !== sharpenerSlug(record)) {
           navigate(sharpenerPath(record), { replace: true });
@@ -136,36 +141,34 @@ export default function SharpenerDetail() {
         setMaker(null);
         setPatents([]);
         base44.entities.Patent.filter({ sharpener_ids: record.id }, 'year', 20)
-          .then((rows) => !cancelled && setPatents(rows || []))
+          .then((rows) => !stale() && setPatents(rows || []))
           .catch(() => {});
         if (record.maker_id) {
           base44.entities.Maker.get(record.maker_id)
-            .then((m) => !cancelled && setMaker(m))
+            .then((m) => !stale() && setMaker(m))
             .catch(() => {});
         }
         return base44.entities.Sharpener.filter(
           { name: { $gt: record.name } },
           { sort: 'name', limit: 1 }
         ).then((page) => {
-          if (!cancelled) setNext(page.items?.[0] || null);
+          if (!stale()) setNext(page.items?.[0] || null);
         });
       })
       .catch(() => {
-        if (!cancelled) setMissing(true);
+        if (!stale()) setMissing(true);
       });
 
     base44.auth
       .me()
       .then((user) => {
-        if (!cancelled) setIsAdmin(user?.role === 'admin');
+        if (!stale()) setIsAdmin(user?.role === 'admin');
       })
       .catch(() => {
-        if (!cancelled) setIsAdmin(false);
+        if (!stale()) setIsAdmin(false);
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return undefined;
   }, [id]);
 
   useEffect(() => {
