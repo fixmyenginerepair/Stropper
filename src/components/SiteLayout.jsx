@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import PhotoZoom from '@/components/detail/PhotoZoom';
+import CompareTray from '@/components/compare/CompareTray';
 
 // Any picture on the site that isn't already a link or button opens in the
 // zoom viewer when tapped. Mark an area with data-no-zoom to opt out.
@@ -36,6 +37,7 @@ export default function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <CompareTray />
       {zoom && <PhotoZoom src={zoom.src} alt={zoom.alt} onClose={() => setZoom(null)} />}
     </div>
   );
