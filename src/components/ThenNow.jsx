@@ -28,7 +28,7 @@ export default function ThenNow({ ad, variant = 'panel', className = '' }) {
     <div className={`overflow-hidden rounded-[10px] border border-dashed border-oxblood/45 bg-[#fbf8f1] ${className}`}>
       <div className="flex items-baseline justify-between gap-3 bg-navy px-4 py-2">
         <h3 className="font-heading text-[17px] font-bold leading-tight text-white">Then &amp; Now</h3>
-        <span className="text-right text-[11px] leading-tight text-white/70">What it cost, in today’s money</span>
+        <span className="text-right text-[11px] leading-tight text-white/70">Old price, today’s value</span>
       </div>
       <div className="grid grid-cols-2 divide-x divide-dashed divide-oxblood/30">
         <div className="min-w-0 px-4 py-3">
