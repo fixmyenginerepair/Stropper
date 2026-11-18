@@ -2,7 +2,6 @@ import HeroSection from '@/components/home/HeroSection';
 import TypeGrid from '@/components/home/TypeGrid';
 import RecentSharpeners from '@/components/home/RecentSharpeners';
 import FeaturedCarousel from '@/components/home/FeaturedCarousel';
-import BookSection from '@/components/home/BookSection';
 import AdShowcase from '@/components/home/AdShowcase';
 import JoinSection from '@/components/home/JoinSection';
 
@@ -14,7 +13,6 @@ export default function Home() {
       <RecentSharpeners />
       <FeaturedCarousel />
       <AdShowcase />
-      <BookSection />
       <JoinSection />
     </>
   );
