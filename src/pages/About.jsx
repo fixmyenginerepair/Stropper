@@ -203,12 +203,9 @@ export default function About() {
 
           <h2 className="font-heading text-2xl font-bold text-ink">The Book</h2>
           <p>
-            Any search can be turned into a printed book: the entire archive, one type, one
-            country, or a single collector’s pieces. Use{' '}
-            <Link to="/book" className="font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood">
-              The Book
-            </Link>{' '}
-            to build and print it.
+            The administrators can turn any search into a printed book: the entire archive, one
+            type, one country, or a single collector’s pieces. Write to the webmaster if you would
+            like a copy.
           </p>
         </div>
 
