@@ -21,6 +21,8 @@ import ClassicStropper from '@/pages/ClassicStropper';
 import Advertising from '@/pages/Advertising';
 import HowItWorks from '@/pages/HowItWorks';
 import MakersMap from '@/pages/MakersMap';
+import Identify from '@/pages/Identify';
+import MostWanted from '@/pages/MostWanted';
 import Admin from '@/pages/Admin';
 import History from '@/pages/History';
 import ArticleDetail from '@/pages/ArticleDetail';
@@ -74,6 +76,8 @@ const AuthenticatedApp = () => {
         <Route path="/advertising" element={<Advertising />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/map" element={<MakersMap />} />
+        <Route path="/identify" element={<Identify />} />
+        <Route path="/most-wanted" element={<MostWanted />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/history" element={<History />} />
         <Route path="/history/:slug" element={<ArticleDetail />} />
