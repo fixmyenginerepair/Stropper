@@ -4,6 +4,7 @@
     "approved": {
       "default": false,
       "description": "Shown in the public directory once an admin approves",
+      "type": "boolean",
       "rls": {
         "create": {
           "user_condition": {
@@ -15,8 +16,7 @@
             "role": "admin"
           }
         }
-      },
-      "type": "boolean"
+      }
     },
     "collection_type": {
       "enum": [
@@ -34,17 +34,18 @@
     },
     "email": {
       "description": "Private: only admins can read it",
+      "type": "string",
       "rls": {
         "read": {
           "user_condition": {
             "role": "admin"
           }
         }
-      },
-      "type": "string"
+      }
     },
     "from_legacy_site": {
       "default": false,
+      "type": "boolean",
       "rls": {
         "create": {
           "user_condition": {
@@ -56,8 +57,7 @@
             "role": "admin"
           }
         }
-      },
-      "type": "boolean"
+      }
     },
     "main_collection_size": {
       "description": "As entered by the collector, e.g. 500+",
@@ -71,6 +71,7 @@
     },
     "user_id": {
       "description": "Linked collector account (private); set by the backend only, never from the browser",
+      "type": "string",
       "rls": {
         "create": {
           "user_condition": {
@@ -87,15 +88,18 @@
             "role": "admin"
           }
         }
-      },
-      "type": "string"
+      }
     }
   },
   "required": [
     "name"
   ],
   "rls": {
-    "create": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "delete": {
       "user_condition": {
         "role": "admin"
