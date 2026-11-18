@@ -27,6 +27,27 @@
       "description": "Linked Maker record",
       "type": "string"
     },
+    "price_currency": {
+      "description": "Currency of price_then",
+      "enum": [
+        "USD",
+        "GBP",
+        "CAD"
+      ],
+      "type": "string"
+    },
+    "price_item": {
+      "description": "What that price bought, e.g. Standard set",
+      "type": "string"
+    },
+    "price_printed": {
+      "description": "The price as printed in the ad, e.g. 21/- or $5",
+      "type": "string"
+    },
+    "price_then": {
+      "description": "Headline price for Then/Now, in decimal units of the currency (21 shillings = 1.05 pounds)",
+      "type": "number"
+    },
     "prices_quoted": {
       "type": "string"
     },
@@ -69,6 +90,7 @@
     "title",
     "image"
   ],
+  "type": "object",
   "rls": {
     "create": {
       "user_condition": {
@@ -85,6 +107,5 @@
         "role": "admin"
       }
     }
-  },
-  "type": "object"
+  }
 }
