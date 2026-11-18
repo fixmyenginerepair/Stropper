@@ -32,9 +32,10 @@ function clusterPlaces(panel, places) {
         near.key = `${near.key}|${p.key}`;
         near.makers = [...near.makers, ...p.makers];
         near.parts.push(p.key);
-        near.label = `${near.parts.length > 1 ? near.label.replace(/ \+\d+$/, '') : near.label} +${near.parts.length - 1}`;
+        // Short pin label: both names when they fit, else "Boston +3".
+        near.label = near.name.length <= 24 ? near.name : `${near.first} +${near.parts.length - 1}`;
       } else {
-        out.push({ ...p, x, y, parts: [p.key], label: p.name });
+        out.push({ ...p, x, y, parts: [p.key], label: p.name, first: p.name });
       }
     });
   return out;
