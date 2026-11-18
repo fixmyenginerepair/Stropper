@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
-import { setPageMeta } from '@/lib/pageMeta';
+import { setPageMeta, setRecordSeo } from '@/lib/pageMeta';
+import { parseSharpenerParam, sharpenerPath, sharpenerSlug, sharpenerUrl, SITE_ORIGIN } from '@/lib/slugs';
+import CompareButton from '@/components/compare/CompareButton';
+import RelatedPieces from '@/components/detail/RelatedPieces';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
@@ -15,6 +18,64 @@ import { formatValue, rarityLabel } from '@/lib/archive';
 import { patentLabel } from '@/lib/patents';
 import { SITE } from '@/lib/site';
 import { addToBook, bookHref, readBook } from '@/lib/myBook';
+
+// Finds the record behind a /sharpener/<param> address: a readable slug ending
+// in the old stropper.com ID, or a Base44 record ID.
+async function loadSharpener(param) {
+  const { id, legacyId } = parseSharpenerParam(param);
+  if (id) return base44.entities.Sharpener.get(id);
+  if (legacyId) {
+    const rows = await base44.entities.Sharpener.filter({ legacy_id: legacyId }, null, 1);
+    if (rows?.[0]) return rows[0];
+  }
+  throw new Error('not found');
+}
+
+// Structured data for search engines and AI answer engines.
+function sharpenerJsonLd(s, maker) {
+  const url = sharpenerUrl(s);
+  const props = [
+    ['Type', s.type],
+    ['Country of origin', s.country],
+    ['Patent', s.patent],
+    ['Rarity (1–10)', s.rarity],
+    ['Year made', s.year_made],
+  ]
+    .filter(([, v]) => v)
+    .map(([name, value]) => ({ '@type': 'PropertyValue', name, value: String(value) }));
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemPage',
+      url,
+      name: s.name,
+      isPartOf: { '@type': 'WebSite', name: SITE.name, url: SITE_ORIGIN },
+      mainEntity: {
+        '@type': 'Thing',
+        additionalType: 'https://schema.org/Product',
+        name: s.name,
+        description: s.description || undefined,
+        image: s.images?.length ? s.images : undefined,
+        url,
+        identifier: s.legacy_id ? `stropper-${Math.round(s.legacy_id)}` : s.id,
+        ...(maker
+          ? { subjectOf: { '@type': 'Organization', name: maker.name, url: `${SITE_ORIGIN}/makers/${maker.id}` } }
+          : {}),
+        ...(s.manufacturer ? { disambiguatingDescription: `Made by ${s.manufacturer}` } : {}),
+        ...(props.length ? { additionalProperty: props } : {}),
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
+        { '@type': 'ListItem', position: 2, name: 'Browse', item: `${SITE_ORIGIN}/browse` },
+        { '@type': 'ListItem', position: 3, name: s.name, item: url },
+      ],
+    },
+  ];
+}
 
 const Row = ({ label, value, to }) => (
   <div className="flex flex-col gap-1 border-b border-hair py-3 sm:flex-row sm:gap-6">
@@ -54,9 +115,13 @@ export default function SharpenerDetail() {
     setMissing(false);
     setSharpener(null);
 
-    base44.entities.Sharpener.get(id)
+    loadSharpener(id)
       .then((record) => {
         if (cancelled) return;
+        // Show the readable address (and forward old record-ID links to it).
+        if (record.name && id !== sharpenerSlug(record)) {
+          navigate(sharpenerPath(record), { replace: true });
+        }
         setSharpener(record);
         {
           const year = record.year_made ? ` (${record.year_made})` : '';
@@ -105,6 +170,16 @@ export default function SharpenerDetail() {
   }, [id]);
 
   useEffect(() => {
+    if (!sharpener) return undefined;
+    return setRecordSeo({
+      url: sharpenerUrl(sharpener),
+      image: sharpener.images?.[0],
+      imageAlt: sharpener.name,
+      jsonLd: sharpenerJsonLd(sharpener, maker),
+    });
+  }, [sharpener, maker]);
+
+  useEffect(() => {
     if (!missing) return undefined;
     const meta = document.createElement('meta');
     meta.name = 'prerender-status-code';
@@ -135,6 +210,7 @@ export default function SharpenerDetail() {
   const reload = async () => {
     const fresh = await base44.entities.Sharpener.get(sharpener.id);
     setSharpener(fresh);
+    if (fresh.name) navigate(sharpenerPath(fresh), { replace: true });
   };
 
   const remove = async () => {
@@ -238,6 +314,7 @@ export default function SharpenerDetail() {
             >
               Contact the collector
             </a>
+            <CompareButton sharpenerId={sharpener.id} />
             {isAdmin && (inBook ? (
               <Link
                 to={bookHref(readBook())}
@@ -284,6 +361,8 @@ export default function SharpenerDetail() {
 
       <HowItWorksSection mechanism={mechanismForType(sharpener.type)} />
 
+      <RelatedPieces sharpener={sharpener} maker={maker} />
+
       <CommentsSection sharpenerId={sharpener.id} />
 
       <div className="mt-14 flex flex-col gap-4 border-t border-hair pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -295,7 +374,7 @@ export default function SharpenerDetail() {
         </button>
         {next && (
           <Link
-            to={`/sharpener/${next.id}`}
+            to={sharpenerPath(next)}
             className="flex items-center gap-2 text-sm font-semibold text-oxblood"
           >
             Next: {next.name} <ArrowRight className="h-4 w-4" />
