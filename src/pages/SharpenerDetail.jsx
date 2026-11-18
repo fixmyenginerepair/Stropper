@@ -122,11 +122,11 @@ export default function SharpenerDetail() {
     loadSharpener(id)
       .then((record) => {
         if (stale()) return;
+        setSharpener(record);
         // Show the readable address (and forward old record-ID links to it).
         if (record.name && id !== sharpenerSlug(record)) {
           navigate(sharpenerPath(record), { replace: true });
         }
-        setSharpener(record);
         {
           const year = record.year_made ? ` (${record.year_made})` : '';
           const kind = record.type ? `${record.type} razor blade sharpener` : 'Razor blade sharpener';
