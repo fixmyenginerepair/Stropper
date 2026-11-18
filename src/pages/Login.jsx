@@ -55,12 +55,12 @@ export default function Login() {
       subtitle="Log in to your account"
       footer={
         <>
-          Don't have an account?{" "}
+          Accounts are set up by the site admins.{" "}
           <Link
             to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
             className="text-primary font-medium hover:underline"
           >
-            Create one
+            Invited? Set up your account
           </Link>
         </>
       }
