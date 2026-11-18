@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import JoinDirectoryForm from '@/components/collectors/JoinDirectoryForm';
 import CollectorDirectory from '@/components/collectors/CollectorDirectory';
 import PendingApprovals from '@/components/collectors/PendingApprovals';
 
@@ -45,11 +44,9 @@ export default function Collectors() {
           Collectors
         </h1>
         <p className="mt-3 text-[16px] leading-relaxed text-steel">
-          If you would like to be added to the list of collectors below, please fill out this form.
+          Fellow collectors of razor sharpeners and shaving collectibles from around the world.
         </p>
       </header>
-
-      <JoinDirectoryForm />
 
       <CollectorDirectory collectors={approved} loading={loading} />
 
