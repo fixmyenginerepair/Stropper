@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PhotoZoom from '@/components/detail/PhotoZoom';
+import ThenNow from '@/components/ThenNow';
 
 const yearLabel = (ad) => (ad.year ? `${ad.year_approximate ? 'c. ' : ''}${ad.year}` : 'Undated');
 
@@ -26,6 +27,7 @@ function AdCard({ ad, onOpen }) {
         </p>
         <h3 className="mt-2 font-heading text-[16px] font-bold leading-snug text-ink">{ad.title}</h3>
         {ad.publication && <p className="mt-1 text-[13px] text-steel">{ad.publication}</p>}
+        <ThenNow ad={ad} variant="chip" className="mt-auto pt-3" />
       </div>
     </button>
   );
@@ -81,6 +83,7 @@ function AdViewer({ ad, onClose }) {
           </p>
           <h2 className="mt-2 font-heading text-2xl font-bold text-ink">{ad.title}</h2>
           {ad.summary && <p className="mt-3 text-[15px] leading-relaxed text-steel">{ad.summary}</p>}
+          <ThenNow ad={ad} className="mt-5" />
           <dl className="mt-5 space-y-3 text-[14px]">
             {[
               ['Brand', ad.brand],
