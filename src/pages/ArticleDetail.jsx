@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import Markdown, { SourceList } from '@/components/history/Markdown';
 
@@ -21,7 +22,7 @@ export default function ArticleDetail() {
         if (cancelled) return;
         if (!record) { setMissing(true); return; }
         setArticle(record);
-        document.title = `${record.title} · Stropper.com`;
+        setPageMeta(`${record.title} · Stropper.com`, record.summary || record.body);
         if (record.maker_ids?.length) {
           const found = await base44.entities.Maker.filter({ id: { $in: record.maker_ids } }, 'name', 20).catch(() => []);
           if (!cancelled) setMakers(found || []);

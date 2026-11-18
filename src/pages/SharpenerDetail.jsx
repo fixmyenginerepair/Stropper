@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Pencil, Trash2 } from 'lucide-react';
+import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
@@ -57,6 +58,16 @@ export default function SharpenerDetail() {
       .then((record) => {
         if (cancelled) return;
         setSharpener(record);
+        {
+          const year = record.year_made ? ` (${record.year_made})` : '';
+          const kind = record.type ? `${record.type} razor blade sharpener` : 'Razor blade sharpener';
+          const by = record.manufacturer ? ` made by ${record.manufacturer}` : (record.country ? ` from ${record.country}` : '');
+          const what = record.description && record.description !== record.name ? ` ${record.description}.` : '';
+          setPageMeta(
+            `${record.name}${year} · Razor Blade Sharpener · Stropper.com`,
+            `${record.name}${year}: ${kind}${by}.${what} Photos, rarity and value guide from the Stropper.com collection.`,
+          );
+        }
         setInBook(readBook().includes(record.id));
         setMaker(null);
         setPatents([]);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, FileText } from 'lucide-react';
+import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import SharpenerCard from '@/components/SharpenerCard';
 import { COUNTRY_NAMES, formatGrantDate, googlePatentsUrl, patentLabel } from '@/lib/patents';
@@ -30,7 +31,10 @@ export default function PatentDetail() {
       .then(async (p) => {
         if (cancelled) return;
         setPatent(p);
-        document.title = `${patentLabel(p)}${p.title ? ` — ${p.title}` : ''} · Stropper.com`;
+        setPageMeta(
+          `${patentLabel(p)}${p.title ? ` — ${p.title}` : ''} · Stropper.com`,
+          `${patentLabel(p)}${p.title ? `, ${p.title}` : ''}${p.inventors?.length ? `, by ${p.inventors.join(', ')}` : ''}${p.year ? ` (${p.year})` : ''}. Patent drawings and the razor blade sharpeners made under it.`,
+        );
         if (p.sharpener_ids?.length) {
           const rows = await base44.entities.Sharpener.filter({ id: { $in: p.sharpener_ids } }, 'name', 200).catch(() => []);
           if (!cancelled) setPieces(rows || []);

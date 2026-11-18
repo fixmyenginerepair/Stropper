@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import Markdown, { SourceList } from '@/components/history/Markdown';
 import SharpenerCard from '@/components/SharpenerCard';
@@ -35,7 +36,10 @@ export default function MakerDetail() {
       .then((m) => {
         if (cancelled) return;
         setMaker(m);
-        document.title = `${m.name} · Stropper.com`;
+        setPageMeta(
+          `${m.name} · Razor Blade Sharpener Maker · Stropper.com`,
+          m.history || `${m.name}${m.country ? ` of ${m.country}` : ''}, a maker of razor blade sharpeners. History, period ads, patents and pieces in the collection.`,
+        );
       })
       .catch(() => !cancelled && setMissing(true));
     base44.entities.Article.filter({ status: 'Published', maker_ids: id }, '-published_date', 20)

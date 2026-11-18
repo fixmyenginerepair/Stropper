@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { setPageMeta } from '@/lib/pageMeta';
 import { base44 } from '@/api/base44Client';
 import CollectorFacts from '@/components/collectors/CollectorFacts';
 import CollectorPieces from '@/components/collectors/CollectorPieces';
@@ -47,7 +48,10 @@ export default function CollectorDetail() {
 
       if (cancelled) return;
       setCollector(row);
-      document.title = `${row.name} · Collectors · Stropper.com`;
+      setPageMeta(
+        `${row.name} · Collectors · Stropper.com`,
+        `${row.name}${row.country ? ` (${row.country})` : ''}, razor blade sharpener collector. Pieces and profile in the Stropper.com collectors directory.`,
+      );
 
       const query = {
         collection: { $regex: `^${escapeRegex(row.name.trim())}$`, $options: 'i' },
