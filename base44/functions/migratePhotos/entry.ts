@@ -6,6 +6,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 const KEY = '8c611ddfedc11603c0df0675715e8e94';
 const CDN = 'https://cdn.jsdelivr.net/gh/fixmyenginerepair/Stropper@main/';
 const RAW = 'https://raw.githubusercontent.com/fixmyenginerepair/Stropper/main/';
+const FILES = /^https:\/\/base44\.app\/api\/apps\/[^/]+\/files\/mp\/public\//;
 
 const rowsOf = (r) => (Array.isArray(r) ? r : r?.items || []);
 
@@ -18,12 +19,13 @@ async function copyOne(base44, url) {
   const file = new File([blob], name, { type: blob.type || 'image/jpeg' });
   const out = await base44.asServiceRole.integrations.Core.UploadFile({ file });
   if (!out?.file_url) throw new Error(`no file_url for ${raw}`);
-  return out.file_url;
+  return out.file_url.replace(FILES, 'https://media.base44.com/images/public/');
 }
 
 async function mapUrls(base44, urls, cache, failures) {
   const out = [];
   for (const u of urls) {
+    if (typeof u === 'string' && FILES.test(u)) { out.push(u.replace(FILES, 'https://media.base44.com/images/public/')); continue; }
     if (typeof u !== 'string' || !u.includes('cdn.jsdelivr.net')) { out.push(u); continue; }
     if (!cache[u]) {
       try { cache[u] = await copyOne(base44, u); }
@@ -43,6 +45,17 @@ export default async function (req) {
     const limit = Math.min(Number(body.limit) || 8, 25);
     const exclude = new Set(body.exclude || []);
     const E = base44.asServiceRole.entities[entity];
+
+    if (body.ids) {
+      const fixed = [];
+      for (const id of body.ids) {
+        const row = await E.get(id);
+        const failures = [];
+        await E.update(id, { images: await mapUrls(base44, row.images || [], {}, failures) });
+        fixed.push({ id, failures });
+      }
+      return Response.json({ fixed });
+    }
 
     const q = entity === 'Article'
       ? { $or: [{ images: { $regex: 'jsdelivr' } }, { cover_image: { $regex: 'jsdelivr' } }, { body: { $regex: 'jsdelivr' } }] }
