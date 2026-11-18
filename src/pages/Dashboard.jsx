@@ -1,7 +1,46 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import ProfileForm from '@/components/dashboard/ProfileForm';
+import { SITE } from '@/lib/site';
+
+// Collector listings are added, edited and deleted by the admins only,
+// so the dashboard shows the listing without letting the collector change it.
+function ProfileSummary({ profile }) {
+  const rows = profile
+    ? [
+        ['Name', profile.name],
+        ['Country', profile.country],
+        ['Collects', profile.collection_type],
+        ['Size of main collection', profile.main_collection_size],
+        ['Size of sharpener collection', profile.sharpener_collection_size],
+      ]
+    : [];
+  const mailto = `mailto:${SITE.webmaster}?subject=${encodeURIComponent('Change to my collector listing')}`;
+  return (
+    <section className="rounded-[10px] border border-hair bg-white p-6 sm:p-7">
+      <h2 className="font-heading text-xl font-bold text-ink">Your directory listing</h2>
+      {profile ? (
+        <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+          {rows.map(([label, value]) => (
+            <div key={label} className="min-w-0">
+              <dt className="text-[12px] font-semibold uppercase tracking-[0.12em] text-steel">{label}</dt>
+              <dd className="mt-0.5 break-words text-[15px] text-ink">{value || <span className="text-steel">Not recorded</span>}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : (
+        <p className="mt-3 text-[15px] text-steel">You don’t have a directory listing yet.</p>
+      )}
+      <p className="mt-5 text-[14px] leading-relaxed text-steel">
+        Listings are kept by the site admins. To add or change anything,{' '}
+        <a href={mailto} className="font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood">
+          write to the webmaster
+        </a>
+        .
+      </p>
+    </section>
+  );
+}
 import MyPieces from '@/components/dashboard/MyPieces';
 
 export default function Dashboard() {
@@ -31,12 +70,6 @@ export default function Dashboard() {
 
   const { profile, pieces, total } = state;
 
-  const onSaved = (savedProfile) => {
-    if (!savedProfile) return;
-    const renamed = savedProfile.name !== profile?.name;
-    setState((current) => ({ ...current, profile: savedProfile }));
-    if (renamed) load();
-  };
 
   return (
     <div className="pb-16">
@@ -47,7 +80,7 @@ export default function Dashboard() {
             {profile?.name || 'Your collector page'}
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-            Keep your directory details up to date and see every piece recorded under your name.
+Your directory listing and every piece recorded under your name.
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-4 text-[13px]">
             {profile?.approved ? (
@@ -81,7 +114,7 @@ export default function Dashboard() {
           ) : (
             <>
               {!loading && (
-                <ProfileForm profile={profile} onSaved={onSaved} />
+                <ProfileSummary profile={profile} />
               )}
               <MyPieces
                 name={profile?.name}
