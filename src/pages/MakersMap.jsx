@@ -43,6 +43,8 @@ function clusterPlaces(panel, places) {
 
 // Labels that would collide with a neighbour go on the left of the pin.
 const LEFT_LABELS = new Set(['Geneva, NY', 'Lucerne']);
+// Same, matched on any place inside a shared pin (keys are lower-case place names).
+const LEFT_KEYS = new Set(['adrian, mi', 'swanton, oh']);
 
 function MapPanel({ panel, places, selected, onSelect }) {
   return (
@@ -61,7 +63,7 @@ function MapPanel({ panel, places, selected, onSelect }) {
         {places.map((place) => {
           const { x, y } = project(panel, place.lat, place.lng);
           const active = selected === place.key || (place.parts || []).includes(selected);
-          const left = LEFT_LABELS.has(place.name);
+          const left = LEFT_LABELS.has(place.name) || (place.parts || []).some((k) => LEFT_KEYS.has(k));
           return (
             <g
               key={place.key}
