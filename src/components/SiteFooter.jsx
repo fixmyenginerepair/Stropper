@@ -44,7 +44,7 @@ export default function SiteFooter() {
           </div>
         </div>
         <p className="mt-12 text-center font-fell text-[13px] uppercase tracking-[0.3em] text-white/40">
-          Strops · Hones · Rollers · Stroppers · 1853 – 1959
+          Strops · Hones · Rollers · Stroppers
         </p>
       </div>
     </footer>
