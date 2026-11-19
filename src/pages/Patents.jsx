@@ -18,7 +18,6 @@ export default function Patents() {
   const [params, setParams] = useSearchParams();
   const q = params.get('q') || '';
   const country = params.get('country') || '';
-  const decade = Number(params.get('decade')) || 0;
   const sort = params.get('sort') || 'year';
   const page = Math.max(1, Number(params.get('page') || 1) || 1);
 
@@ -43,7 +42,6 @@ export default function Patents() {
   const query = useMemo(() => {
     const out = {};
     if (country) out.country = country;
-    if (decade) out.year = { $gte: decade, $lt: decade + 10 };
     if (q) {
       const digits = q.replace(/[^\d]/g, '');
       const ors = [
@@ -55,7 +53,7 @@ export default function Patents() {
       out.$or = ors;
     }
     return out;
-  }, [q, country, decade]);
+  }, [q, country]);
 
   useEffect(() => {
     let cancelled = false;
@@ -149,14 +147,6 @@ export default function Patents() {
 
       <p className="mt-6 border-b border-hair pb-3 text-[14px] text-steel">
         {rows === null ? 'Loading…' : `${total.toLocaleString()} patent${total === 1 ? '' : 's'}`}
-        {decade > 0 && (
-          <>
-            {' '}granted in the {decade}s ·{' '}
-            <button type="button" onClick={() => set({ decade: '' })} className="font-semibold text-oxblood hover:underline">
-              show every decade
-            </button>
-          </>
-        )}
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">

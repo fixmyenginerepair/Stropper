@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 40 49% 92%;
-    --foreground: 34 22% 10%;
+    --background: 240 37% 97%;
+    --foreground: 220 31% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 34 22% 10%;
+    --card-foreground: 220 31% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 34 22% 10%;
+    --popover-foreground: 220 31% 15%;
     --primary: 0 100% 20%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 45% 88%;
+    --secondary: 240 30% 96%;
     --secondary-foreground: 220 31% 15%;
-    --muted: 40 45% 88%;
-    --muted-foreground: 36 12% 37%;
-    --accent: 40 45% 88%;
+    --muted: 240 30% 96%;
+    --muted-foreground: 225 11% 41%;
+    --accent: 240 30% 96%;
     --accent-foreground: 220 31% 15%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 40 36% 77%;
-    --input: 40 36% 77%;
+    --border: 240 21% 88%;
+    --input: 240 21% 88%;
     --ring: 0 100% 20%;
     --chart-1: 0 100% 20%;
     --chart-2: 240 98% 20%;
@@ -29,12 +29,9 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.625rem;
-    --font-heading: 'Fraunces', 'Bitter', Georgia, serif;
-    --font-body: 'Source Serif 4', Georgia, serif;
-    --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-fell: 'Josefin Sans', 'Inter', system-ui, sans-serif;
-    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    --font-display: 'Fraunces', Georgia, serif;
+    --font-heading: 'Bitter', Georgia, serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Bitter', Georgia, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 240 30% 97%;
     --sidebar-foreground: 220 31% 15%;
@@ -105,28 +102,11 @@
   body {
     @apply bg-background text-foreground font-body;
     line-height: 1.6;
-    /* Aged catalogue paper: fine grain plus a faint warm vignette. */
-    background-image:
-      var(--paper-grain),
-      radial-gradient(ellipse at 50% 0%, rgba(255, 252, 244, 0.75), transparent 60%),
-      radial-gradient(ellipse at 50% 100%, rgba(164, 124, 63, 0.10), transparent 70%);
-    background-attachment: fixed;
-  }
-
-  /* Controls, menus and data tables stay in a clean sans for legibility. */
-  button, input, select, textarea, label, nav, table, [role="menu"], [role="dialog"] {
-    font-family: var(--font-ui);
   }
 
   h1, h2, h3, h4 {
     @apply font-heading;
     letter-spacing: -0.01em;
-    /* Fraunces' soft, slightly wonky cut recalls 1920s ad lettering. */
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  }
-
-  ::selection {
-    background: rgba(104, 0, 0, 0.18);
   }
 }
 
@@ -136,98 +116,7 @@
   }
 
   .eyebrow {
-    font-family: var(--font-fell);
-    @apply text-[12px] font-semibold uppercase tracking-[0.24em];
-  }
-
-  /* Display type for the big all-caps "ROLLS RAZOR" moments. */
-  .ad-display {
-    font-family: var(--font-heading);
-    font-weight: 900;
-    font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 0.88;
-  }
-  .ad-script {
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 500;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  }
-
-  /* The twisted-cord border of a 1920s press advertisement. */
-  .rope-frame {
-    position: relative;
-    border: 14px solid transparent;
-    border-image: repeating-linear-gradient(45deg, #15120e 0 7px, #f5eedf 7px 11px) 14;
-    outline: 2px solid #15120e;
-    outline-offset: -20px;
-  }
-  .rope-frame--light {
-    border-image: repeating-linear-gradient(45deg, #f5eedf 0 7px, transparent 7px 11px) 14;
-    outline-color: #f5eedf;
-  }
-  .rope-rule {
-    height: 12px;
-    background: repeating-linear-gradient(45deg, #15120e 0 6px, transparent 6px 10px);
-    border-block: 2px solid #15120e;
-  }
-  .rope-rule--light {
-    background: repeating-linear-gradient(45deg, #f5eedf 0 6px, transparent 6px 10px);
-    border-color: #f5eedf;
-  }
-
-  /* The black price tag in the ad's corner ("from 21/-"). */
-  .price-tag {
-    @apply inline-flex flex-col items-center justify-center bg-[#15120e] px-4 py-2 text-paper;
-    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
-  }
-
-  /* Printed halftone dots, for a modern screen-print accent. */
-  .halftone {
-    background-image: radial-gradient(currentColor 1.1px, transparent 1.3px);
-    background-size: 7px 7px;
-  }
-
-  /* A printer's rule with a centred fleuron:  ───── ❦ ───── */
-  .ornament-rule {
-    @apply flex items-center gap-4 text-brass;
-  }
-  .ornament-rule::before,
-  .ornament-rule::after {
-    content: '';
-    @apply h-px flex-1;
-    background: linear-gradient(90deg, transparent, currentColor 25%, currentColor 75%, transparent);
-  }
-
-  /* Double-ruled engraved frame, as round a catalogue plate. */
-  .plate-frame {
-    @apply relative bg-paper;
-    box-shadow:
-      0 0 0 1px #1f1a14,
-      inset 0 0 0 5px #f5eedf,
-      inset 0 0 0 6px #1f1a14,
-      0 18px 40px -22px rgba(31, 26, 20, 0.55);
-  }
-
-  /* Patent drawings are black ink on white: multiply them onto the paper. */
-  .ink-on-paper {
-    mix-blend-mode: multiply;
-    filter: contrast(1.15) sepia(0.25);
-  }
-
-  .drop-cap::first-letter {
-    font-family: var(--font-heading);
-    @apply float-left mr-2 mt-1 text-[3.6rem] font-bold leading-[0.8] text-oxblood;
-  }
-
-  .drop-cap-light::first-letter {
-    color: #e9c98f;
-  }
-
-  .text-balance {
-    text-wrap: balance;
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em];
   }
 }
 
