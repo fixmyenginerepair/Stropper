@@ -5,6 +5,7 @@ import { setPageMeta, setRecordSeo } from '@/lib/pageMeta';
 import { parseSharpenerParam, sharpenerPath, sharpenerSlug, sharpenerUrl, SITE_ORIGIN } from '@/lib/slugs';
 import CompareButton from '@/components/compare/CompareButton';
 import RelatedPieces from '@/components/detail/RelatedPieces';
+import PlaceInHistory from '@/components/detail/PlaceInHistory';
 import { base44 } from '@/api/base44Client';
 import DetailGallery from '@/components/detail/DetailGallery';
 import RarityScale from '@/components/detail/RarityScale';
@@ -360,6 +361,8 @@ export default function SharpenerDetail() {
           </div>
         </div>
       </div>
+
+      <PlaceInHistory sharpener={sharpener} maker={maker} patents={patents} />
 
       <HowItWorksSection mechanism={mechanismForType(sharpener.type)} />
 
