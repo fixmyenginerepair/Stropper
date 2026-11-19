@@ -16,10 +16,12 @@ module.exports = {
   				DEFAULT: '#680000',
   				dark: '#4a0000'
   			},
-  			frost: '#F4F4FA',
-  			ink: '#1B2333',
-  			steel: '#59617A',
-  			hair: '#D9D9E6',
+  			frost: '#EFE6D3',
+  			paper: '#F5EEDF',
+  			brass: '#A47C3F',
+  			ink: '#1F1A14',
+  			steel: '#6A6152',
+  			hair: '#D9CCB0',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -75,6 +77,8 @@ module.exports = {
   			heading: ['var(--font-heading)'],
   			body: ['var(--font-body)'],
   			display: ['var(--font-display)'],
+  			fell: ['var(--font-fell)'],
+  			ui: ['var(--font-ui)'],
   			mono: ['var(--font-mono)']
   		},
   		keyframes: {
