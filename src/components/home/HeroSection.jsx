@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { loadPatents, patentYear, SHARPENER_CARD_FIELDS, eraFor } from '@/lib/eras';
+import { eraFor, loadPatents, patentYear, SHARPENER_CARD_FIELDS } from '@/lib/eras';
 import { patentLabel } from '@/lib/patents';
 import { sharpenerPath } from '@/lib/slugs';
+
+// The home page opens like a 1920s press advertisement: rope border, a rhyming
+// headline, giant capitals, a line drawing and a price tag in the corner.
 
 const CHIPS = [
   { label: 'Rollers', to: '/browse?type=Rollers' },
@@ -13,7 +16,6 @@ const CHIPS = [
   { label: 'Germany', to: '/browse?country=Germany' },
 ];
 
-const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 const PLATES = 8;
 
 function shuffle(rows) {
@@ -63,73 +65,64 @@ function useCounts() {
   return counts;
 }
 
-function Plate({ plate, index, total, onPrev, onNext }) {
+const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : '—');
+
+function Illustration({ plate, index, total, onPrev, onNext }) {
   const { patent, piece } = plate;
   const year = patentYear(patent);
   const era = eraFor(year);
   return (
-    <figure className="plate-frame p-5 sm:p-7">
-      <div className="flex items-baseline justify-between gap-3 border-b border-ink/70 pb-2">
-        <span className="font-fell text-[13px] uppercase tracking-[0.25em] text-ink/70">Plate {ROMAN[index] || index + 1}</span>
-        <span className="font-fell text-[13px] uppercase tracking-[0.25em] text-oxblood">{year || ''}</span>
-      </div>
-
-      <div data-no-zoom className="relative mt-4 aspect-[4/3.4] overflow-hidden">
-        <img
-          key={patent.id}
-          src={patent.drawing_urls[0]}
-          alt={`Patent drawing, ${patentLabel(patent)}`}
-          className="ink-on-paper plate-fade absolute inset-0 h-full w-full object-contain"
-        />
-        <Link
-          to={sharpenerPath(piece)}
-          className="plate-fade absolute bottom-0 right-0 block w-[44%] overflow-hidden rounded-[50%] border-[3px] border-paper shadow-[0_0_0_1px_#1f1a14,0_14px_30px_-12px_rgba(0,0,0,.55)] transition-transform duration-500 hover:scale-[1.03]"
-          aria-label={`See ${piece.name}`}
-        >
-          <img src={piece.images[0]} alt={piece.name} className="aspect-[4/5] w-full object-cover" />
-        </Link>
-      </div>
-
-      <figcaption className="mt-4 border-t border-ink/70 pt-3">
-        <Link to={sharpenerPath(piece)} className="font-heading text-[19px] font-bold leading-snug text-ink hover:text-oxblood">
-          {piece.name}
-        </Link>
-        <p className="mt-1 text-[14px] italic text-steel">
-          {patentLabel(patent)}
-          {patent.title ? ` — ${patent.title}` : ''}
-        </p>
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <Link to={`/patents/${patent.id}`} className="text-[13px] font-semibold text-oxblood underline decoration-oxblood/30 underline-offset-4 hover:decoration-oxblood">
-            {era?.name ? `${era.name} · read the patent` : 'Read the patent'}
-          </Link>
-          <div className="flex items-center gap-1">
-            <button type="button" onClick={onPrev} aria-label="Previous plate" className="rounded-full p-1.5 text-ink/70 hover:bg-ink/5 hover:text-oxblood">
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <span className="font-ui text-[12px] tabular-nums text-steel">
-              {index + 1} / {total}
-            </span>
-            <button type="button" onClick={onNext} aria-label="Next plate" className="rounded-full p-1.5 text-ink/70 hover:bg-ink/5 hover:text-oxblood">
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
+    <div className="relative">
+      {/* Inset box, as round the soap-bowl panel in the old ad. */}
+      <div data-no-zoom className="relative border-2 border-[#15120e] bg-paper p-3 shadow-[6px_6px_0_#15120e]">
+        <div className="relative aspect-[4/3.3] overflow-hidden">
+          <img
+            key={patent.id}
+            src={patent.drawing_urls[0]}
+            alt={`Patent drawing, ${patentLabel(patent)}`}
+            className="ink-on-paper ad-fade absolute inset-0 h-full w-full object-contain"
+          />
         </div>
-      </figcaption>
-    </figure>
-  );
-}
+        <Link
+          key={piece.id}
+          to={sharpenerPath(piece)}
+          aria-label={`See ${piece.name}`}
+          className="ad-fade absolute -bottom-6 -left-6 block w-[38%] border-2 border-[#15120e] bg-paper p-1.5 shadow-[5px_5px_0_#680000] transition-transform duration-300 hover:-translate-y-1 sm:-left-8"
+        >
+          <img src={piece.images[0]} alt={piece.name} className="aspect-square w-full object-cover" />
+        </Link>
+        {/* Price-tag corner: the patent year. */}
+        <Link to={`/patents/${patent.id}`} className="price-tag absolute -bottom-5 -right-4 min-w-[96px] hover:bg-oxblood">
+          <span className="ad-script text-[15px] leading-none">pat.</span>
+          <span className="font-heading text-[2.1rem] font-black leading-none tracking-tight">{year || '—'}</span>
+        </Link>
+      </div>
 
-function PlateSkeleton() {
-  return (
-    <div className="plate-frame p-7">
-      <div className="h-4 w-24 animate-pulse rounded bg-frost" />
-      <div className="mt-4 aspect-[4/3.4] animate-pulse rounded bg-frost/70" />
-      <div className="mt-4 h-5 w-2/3 animate-pulse rounded bg-frost" />
+      <div className="mt-10 flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <Link to={sharpenerPath(piece)} className="font-heading text-[1.35rem] font-extrabold leading-tight text-ink hover:text-oxblood">
+            {piece.name}
+          </Link>
+          <p className="mt-1 font-fell text-[11px] font-semibold uppercase tracking-[0.2em] text-steel">
+            {patentLabel(patent)}
+            {era?.name ? ` · ${era.name}` : ''}
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-1">
+          <button type="button" onClick={onPrev} aria-label="Previous drawing" className="border-2 border-[#15120e] p-1.5 text-ink hover:bg-[#15120e] hover:text-paper">
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <span className="px-1.5 font-ui text-[12px] tabular-nums text-steel">
+            {index + 1}/{total}
+          </span>
+          <button type="button" onClick={onNext} aria-label="Next drawing" className="border-2 border-[#15120e] p-1.5 text-ink hover:bg-[#15120e] hover:text-paper">
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
-
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : '—');
 
 export default function HeroSection() {
   const [query, setQuery] = useState('');
@@ -150,83 +143,100 @@ export default function HeroSection() {
     event.preventDefault();
     navigate(query.trim() ? `/browse?q=${encodeURIComponent(query.trim())}` : '/browse');
   };
-
   const step = (d) => setIndex((i) => (i + d + plates.length) % plates.length);
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="archive-container py-8 sm:py-12 lg:py-14">
       <style>{`
-        .plate-fade{animation:plate-in .9s ease both}
-        @keyframes plate-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-        @media (prefers-reduced-motion: reduce){.plate-fade{animation:none}}
+        .ad-fade{animation:ad-in .8s ease both}
+        @keyframes ad-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+        .ad-rise > *{animation:ad-in .9s ease both}
+        .ad-rise > *:nth-child(2){animation-delay:.12s}.ad-rise > *:nth-child(3){animation-delay:.24s}
+        .ad-rise > *:nth-child(4){animation-delay:.36s}.ad-rise > *:nth-child(5){animation-delay:.48s}
+        @media (prefers-reduced-motion: reduce){.ad-fade,.ad-rise > *{animation:none}}
       `}</style>
-      {/* Faint engraved sunburst behind the title. */}
-      <svg aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 h-[720px] w-[720px] text-brass/[0.12]" viewBox="0 0 200 200">
-        {Array.from({ length: 48 }).map((_, i) => (
-          <line key={i} x1="100" y1="100" x2={100 + 100 * Math.cos((i * Math.PI) / 24)} y2={100 + 100 * Math.sin((i * Math.PI) / 24)} stroke="currentColor" strokeWidth="0.6" />
-        ))}
-      </svg>
 
-      <div className="archive-container relative grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:py-20">
-        <div>
-          <p className="eyebrow text-oxblood">A collector’s catalogue · Vol. MMXXVI</p>
-          <h1 className="text-balance mt-4 font-heading text-[2.6rem] font-black leading-[0.98] text-ink sm:text-6xl lg:text-[4.6rem]">
-            The World <span className="font-normal italic text-oxblood">of</span> Razor Sharpeners
-          </h1>
-          <div className="ornament-rule mt-6 max-w-md">
-            <span className="font-fell text-xl leading-none">✦</span>
-          </div>
-          <p className="mt-5 max-w-xl text-[19px] leading-relaxed text-ink/80">
-            Strops, hones, rollers and stroppers from the makers of a century past — each one photographed, rated, and
-            tied to the patent, the company and the advertising of its day.
-          </p>
+      <div className="rope-frame bg-[#fbf7ee]">
+        <div className="grid gap-12 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.12fr_0.88fr] lg:gap-14 lg:px-14 lg:py-16">
+          <div className="ad-rise">
+            <h1 className="text-balance font-heading text-[2.15rem] font-extrabold leading-[1.02] text-ink sm:text-[3.1rem] lg:text-[3.5rem]">
+              A thousand machines
+              <br />
+              to keep the edge keen,
+              <br />
+              now each one is kept
+              <br />
+              <span className="ad-script font-medium text-oxblood">in the</span>
+            </h1>
 
-          <form onSubmit={submit} className="mt-8 flex max-w-2xl flex-col gap-3 sm:flex-row">
-            <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-steel" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search maker, model, patent number…"
-                aria-label="Search the archive"
-                className="h-14 w-full rounded-none border border-ink/70 bg-paper pl-12 pr-4 text-[15px] text-ink shadow-[inset_0_1px_3px_rgba(31,26,20,.12)] placeholder:text-steel/80 focus:outline-none focus:ring-2 focus:ring-oxblood"
-              />
+            <p className="ad-display mt-3 text-[3.6rem] text-ink sm:text-[5.6rem] lg:text-[6.6rem]">
+              Stropper
+              <span className="block text-navy">Archive</span>
+            </p>
+
+            <p className="mt-6 max-w-xl">
+              <span className="ad-script text-[22px] text-oxblood">The </span>
+              <span className="font-fell text-[15px] font-semibold uppercase leading-[1.7] tracking-[0.12em] text-ink">
+                world’s fullest record of razor sharpeners — with the patents, makers & advertising that made them
+              </span>
+            </p>
+
+            <form onSubmit={submit} className="mt-8 flex max-w-2xl flex-col gap-0 sm:flex-row">
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-steel" />
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search maker, model, patent number…"
+                  aria-label="Search the archive"
+                  className="h-14 w-full rounded-none border-2 border-[#15120e] bg-white pl-12 pr-4 text-[15px] text-ink placeholder:text-steel/80 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-oxblood sm:border-r-0"
+                />
+              </div>
+              <button
+                type="submit"
+                className="h-14 rounded-none border-2 border-[#15120e] bg-[#15120e] px-7 font-fell text-[14px] font-bold uppercase tracking-[0.16em] text-paper transition-colors hover:bg-oxblood"
+              >
+                Search
+              </button>
+            </form>
+
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="ad-script text-[17px] text-steel">or try</span>
+              {CHIPS.map((chip) => (
+                <Link key={chip.label} to={chip.to} className="font-fell text-[13px] font-semibold uppercase tracking-[0.14em] text-ink underline decoration-oxblood decoration-2 underline-offset-4 hover:text-oxblood">
+                  {chip.label}
+                </Link>
+              ))}
             </div>
-            <button type="submit" className="h-14 rounded-none bg-oxblood px-7 text-[15px] font-semibold tracking-wide text-white transition-colors hover:bg-oxblood-dark">
-              Search the archive
-            </button>
-          </form>
-
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span className="mr-1 font-heading text-[15px] italic text-steel">or try</span>
-            {CHIPS.map((chip) => (
-              <Link key={chip.label} to={chip.to} className="border-b border-ink/30 px-1 text-[15px] text-ink hover:border-oxblood hover:text-oxblood">
-                {chip.label}
-              </Link>
-            ))}
           </div>
 
-          <div className="mt-10 grid max-w-xl grid-cols-2 border-y border-ink/70 sm:grid-cols-4">
-            {[
-              ['Pieces', counts?.pieces, '/browse'],
-              ['Makers', counts?.makers, '/history'],
-              ['Patents', counts?.patents, '/patents'],
-              ['Period ads', counts?.ads, '/advertising'],
-            ].map(([label, n, to], i) => (
-              <Link key={label} to={to} className={`group block px-3 py-4 text-center ${i ? 'sm:border-l sm:border-ink/25' : ''} ${i % 2 ? 'border-l border-ink/25 sm:border-l' : ''}`}>
-                <span className="block font-heading text-[1.9rem] font-bold leading-none text-ink group-hover:text-oxblood">{fmt(n)}</span>
-                <span className="mt-1.5 block font-fell text-[12px] uppercase tracking-[0.2em] text-steel">{label}</span>
-              </Link>
-            ))}
+          <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} className="mx-auto w-full max-w-[460px] lg:mx-0 lg:max-w-none lg:pt-4">
+            {plates.length ? (
+              <Illustration plate={plates[index]} index={index} total={plates.length} onPrev={() => step(-1)} onNext={() => step(1)} />
+            ) : (
+              <div className="aspect-[4/3.3] animate-pulse border-2 border-[#15120e] bg-frost" />
+            )}
           </div>
         </div>
 
-        <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} className="mx-auto w-full max-w-[460px] lg:max-w-none">
-          {plates.length ? (
-            <Plate plate={plates[index]} index={index} total={plates.length} onPrev={() => step(-1)} onNext={() => step(1)} />
-          ) : (
-            <PlateSkeleton />
-          )}
+        {/* Counts set as a row of price tags. */}
+        <div className="border-t-2 border-[#15120e] px-6 py-6 sm:px-10 lg:px-14">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between">
+            {[
+              ['pieces', counts?.pieces, '/browse'],
+              ['makers', counts?.makers, '/history'],
+              ['patents', counts?.patents, '/patents'],
+              ['period ads', counts?.ads, '/advertising'],
+            ].map(([label, n, to]) => (
+              <Link key={label} to={to} className="price-tag min-w-[132px] transition-colors hover:bg-oxblood">
+                <span className="font-heading text-[2rem] font-black leading-none">{fmt(n)}</span>
+                <span className="ad-script mt-0.5 text-[15px] leading-none text-paper/80">{label}</span>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-5 text-center font-fell text-[11px] font-semibold uppercase tracking-[0.3em] text-steel">
+            Stropper.com · Strops · Hones · Rollers · Stroppers · Est. by collectors, for collectors
+          </p>
         </div>
       </div>
     </section>
