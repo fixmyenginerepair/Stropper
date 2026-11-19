@@ -29,12 +29,12 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.625rem;
-    --font-heading: 'Playfair Display', 'Bitter', Georgia, serif;
+    --font-heading: 'Fraunces', 'Bitter', Georgia, serif;
     --font-body: 'Source Serif 4', Georgia, serif;
     --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-fell: 'IM Fell English SC', 'Playfair Display', Georgia, serif;
+    --font-fell: 'Josefin Sans', 'Inter', system-ui, sans-serif;
     --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    --font-display: 'Playfair Display', Georgia, serif;
+    --font-display: 'Fraunces', Georgia, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 240 30% 97%;
     --sidebar-foreground: 220 31% 15%;
@@ -120,7 +120,9 @@
 
   h1, h2, h3, h4 {
     @apply font-heading;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.01em;
+    /* Fraunces' soft, slightly wonky cut recalls 1920s ad lettering. */
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
   }
 
   ::selection {
@@ -135,7 +137,57 @@
 
   .eyebrow {
     font-family: var(--font-fell);
-    @apply text-[13px] font-normal uppercase tracking-[0.2em];
+    @apply text-[12px] font-semibold uppercase tracking-[0.24em];
+  }
+
+  /* Display type for the big all-caps "ROLLS RAZOR" moments. */
+  .ad-display {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 0.88;
+  }
+  .ad-script {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 500;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
+  /* The twisted-cord border of a 1920s press advertisement. */
+  .rope-frame {
+    position: relative;
+    border: 14px solid transparent;
+    border-image: repeating-linear-gradient(45deg, #15120e 0 7px, #f5eedf 7px 11px) 14;
+    outline: 2px solid #15120e;
+    outline-offset: -20px;
+  }
+  .rope-frame--light {
+    border-image: repeating-linear-gradient(45deg, #f5eedf 0 7px, transparent 7px 11px) 14;
+    outline-color: #f5eedf;
+  }
+  .rope-rule {
+    height: 12px;
+    background: repeating-linear-gradient(45deg, #15120e 0 6px, transparent 6px 10px);
+    border-block: 2px solid #15120e;
+  }
+  .rope-rule--light {
+    background: repeating-linear-gradient(45deg, #f5eedf 0 6px, transparent 6px 10px);
+    border-color: #f5eedf;
+  }
+
+  /* The black price tag in the ad's corner ("from 21/-"). */
+  .price-tag {
+    @apply inline-flex flex-col items-center justify-center bg-[#15120e] px-4 py-2 text-paper;
+    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  /* Printed halftone dots, for a modern screen-print accent. */
+  .halftone {
+    background-image: radial-gradient(currentColor 1.1px, transparent 1.3px);
+    background-size: 7px 7px;
   }
 
   /* A printer's rule with a centred fleuron:  ───── ❦ ───── */
