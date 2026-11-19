@@ -18,6 +18,7 @@ export default function Patents() {
   const [params, setParams] = useSearchParams();
   const q = params.get('q') || '';
   const country = params.get('country') || '';
+  const decade = Number(params.get('decade')) || 0;
   const sort = params.get('sort') || 'year';
   const page = Math.max(1, Number(params.get('page') || 1) || 1);
 
@@ -42,6 +43,7 @@ export default function Patents() {
   const query = useMemo(() => {
     const out = {};
     if (country) out.country = country;
+    if (decade) out.year = { $gte: decade, $lt: decade + 10 };
     if (q) {
       const digits = q.replace(/[^\d]/g, '');
       const ors = [
@@ -53,7 +55,7 @@ export default function Patents() {
       out.$or = ors;
     }
     return out;
-  }, [q, country]);
+  }, [q, country, decade]);
 
   useEffect(() => {
     let cancelled = false;
