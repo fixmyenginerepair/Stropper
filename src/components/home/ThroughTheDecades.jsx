@@ -115,6 +115,7 @@ export default function ThroughTheDecades() {
 
   return (
     <section id="decades" className="scroll-mt-20 bg-navy text-white">
+      <div className="rope-rule rope-rule--light opacity-60" />
       <div className="archive-container py-16 sm:py-20 lg:py-24">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
@@ -162,14 +163,14 @@ export default function ThroughTheDecades() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   to={`/patents?decade=${selected}`}
-                  className="inline-flex items-center gap-2 bg-paper px-5 py-3 font-ui text-sm font-semibold text-ink transition-colors hover:bg-white"
+                  className="inline-flex items-center gap-2 bg-paper px-5 py-3 font-fell text-[13px] font-bold uppercase tracking-[0.14em] text-ink shadow-[4px_4px_0_#680000] transition-transform hover:-translate-y-0.5"
                 >
                   The {selected}s patents <ArrowRight className="h-4 w-4" />
                 </Link>
                 {bucket?.ads.length > 0 && (
                   <Link
                     to="/advertising"
-                    className="inline-flex items-center gap-2 border border-white/40 px-5 py-3 font-ui text-sm font-semibold text-white hover:border-white"
+                    className="inline-flex items-center gap-2 border-2 border-white/60 px-5 py-3 font-fell text-[13px] font-bold uppercase tracking-[0.14em] text-white hover:border-white"
                   >
                     Ads of the era
                   </Link>
@@ -224,6 +225,7 @@ export default function ThroughTheDecades() {
           </div>
         )}
       </div>
+      <div className="rope-rule rope-rule--light opacity-60" />
     </section>
   );
 }
