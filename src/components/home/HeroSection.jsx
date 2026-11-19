@@ -206,7 +206,7 @@ export default function HeroSection() {
             ))}
           </div>
 
-          <dl className="mt-10 grid max-w-xl grid-cols-2 border-y border-ink/70 sm:grid-cols-4">
+          <div className="mt-10 grid max-w-xl grid-cols-2 border-y border-ink/70 sm:grid-cols-4">
             {[
               ['Pieces', counts?.pieces, '/browse'],
               ['Makers', counts?.makers, '/history'],
@@ -214,11 +214,11 @@ export default function HeroSection() {
               ['Period ads', counts?.ads, '/advertising'],
             ].map(([label, n, to], i) => (
               <Link key={label} to={to} className={`group block px-3 py-4 text-center ${i ? 'sm:border-l sm:border-ink/25' : ''} ${i % 2 ? 'border-l border-ink/25 sm:border-l' : ''}`}>
-                <dd className="font-heading text-[1.9rem] font-bold leading-none text-ink group-hover:text-oxblood">{fmt(n)}</dd>
-                <dt className="mt-1.5 font-fell text-[12px] uppercase tracking-[0.2em] text-steel">{label}</dt>
+                <span className="block font-heading text-[1.9rem] font-bold leading-none text-ink group-hover:text-oxblood">{fmt(n)}</span>
+                <span className="mt-1.5 block font-fell text-[12px] uppercase tracking-[0.2em] text-steel">{label}</span>
               </Link>
             ))}
-          </dl>
+          </div>
         </div>
 
         <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} className="mx-auto w-full max-w-[460px] lg:max-w-none">
