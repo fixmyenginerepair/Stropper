@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 240 37% 97%;
-    --foreground: 220 31% 15%;
+    --background: 40 49% 92%;
+    --foreground: 34 22% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 220 31% 15%;
+    --card-foreground: 34 22% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 31% 15%;
+    --popover-foreground: 34 22% 10%;
     --primary: 0 100% 20%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 30% 96%;
+    --secondary: 40 45% 88%;
     --secondary-foreground: 220 31% 15%;
-    --muted: 240 30% 96%;
-    --muted-foreground: 225 11% 41%;
-    --accent: 240 30% 96%;
+    --muted: 40 45% 88%;
+    --muted-foreground: 36 12% 37%;
+    --accent: 40 45% 88%;
     --accent-foreground: 220 31% 15%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 21% 88%;
-    --input: 240 21% 88%;
+    --border: 40 36% 77%;
+    --input: 40 36% 77%;
     --ring: 0 100% 20%;
     --chart-1: 0 100% 20%;
     --chart-2: 240 98% 20%;
@@ -29,9 +29,12 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.625rem;
-    --font-heading: 'Bitter', Georgia, serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-display: 'Bitter', Georgia, serif;
+    --font-heading: 'Playfair Display', 'Bitter', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-fell: 'IM Fell English SC', 'Playfair Display', Georgia, serif;
+    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --font-display: 'Playfair Display', Georgia, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 240 30% 97%;
     --sidebar-foreground: 220 31% 15%;
@@ -102,11 +105,26 @@
   body {
     @apply bg-background text-foreground font-body;
     line-height: 1.6;
+    /* Aged catalogue paper: fine grain plus a faint warm vignette. */
+    background-image:
+      var(--paper-grain),
+      radial-gradient(ellipse at 50% 0%, rgba(255, 252, 244, 0.75), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(164, 124, 63, 0.10), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  /* Controls, menus and data tables stay in a clean sans for legibility. */
+  button, input, select, textarea, label, nav, table, [role="menu"], [role="dialog"] {
+    font-family: var(--font-ui);
   }
 
   h1, h2, h3, h4 {
     @apply font-heading;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection {
+    background: rgba(104, 0, 0, 0.18);
   }
 }
 
@@ -116,7 +134,44 @@
   }
 
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.22em];
+    font-family: var(--font-fell);
+    @apply text-[13px] font-normal uppercase tracking-[0.2em];
+  }
+
+  /* A printer's rule with a centred fleuron:  ───── ❦ ───── */
+  .ornament-rule {
+    @apply flex items-center gap-4 text-brass;
+  }
+  .ornament-rule::before,
+  .ornament-rule::after {
+    content: '';
+    @apply h-px flex-1;
+    background: linear-gradient(90deg, transparent, currentColor 25%, currentColor 75%, transparent);
+  }
+
+  /* Double-ruled engraved frame, as round a catalogue plate. */
+  .plate-frame {
+    @apply relative bg-paper;
+    box-shadow:
+      0 0 0 1px #1f1a14,
+      inset 0 0 0 5px #f5eedf,
+      inset 0 0 0 6px #1f1a14,
+      0 18px 40px -22px rgba(31, 26, 20, 0.55);
+  }
+
+  /* Patent drawings are black ink on white: multiply them onto the paper. */
+  .ink-on-paper {
+    mix-blend-mode: multiply;
+    filter: contrast(1.15) sepia(0.25);
+  }
+
+  .drop-cap::first-letter {
+    font-family: var(--font-heading);
+    @apply float-left mr-2 mt-1 text-[3.6rem] font-bold leading-[0.8] text-oxblood;
+  }
+
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
