@@ -149,6 +149,14 @@ export default function Patents() {
 
       <p className="mt-6 border-b border-hair pb-3 text-[14px] text-steel">
         {rows === null ? 'Loading…' : `${total.toLocaleString()} patent${total === 1 ? '' : 's'}`}
+        {decade > 0 && (
+          <>
+            {' '}granted in the {decade}s ·{' '}
+            <button type="button" onClick={() => set({ decade: '' })} className="font-semibold text-oxblood hover:underline">
+              show every decade
+            </button>
+          </>
+        )}
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
