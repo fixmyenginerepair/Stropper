@@ -145,7 +145,7 @@ export default function ThroughTheDecades() {
                 {selected}s
               </p>
               <h3 className="mt-5 font-heading text-3xl font-bold">{era.name}</h3>
-              <p className="drop-cap mt-4 text-[18px] leading-relaxed text-white/80 [&::first-letter]:text-[#e9c98f]">{era.story}</p>
+              <p className="drop-cap drop-cap-light mt-4 text-[18px] leading-relaxed text-white/80">{era.story}</p>
               <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-ui text-[14px] text-white/60">
                 <span>
                   <strong className="text-white">{bucket?.pieceIds.size ?? '…'}</strong> pieces

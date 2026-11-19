@@ -170,6 +170,10 @@
     @apply float-left mr-2 mt-1 text-[3.6rem] font-bold leading-[0.8] text-oxblood;
   }
 
+  .drop-cap-light::first-letter {
+    color: #e9c98f;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
