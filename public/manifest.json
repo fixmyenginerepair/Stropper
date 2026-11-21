@@ -9,6 +9,36 @@
   "theme_color": "#0b2a6f",
   "icons": [
     {
+      "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/dbc549c42_stropper-icon-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/b4d54929d_stropper-icon-64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/e14dee17d_stropper-icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/e9e1fda92_stropper-icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/b08541cea_stropper-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "https://media.base44.com/images/public/6aef7ea3490a3928d32a4982/06642d377_stropper-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
