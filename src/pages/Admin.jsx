@@ -6,6 +6,7 @@ import {
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
 import UsersPanel from '@/components/admin/UsersPanel';
+import CollectorsPanel from '@/components/admin/CollectorsPanel';
 import CountsPanel from '@/components/admin/CountsPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
 import { cached, limited } from '@/lib/limited';
@@ -133,7 +134,7 @@ export default function Admin() {
   }
 
   const current = TABS.find((t) => t.key === tab) || TABS[0];
-  const config = ADMIN_ENTITIES[current.key];
+  const config = current.key === 'Collector' ? null : ADMIN_ENTITIES[current.key];
 
   return (
     <div className="archive-container py-8 lg:py-10">
@@ -168,6 +169,7 @@ export default function Admin() {
         <section className="min-w-0">
           {current.key === 'overview' && <Overview goTo={goTo} />}
           {current.key === 'users' && <UsersPanel me={me} />}
+          {current.key === 'Collector' && <CollectorsPanel me={me} />}
           {current.key === 'counts' && <CountsPanel />}
           {current.key === 'book' && (
             <div className="overflow-hidden rounded-[12px]">
