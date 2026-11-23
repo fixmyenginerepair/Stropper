@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
-  Archive, BookOpen, BookMarked, Factory, FileBadge, Hash, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users, UserCog,
+  Archive, BookOpen, BookMarked, Factory, FileBadge, Hash, LayoutDashboard, Lock, LogOut, Megaphone, Scissors, Users,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
-import UsersPanel from '@/components/admin/UsersPanel';
 import CollectorsPanel from '@/components/admin/CollectorsPanel';
 import CountsPanel from '@/components/admin/CountsPanel';
 import { ADMIN_ENTITIES } from '@/lib/adminConfig';
@@ -21,10 +20,9 @@ const TABS = [
   { key: 'Patent', label: 'Patents', icon: FileBadge },
   { key: 'Article', label: 'Articles', icon: BookOpen },
   { key: 'PeriodAd', label: 'Period ads', icon: Megaphone },
-  { key: 'Collector', label: 'Collectors', icon: Users },
+  { key: 'Collector', label: 'Collectors & access', icon: Users },
   { key: 'ArchiveItem', label: 'Classic archive', icon: Archive },
   { key: 'book', label: 'The Book', icon: BookMarked },
-  { key: 'users', label: 'Users & access', icon: UserCog },
 ];
 
 function Overview({ goTo }) {
@@ -68,8 +66,8 @@ function Overview({ goTo }) {
         {tile('Makers', stats?.makers, 'Maker')}
         {tile('Articles', stats?.articles, 'Article', stats?.drafts ? `${stats.drafts} drafts` : null)}
         {tile('Period ads', stats?.ads, 'PeriodAd')}
-        {tile('Collectors', stats?.collectors, 'Collector', stats?.pending ? `${stats.pending} awaiting approval` : null)}
-        {tile('Users & access', 'Manage', 'users', 'Invite admins and collectors')}
+        {tile('Collectors & access', stats?.collectors, 'Collector', stats?.pending ? `${stats.pending} awaiting approval` : 'Roles, invites and listings')}
+
       </div>
 
       <h2 className="mt-10 font-heading text-lg font-bold text-ink">Recently changed sharpeners</h2>
@@ -89,7 +87,8 @@ function Overview({ goTo }) {
 
 export default function Admin() {
   const [params, setParams] = useSearchParams();
-  const tab = params.get('tab') || 'overview';
+  // The old "Users & access" tab now lives inside Collectors & access.
+  const tab = params.get('tab') === 'users' ? 'Collector' : params.get('tab') || 'overview';
   const [me, setMe] = useState(undefined); // undefined = checking, null = signed out
   const [, setTick] = useState(0);
 
@@ -168,7 +167,6 @@ export default function Admin() {
 
         <section className="min-w-0">
           {current.key === 'overview' && <Overview goTo={goTo} />}
-          {current.key === 'users' && <UsersPanel me={me} />}
           {current.key === 'Collector' && <CollectorsPanel me={me} />}
           {current.key === 'counts' && <CountsPanel />}
           {current.key === 'book' && (
